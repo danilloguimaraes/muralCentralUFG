@@ -1,0 +1,14 @@
+REQUISITOS:
+
+Java 1.8 ou posterior
+Maven 3.2.2 ou posterior
+
+INSTRUÇÕES PARA INSTALAÇÃO
+(os passos abaixo permitem construir, 
+iniciar o serviço construído e experimentá-lo
+por meio da linha de comandos)
+
+mvn clean package
+java -jar target/central-1.0-SNAPSHOT.jar server central-configuracao.yml
+curl http://localhost:8080/identificacao
+
