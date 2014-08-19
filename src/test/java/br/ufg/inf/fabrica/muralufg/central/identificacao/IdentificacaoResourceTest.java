@@ -1,4 +1,4 @@
-package br.ufg.inf.fs.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.identificacao;
 
 import static org.junit.Assert.*;
 

@@ -1,6 +1,6 @@
-package br.ufg.inf.fs.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.identificacao;
 
-import br.ufg.inf.fs.muralufg.central.CentralConfiguration;
+import br.ufg.inf.fabrica.muralufg.central.CentralConfiguration;
 import com.codahale.metrics.health.HealthCheck;
 
 public class IdentificacaoHealthCheck extends HealthCheck {

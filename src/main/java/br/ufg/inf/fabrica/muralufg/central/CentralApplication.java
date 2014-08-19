@@ -1,7 +1,7 @@
-package br.ufg.inf.fs.muralufg.central;
+package br.ufg.inf.fabrica.muralufg.central;
 
-import br.ufg.inf.fs.muralufg.central.identificacao.IdentificacaoHealthCheck;
-import br.ufg.inf.fs.muralufg.central.identificacao.IdentificacaoResource;
+import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoHealthCheck;
+import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;

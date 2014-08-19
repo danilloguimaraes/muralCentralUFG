@@ -1,4 +1,4 @@
-package br.ufg.inf.fs.muralufg.central;
+package br.ufg.inf.fabrica.muralufg.central;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;

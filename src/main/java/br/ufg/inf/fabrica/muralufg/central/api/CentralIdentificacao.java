@@ -1,7 +1,6 @@
-package br.ufg.inf.fs.muralufg.central.api;
+package br.ufg.inf.fabrica.muralufg.central.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * Fornece a identificação da Central UFG

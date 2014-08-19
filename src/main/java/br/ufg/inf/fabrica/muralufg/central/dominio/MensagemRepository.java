@@ -50,92 +50,36 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fs.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.dominio;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * Representa informação veiculada/divulgada pelo
- * Mural UFG.
+ * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
  */
-public class Mensagem {
-
-    private String id;
+public interface MensagemRepository {
 
     /**
-     * Obtém o identificador único da mensagem.
-     * @return O identificador único (guid) da
-     * mensagem.
-     * @see #setId(String)
+     * Recupera a mensagem cujo identificador é fornecido.
+     * @param id O identificador da mensagem a ser recuperada.
+     * @return A {@link br.ufg.inf.fabrica.mural.dominio.Mensagem} cujo
+     * identificador é aquele fornecido.
+     * @see #getPorPeriodo(java.util.Date, java.util.Date)
      */
-    public String getId() {
-        return id;
-    }
+    public Mensagem getPorId(String id);
 
     /**
-     * Define o identificador único (guid) da
-     * mensagem.
-     * @param id O identificador único da mensagem.
-     * @see #getId()
+     * Recupera, em ordem cronologógica, as mensagens recebidas
+     * pelo Mural UFG no período fornecido. Toda mensagem retornada
+     * tem data de criação contida no período indicado.
+     * @param aPartirDe Data a partir da qual, inclusive, mensagens
+     *                  serão consideradas.
+     * @param fim Data após a qual mensagens recebidas pelo Mural
+     *            não serão retornadas pelo presente método.
+     * @return Mensagens, em ordem cronológica, cujas datas de criação
+     * estão no período indicado.
+     * @see #getPorId(String)
      */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * Informação a ser veiculada pela mensagem.
-     * Trata-se exclusivamente de texto, embora o
-     * texto possa fazer referência a uma URL onde
-     * outras informações podem ser associadas.
-     */
-    private String conteudo;
-
-    /**
-     * Recupera o conteúdo da mensagem.
-     * @return Sequência que é o conteúdo da mensagem.
-     * @see #setConteudo(String)
-     */
-    public String getConteudo() {
-        return conteudo;
-    }
-
-    /**
-     * Define o conteúdo da mensagem.
-     * @param conteudo Sequência que define a informação
-     *                 ou conteúdo a ser veiculado pela
-     *                 mensagem.
-     * @see #getConteudo()
-     */
-    public void setConteudo(String conteudo) {
-        this.conteudo = conteudo;
-    }
-
-    /**
-     * Data de criação da mensagem. Não necessariamente
-     * é a data em que é enviada (submetida). Trata-se
-     * da data em que o Mural UFG tem conhecimento da
-     * existência da mensagem.
-     */
-    private Date dataCriacao;
-
-    /**
-     * Obtém a data de criação da mensagem.
-     * @return Data em que a mensagem é recebida
-     * pelo Mural UFG.
-     * @see #setDataCriacao(java.util.Date)
-     */
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    /**
-     * Define a data em que a mensagem torna-se
-     * conhecida pelo Mural UFG.
-     * @param dataCriacao Data em que mensagem
-     *                    é recebida pelo Mural UFG.
-     * @see #getDataCriacao()
-     */
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
+    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
 }

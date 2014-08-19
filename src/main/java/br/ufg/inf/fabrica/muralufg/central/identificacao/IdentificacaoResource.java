@@ -1,6 +1,6 @@
-package br.ufg.inf.fs.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.identificacao;
 
-import br.ufg.inf.fs.muralufg.central.api.CentralIdentificacao;
+import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
