@@ -12,3 +12,7 @@ mvn clean package
 java -jar target/central-1.0-SNAPSHOT.jar server central-configuracao.yml
 curl http://localhost:8080/identificacao
 
+Você também pode executar a Central via Maven:
+mvn exec:java
+
+
