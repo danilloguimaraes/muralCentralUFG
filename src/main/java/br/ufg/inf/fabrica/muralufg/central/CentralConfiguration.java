@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Estabelece parâmetros de configuração da Central.
+ * Estabelece parâmetros de configuração da Central (componente).
+ * @see br.ufg.inf.fabrica.muralufg.central.CentralApplication
  */
 public class CentralConfiguration extends Configuration {
     @NotEmpty
