@@ -10,7 +10,8 @@ import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Identificação da Central.
+ * Identificação da Central. Simplesmente expõe
+ * valores configurados em central-configuracao.yml.
  */
 @Path("/identificacao")
 @Produces(MediaType.APPLICATION_JSON)
