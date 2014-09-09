@@ -27,6 +27,9 @@
         <module name="Central" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Central" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 

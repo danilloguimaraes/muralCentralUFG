@@ -52,7 +52,7 @@
 
 package br.ufg.inf.fabrica.muralufg.central.dominio;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * Representa informação veiculada/divulgada pelo
@@ -60,27 +60,10 @@ import java.util.Date;
  */
 public class Mensagem {
 
-    private String id;
-
     /**
-     * Obtém o identificador único da mensagem.
-     * @return O identificador único (guid) da
-     * mensagem.
-     * @see #setId(String)
+     * Identificador único da mensagem.
      */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Define o identificador único (guid) da
-     * mensagem.
-     * @param id O identificador único da mensagem.
-     * @see #getId()
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+    private UUID id;
 
     /**
      * Informação a ser veiculada pela mensagem.
@@ -91,7 +74,108 @@ public class Mensagem {
     private String conteudo;
 
     /**
+     * Data de criação da mensagem. Não necessariamente
+     * é a data em que é enviada (submetida). Trata-se
+     * da data em que o Mural UFG tem conhecimento da
+     * existência da mensagem.
+     */
+    private Date dataCriacao;
+
+    /**
+     * Imagens associadas à mensagem.
+     */
+    private List<Imagem> imagens;
+
+    /**
+     * Cria uma instância de mensagem.
+     *
+     * @param id          O identificador único da mensagem.
+     * @param conteudo    O conteúdo da mensagem.
+     * @param dataCriacao A data de criação da mensagem.
+     * @param imagens     O conjunto de imagens associadas à mensagem.
+     */
+    public Mensagem(String id, String conteudo, Date dataCriacao, List<Imagem> imagens) {
+        setId(id);
+        setConteudo(conteudo);
+        setDataCriacao(dataCriacao);
+        setImagens(imagens);
+    }
+
+    /**
+     * Obtém imagens associadas à mensagem.
+     *
+     * @return Imagens associadas à mensagem.
+     */
+    public List<Imagem> getImagens() {
+        return Collections.unmodifiableList(imagens);
+    }
+
+    /**
+     * Define as imagens associadas à mensagem.
+     * @param imagens Lista de imagens a serem
+     *                associadas à mensagem.
+     */
+    private void setImagens(List<Imagem> imagens) {
+        this.imagens = new ArrayList<Imagem>();
+
+        if (imagens == null) {
+            return;
+        }
+
+        for (Imagem imagem : imagens) {
+            AdicionaImagem(imagem);
+        }
+    }
+
+    /**
+     * Associa (adiciona) uma imagem à mensagem.
+     * Imagem cujo valor é <c>null</c> ou duplicidade não são
+     * admitidos.
+     *
+     * @param imagem Informações sobre a imagem a ser
+     *               adicionada (associada) à mensagem.
+     */
+    private void AdicionaImagem(Imagem imagem) {
+        if (imagem == null) {
+            throw new IllegalArgumentException("imagem é null");
+        }
+
+        if (imagens.contains(imagem)) {
+            throw new IllegalArgumentException("imagem já adicionada à mensagem");
+        }
+
+        imagens.add(imagem);
+    }
+
+    /**
+     * Obtém o identificador único da mensagem.
+     *
+     * @return O identificador único (guid) da
+     * mensagem.
+     * @see #setId(String)
+     */
+    public String getId() {
+        return id.toString();
+    }
+
+    /**
+     * Define o identificador único (guid) da
+     * mensagem.
+     *
+     * @param id O identificador único da mensagem.
+     * @see #getId()
+     */
+    private void setId(String id) {
+        if (id == null || "".equals(id)) {
+            throw new IllegalArgumentException("id é null ou vazio");
+        }
+
+        this.id = UUID.fromString(id);
+    }
+
+    /**
      * Recupera o conteúdo da mensagem.
+     *
      * @return Sequência que é o conteúdo da mensagem.
      * @see #setConteudo(String)
      */
@@ -101,25 +185,23 @@ public class Mensagem {
 
     /**
      * Define o conteúdo da mensagem.
+     *
      * @param conteudo Sequência que define a informação
      *                 ou conteúdo a ser veiculado pela
      *                 mensagem.
      * @see #getConteudo()
      */
-    public void setConteudo(String conteudo) {
+    private void setConteudo(String conteudo) {
+        if (conteudo == null || "".equals(conteudo)) {
+            throw new IllegalArgumentException("conteúdo é null ou vazio");
+        }
+
         this.conteudo = conteudo;
     }
 
     /**
-     * Data de criação da mensagem. Não necessariamente
-     * é a data em que é enviada (submetida). Trata-se
-     * da data em que o Mural UFG tem conhecimento da
-     * existência da mensagem.
-     */
-    private Date dataCriacao;
-
-    /**
      * Obtém a data de criação da mensagem.
+     *
      * @return Data em que a mensagem é recebida
      * pelo Mural UFG.
      * @see #setDataCriacao(java.util.Date)
@@ -131,11 +213,20 @@ public class Mensagem {
     /**
      * Define a data em que a mensagem torna-se
      * conhecida pelo Mural UFG.
+     *
      * @param dataCriacao Data em que mensagem
      *                    é recebida pelo Mural UFG.
      * @see #getDataCriacao()
      */
-    public void setDataCriacao(Date dataCriacao) {
+    private void setDataCriacao(Date dataCriacao) {
+        if (dataCriacao == null) {
+            throw new IllegalArgumentException("data de criação é null");
+        }
+
+        if (new Date().before(dataCriacao)) {
+            throw new IllegalArgumentException("data de criação no futuro");
+        }
+
         this.dataCriacao = dataCriacao;
     }
 }
