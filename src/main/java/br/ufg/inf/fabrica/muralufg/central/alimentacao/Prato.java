@@ -52,55 +52,14 @@
 
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
+import java.util.Date;
+
 /**
- * Serviços para acesso a informações sobre restaurantes.
+ * Refeição (<i>value object</i>).
  */
-public interface RestauranteRepository {
-
-    /**
-     * Adiciona um restaurante ao repositório. O identificador
-     * único do restaurante é atualizado neste processo.
-     * @param restaurante O restaurante a ser adicionado.
-     * @return {@code true} se e somente se o restaurante foi
-     * adicionado de forma satisfatória.
-     * @throws java.lang.IllegalArgumentException Se o argumento
-     * fornecido é {@code null}, ou o {@link Restaurante#nome} é
-     * {@code null} ou vazio.
-     */
-    boolean adiciona(Restaurante restaurante);
-
-    /**
-     * Remove o restaurante do repositório.
-     * @param restaurante O restaurante a ser removido,
-     *                    juntamente com o cardápio
-     *                    correspondente.
-     * @return {@code true} se e somente se o restaurante foi
-     * removido de forma satisfatória.
-     */
-    boolean remover(Restaurante restaurante);
-
-    /**
-     * Atualiza as informações associadas a um restaurante existente.
-     * @param restaurante O restaurante cujas informações serão atualizadas.
-     * @return {@code true} se e somente se as informações pertinentes
-     * ao restaurante foram atualizadas de forma satisfatória.
-     */
-    boolean atualizar(Restaurante restaurante);
-
-    boolean adicionaPrato(Prato prato);
-
-    /**
-     * Obtém a imagem.
-     * @param imagemId Identificador único da imagem.
-     * @return Vetor de bytes que é o conteúdo da imagem.
-     */
-    byte[] getImagem(String imagemId);
-
-    /**
-     * Obtém o mime-type correspondente ao formato da imagem,
-     * por exemplo, {@code image/png} para imagem no formato PNG.
-     * @param imagemId O identificador único da imagem.
-     * @return O mime-type que identifica o formato da imagem.
-     */
-    String getMimeType(String imagemId);
+public class Prato {
+    private String descricao;
+    private double precoEmReais;
+    private Date diaEmQueEstaDisponivel;
+    private String imagemId;
 }
