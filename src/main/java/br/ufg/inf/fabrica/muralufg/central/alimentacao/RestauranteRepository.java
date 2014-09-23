@@ -52,6 +52,9 @@
 
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Serviços para acesso a informações sobre restaurantes.
  */
@@ -87,7 +90,23 @@ public interface RestauranteRepository {
      */
     boolean atualizar(Restaurante restaurante);
 
-    boolean adicionaPrato(Prato prato);
+    /**
+     * Adiciona o prato ao restaurante.
+     * @param prato O prato a ser adicionado.
+     * @return {@code true} se e somente se o prato é
+     * adicionado de forma satisfatória ao restaurante.
+     */
+    boolean adicionaPrato(Prato prato, Restaurante restaurante);
+
+    /**
+     * Obtém os pratos disponíveis no restaurante no dia indicado.
+     * @param restaurante O restaurante no qual os pratos são servidos.
+     * @param dia O dia em que os pratos estão disponíveis.
+     * @return A lista de pratos disponíveis no resutarante no dia indicado.
+     * Retorna uma lista vazia, sem elementos, caso neste dia o restaurante
+     * não sirva nenhum prato.
+     */
+    List<Prato> obtemPrato(Restaurante restaurante, Date dia);
 
     /**
      * Obtém a imagem.

@@ -62,4 +62,32 @@ public class Prato {
     private double precoEmReais;
     private Date diaEmQueEstaDisponivel;
     private String imagemId;
+    private String mimeTypeImage;
+
+    /**
+     * Dois pratos são considerados idênticos (iguais) se o
+     * dia e a descrição correspondente coincidirem.
+     * @param o O objeto com o qual será feita a comparação.
+     * @return {@code true} se e somente se as descrições e os
+     * dias em que estão disponíveis forem idênticos.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Prato prato = (Prato) o;
+
+        if (!descricao.equals(prato.descricao)) return false;
+        if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = descricao.hashCode();
+        result = 31 * result + diaEmQueEstaDisponivel.hashCode();
+        return result;
+    }
 }
