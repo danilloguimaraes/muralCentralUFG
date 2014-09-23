@@ -66,4 +66,24 @@ public class Restaurante {
     private List<String> formaPagamento;
     private Date inicioHorario;
     private Date fimHorario;
+
+    /**
+     * Identifica se o presente restaurante é "semelhante"
+     * àquele fornecido.
+     * <p>Dois restaurantes são ditos semelhantes se há
+     * semelhanças entre seus membros. Por exemplo, para
+     * o membro {@code campus}, a semelhança é o mesmo que
+     * igualdade. Por outro lado, {@code formaPagamento} é
+     * semelhante se as formas de pagamento do presente restaurante
+     * incluem aquela(s) do restaurante fornecido.</p>
+     * <p>Semelhança para os demais membros deverão ser definidas
+     * após análise de "casos de interesse".</p>
+     * @param restaurante Restaurante com a qual a semelhança
+     *                    será verificada.
+     * @return {@code true} se o presente restaurante é
+     * semelhante àquele fornecido.
+     */
+    public boolean semelhante(Restaurante restaurante) {
+        return true;
+    }
 }

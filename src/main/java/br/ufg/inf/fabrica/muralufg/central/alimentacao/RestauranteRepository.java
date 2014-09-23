@@ -61,6 +61,16 @@ import java.util.List;
 public interface RestauranteRepository {
 
     /**
+     * Recupera lista de restaurantes que satisfazem os valores
+     * do filtro fornecido.
+     * @param filtro Restaurante cujos membros definem semelhanças ou não
+     *               com outros restaurantes. Restaurantes semelhantes são
+     *               identificados pelo método
+     * @return
+     */
+    List<Restaurante> obtem(Restaurante filtro);
+
+    /**
      * Adiciona um restaurante ao repositório. O identificador
      * único do restaurante é atualizado neste processo.
      * @param restaurante O restaurante a ser adicionado.
