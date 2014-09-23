@@ -50,36 +50,44 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import java.util.Date;
-import java.util.List;
 
 /**
- * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
+ * Refeição (<i>value object</i>).
  */
-public interface MensagemRepository {
+public class Prato {
+    private String descricao;
+    private double precoEmReais;
+    private Date diaEmQueEstaDisponivel;
+    private String imagemId;
+    private String mimeTypeImage;
 
     /**
-     * Recupera a mensagem cujo identificador é fornecido.
-     * @param id O identificador da mensagem a ser recuperada.
-     * @return A {@link br.ufg.inf.fabrica.muralufg.central.dominio.Mensagem}
-     * cujo identificador é aquele fornecido.
-     * @see #getPorPeriodo(java.util.Date, java.util.Date)
+     * Dois pratos são considerados idênticos (iguais) se o
+     * dia e a descrição correspondente coincidirem.
+     * @param o O objeto com o qual será feita a comparação.
+     * @return {@code true} se e somente se as descrições e os
+     * dias em que estão disponíveis forem idênticos.
      */
-    public Mensagem getPorId(String id);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    /**
-     * Recupera, em ordem cronologógica, as mensagens recebidas
-     * pelo Mural UFG no período fornecido. Toda mensagem retornada
-     * tem data de criação contida no período indicado.
-     * @param aPartirDe Data a partir da qual, inclusive, mensagens
-     *                  serão consideradas.
-     * @param fim Data após a qual mensagens recebidas pelo Mural
-     *            não serão retornadas pelo presente método.
-     * @return Mensagens, em ordem cronológica, cujas datas de criação
-     * estão no período indicado.
-     * @see #getPorId(String)
-     */
-    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
+        Prato prato = (Prato) o;
+
+        if (!descricao.equals(prato.descricao)) return false;
+        if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = descricao.hashCode();
+        result = 31 * result + diaEmQueEstaDisponivel.hashCode();
+        return result;
+    }
 }

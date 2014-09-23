@@ -50,36 +50,54 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
-
-import java.util.Date;
-import java.util.List;
+package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
 /**
- * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
+ * Serviço de manutenção e verificação de credenciais.
+ * <p>Por meio deste serviço é possível armazenar credenciais,
+ * ou seja, pares (usuário, senha), de forma segura.
+ * </p>
+ * <p>O fluxo básico exige que uma credencial seja inicialmente
+ * criada, e armazenada, por meio de {@link #insere(String, String)}.
+ * </p>
+ * <p>Posteriormente, por meio de</p>
  */
-public interface MensagemRepository {
+public interface CredencialService {
 
     /**
-     * Recupera a mensagem cujo identificador é fornecido.
-     * @param id O identificador da mensagem a ser recuperada.
-     * @return A {@link br.ufg.inf.fabrica.muralufg.central.dominio.Mensagem}
-     * cujo identificador é aquele fornecido.
-     * @see #getPorPeriodo(java.util.Date, java.util.Date)
+     * Persiste a credencial fornecida.
+     * <p>Convém destacar que a estratégia deve assegurar que,
+     * mesmo que o armazenamento empregado para persistir a credencial
+     * torne-se acessível a quem não deveria, nem a indicação de quais
+     * usuários a base se refere, nem tampouco as senhas, poderão ser
+     * recuperadas.</p>
+     * @param usuario Nome da conta associada à credencial.
+     * @param senha Senha da credencial.
+     * @return {@code true} se a credencial foi persistida de forma
+     * satisfatória ou {@code false}, caso contrário.
+     * @see #autenticar(String, String)
+     * @throws java.lang.IllegalArgumentException Caso
      */
-    public Mensagem getPorId(String id);
+    boolean insere(String usuario, String senha);
 
     /**
-     * Recupera, em ordem cronologógica, as mensagens recebidas
-     * pelo Mural UFG no período fornecido. Toda mensagem retornada
-     * tem data de criação contida no período indicado.
-     * @param aPartirDe Data a partir da qual, inclusive, mensagens
-     *                  serão consideradas.
-     * @param fim Data após a qual mensagens recebidas pelo Mural
-     *            não serão retornadas pelo presente método.
-     * @return Mensagens, em ordem cronológica, cujas datas de criação
-     * estão no período indicado.
-     * @see #getPorId(String)
+     * Autentica a credencial fornecida, ou seja, retorna {@code true}
+     * se e somente se o usuário e a senha fornecidos coincide com
+     * credencial previamente inserida.
+     * @param usuario O nome da credencial.
+     * @param senha A senha da credencial.
+     * @return {@code true} se e somente se a credencial fornecida
+     * coincide com credencial anteriormente inserida por meio do
+     * método {@link #insere(String, String)}.
+     * @see #insere(String, String)
      */
-    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
+    boolean autenticar(String usuario, String senha);
+
+    /**
+     * Torna inválida a credencial cujo nome é fornecido.
+     * @param usuario O nome da credencial que se tornará inválido
+     *                após a presente chamada.
+     * @see #insere(String, String)
+     */
+    void invalidar(String usuario);
 }

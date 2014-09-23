@@ -50,36 +50,20 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
+ * Estabelecimento destinado ao preparo, comercialização ou distribuição
+ * de refeições ou alimentos, localizado próximo aos campi da UFG.
  */
-public interface MensagemRepository {
-
-    /**
-     * Recupera a mensagem cujo identificador é fornecido.
-     * @param id O identificador da mensagem a ser recuperada.
-     * @return A {@link br.ufg.inf.fabrica.muralufg.central.dominio.Mensagem}
-     * cujo identificador é aquele fornecido.
-     * @see #getPorPeriodo(java.util.Date, java.util.Date)
-     */
-    public Mensagem getPorId(String id);
-
-    /**
-     * Recupera, em ordem cronologógica, as mensagens recebidas
-     * pelo Mural UFG no período fornecido. Toda mensagem retornada
-     * tem data de criação contida no período indicado.
-     * @param aPartirDe Data a partir da qual, inclusive, mensagens
-     *                  serão consideradas.
-     * @param fim Data após a qual mensagens recebidas pelo Mural
-     *            não serão retornadas pelo presente método.
-     * @return Mensagens, em ordem cronológica, cujas datas de criação
-     * estão no período indicado.
-     * @see #getPorId(String)
-     */
-    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
+public class Restaurante {
+    private String id;
+    private String campus;
+    private String nome;
+    private List<String> formaPagamento;
+    private Date inicioHorario;
+    private Date fimHorario;
 }

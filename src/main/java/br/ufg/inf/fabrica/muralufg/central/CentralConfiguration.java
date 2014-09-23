@@ -5,40 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Estabelece parâmetros de configuração da Central.
+ * Estabelece parâmetros de configuração da Central (componente).
+ * @see br.ufg.inf.fabrica.muralufg.central.CentralApplication
  */
 public class CentralConfiguration extends Configuration {
-    @NotEmpty
-    private String template;
-
+    
     @NotEmpty
     private String nome;
 
     @NotEmpty
     private String versao;
-
-    @NotEmpty
-    private String defaultName = "Stranger";
-
-    @JsonProperty
-    public String getTemplate() {
-        return template;
-    }
-
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String name) {
-        this.defaultName = name;
-    }
 
     @JsonProperty
     public String getNome() {

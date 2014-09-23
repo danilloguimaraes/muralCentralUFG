@@ -6,8 +6,20 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+/**
+ * Ponto de Entrada da Central. O processamento
+ * executado pela Central (componente) inicia-se
+ * por esta classe. A configuração é fornecida por
+ * outra classe {@link br.ufg.inf.fabrica.muralufg.central.CentralConfiguration}.
+ * @see br.ufg.inf.fabrica.muralufg.central.CentralConfiguration
+ */
 public class CentralApplication extends Application<CentralConfiguration> {
 
+    /**
+     * Ponto de entrada da aplicação.
+     * @param args Argumentos fornecidos.
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         new CentralApplication().run(args);
     }
