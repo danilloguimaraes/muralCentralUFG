@@ -52,6 +52,9 @@
 
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Manutenção de eventos.
  */
@@ -64,4 +67,35 @@ public interface EventoRepository {
      * foi adicionado de forma satisfatória.
      */
     boolean adiciona(Evento evento);
+
+    /**
+     * Identifica eventos do repositório cuja realização
+     * encontra-se no "raio" de tempo, em dias, com base
+     * no dia corrente.
+     * @param raioEmDias Número de dias passados e futuros
+     *                   perfazendo um período no qual qualquer
+     *                   realização de evento que há interseção
+     *                   com ele será fornecido na resposta.
+     * @return Eventos, em ordem cronológica, cuja realização
+     * coincide com o período determinado pela data corrente e
+     * o "raio" fornecidos.
+     *
+     * @see #proximos(java.util.Date, int)
+     */
+    List<Evento> proximos(int raioEmDias);
+
+    /**
+     * Identifica eventos cuja realização coincide com o período
+     * definido pela data e os dias indicados, tanto anteriores
+     * quanto posteriores à data.
+     * @param data Data que define período relevante para a busca de
+     *             eventos.
+     * @param raioEmDias Número de dias, tanto anteriores quanto
+     *                   posteriores à data indicada.
+     * @return Eventos cuja realização coincide com o período definido
+     * pela data e dias anteriores/posteriores fornecidos.
+     *
+     * @see #adiciona(Evento)
+     */
+    List<Evento> proximos(Date data, int raioEmDias);
 }
