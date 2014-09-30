@@ -75,7 +75,7 @@ public class IdentificacaoResource {
         this.nome = nome;
         this.versao = versao;
     }
-    //contador id
+
     @GET
     @Timed
     public CentralIdentificacao fornecaIdentificacao() {
