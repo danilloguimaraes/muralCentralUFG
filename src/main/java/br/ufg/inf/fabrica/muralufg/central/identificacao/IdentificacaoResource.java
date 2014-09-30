@@ -16,19 +16,17 @@ import java.util.concurrent.atomic.AtomicLong;
 @Path("/identificacao")
 @Produces(MediaType.APPLICATION_JSON)
 public class IdentificacaoResource {
-    private final AtomicLong counter;
     private final String nome;
     private final String versao;
 
     public IdentificacaoResource(String nome, String versao) {
-        this.counter = new AtomicLong();
         this.nome = nome;
         this.versao = versao;
     }
-
+    //contador id
     @GET
     @Timed
     public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(counter.incrementAndGet(), nome, versao);
+        return new CentralIdentificacao(nome, versao);
     }
 }
