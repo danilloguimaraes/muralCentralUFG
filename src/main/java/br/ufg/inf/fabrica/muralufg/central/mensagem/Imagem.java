@@ -50,36 +50,46 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
-import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
 /**
- * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
+ * Metadados de uma imagem, geralmente arquivo no formato
+ * jpg ou png.
+ *
+ * Nenhuma suposição é feita acerca do mecanismo empregado para
+ * persistir uma imagem, EXCETO que o identificador da imagem
+ * deve ser suficiente para localizá-la.
  */
-public interface MensagemRepository {
+public class Imagem {
 
     /**
-     * Recupera a mensagem cujo identificador é fornecido.
-     * @param id O identificador da mensagem a ser recuperada.
-     * @return A {@link br.ufg.inf.fabrica.muralufg.central.dominio.Mensagem}
-     * cujo identificador é aquele fornecido.
-     * @see #getPorPeriodo(java.util.Date, java.util.Date)
+     * Identificador único da imagem. Deve ser suficiente
+     * para recuperar a imagem propriamente dita (arquivo
+     * correspondente).
      */
-    public Mensagem getPorId(String id);
+    private UUID id;
 
     /**
-     * Recupera, em ordem cronologógica, as mensagens recebidas
-     * pelo Mural UFG no período fornecido. Toda mensagem retornada
-     * tem data de criação contida no período indicado.
-     * @param aPartirDe Data a partir da qual, inclusive, mensagens
-     *                  serão consideradas.
-     * @param fim Data após a qual mensagens recebidas pelo Mural
-     *            não serão retornadas pelo presente método.
-     * @return Mensagens, em ordem cronológica, cujas datas de criação
-     * estão no período indicado.
-     * @see #getPorId(String)
+     * Cria instância de Imagem.
+     * @param id Identificador único da imagem
+     *           cuja instância contém metadados.
      */
-    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
+    public Imagem(UUID id) {
+        this.id = id;
+    }
+
+    public Imagem(String id) {
+        this.id = UUID.fromString(id);
+    }
+
+    /**
+     * Obtém o identificador único da Imagem.
+     * @return A sequência de caracteres correspondente
+     * ao identificador único da imagem.
+     */
+    public String getId() {
+        return id.toString();
+    }
 }
