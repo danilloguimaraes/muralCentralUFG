@@ -50,53 +50,18 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.frase;
-
-import java.util.Date;
+package br.ufg.inf.fabrica.muralufg.central.evento;
 
 /**
- * Manutenção de informação, mensagem, fato ou "frase" considerado
- * relevante.
+ * Manutenção de eventos.
  */
-public interface FraseDoDiaRepository {
+public interface EventoRepository {
 
     /**
-     * Adiciona informação considerada relevante associada ao dia
-     * indicado.
-     * @param data Data assoicada à informação.
-     * @param frase Informação considerada relevante.
-     * @return {@code true} se e somente se a adição foi
-     * realizada de forma satisfatória, ou {@code false},
-     * caso contrário.
+     * Adiciona o evento ao repositório.
+     * @param evento O evento a ser adicionado.
+     * @return {@code true} se e somente se o evento
+     * foi adicionado de forma satisfatória.
      */
-    boolean adiciona(Date data, String frase);
-
-    /**
-     * Adiciona informação considerada relevente.
-     * @param frase Frase ou informação considerada relevante.
-     * @return {@code true} se a frase foi inserida de forma
-     * satisfatóri e, {@code false}, caso contrário.
-     */
-    boolean adiciona(String frase);
-
-    /**
-     * Recupera, de forma arbitrária, frase ou informação
-     * considerada relevante e disponível no repositório,
-     * associada à data.
-     * @param data Data associada à informação relevante a ser
-     *             retornada. Se não houver frase associada à data,
-     *             o valor {@code null} é retornado.
-     *
-     * @return Frase ou informação relevante associada à data.
-     */
-    String recupera(Date data);
-
-    /**
-     * Recupera, de forma arbitrária, frase ou informação
-     * relevante disponível no repositório.
-     * <p>Chamdas subsequentes podem retornar outras frases.</p>
-     * @return Frase ou informação relevante disponível no
-     * repositório.
-     */
-    String recupera();
+    boolean adiciona(Evento evento);
 }

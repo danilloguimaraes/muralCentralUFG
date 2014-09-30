@@ -52,8 +52,7 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import org.joda.time.DateTime;
-
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,7 +70,7 @@ public interface OuvidoriaRepository {
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      *
      */
-    List<Assunto> naoRespondidos(DateTime desde);
+    List<Assunto> naoRespondidos(Date desde);
 
     /**
      * Recupera os assuntos submetidos à ouvidoria, ainda
@@ -85,9 +84,9 @@ public interface OuvidoriaRepository {
      * para o mais recente dos assuntos submetidos à ouvidoria e para
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      *
-     * @see #naoRespondidos(org.joda.time.DateTime)
+     * @see #naoRespondidos(java.util.Date)
      */
-    List<Assunto> naoRespondidos(DateTime desde, int aPartirDe);
+    List<Assunto> naoRespondidos(Date desde, int aPartirDe);
 
     /**
      * Acrescenta ao repositório o assunto.
