@@ -52,52 +52,14 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
- * Mantém informações sobre a estrutura organizacional da UFG.
+ * Representa uma turma.
  */
-public interface OrganizacaoRepository {
-
-    /**
-     * Obtém todos os dispositivos (ids) dos alunos e do
-     * docente responsável por uma dada turma.
-     * @param turma A turma da qual os ids dos dispositivos serão
-     *              obtidos.
-     * @return Conjunto de todos os ids disponíveis dos usuários,
-     * alunos e docente responsável, da turma em questão.
-     */
-    Set<String> dispositivos(Turma turma);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos alunos da
-     * turma.
-     * @param turma
-     * @return
-     */
-    Set<String> alunos(Turma turma);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos docentes
-     * responsáveis pela turma.
-     * @param turma
-     * @return
-     */
-    Set<String> docentes(Turma turma);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos
-     * docentes do curso.
-     * @param curso
-     * @return
-     */
-    Set<String> docentes(Curso curso);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos docentes
-     * lotados no órgão em questão.
-     * @param orgao
-     * @return
-     */
-    Set<String> docentes(Orgao orgao);
+public class Turma {
+    private Date semestre;
+    private Docente responsavel;
+    private Set<Aluno> matriculados;
 }
