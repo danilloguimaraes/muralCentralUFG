@@ -68,7 +68,32 @@ public interface OuvidoriaRepository {
      *
      * @return Lista, em ordem cronológica crescente, do mais antido
      * para o mais recente dos assuntos submetidos à ouvidoria e para
-     * os quais não existe resposta.
+     * os quais não existe resposta. No máximo 100 assuntos são retornados.
+     *
      */
     List<Assunto> naoRespondidos(DateTime desde);
+
+    /**
+     * Recupera os assuntos submetidos à ouvidoria, ainda
+     * sem resposta, a partir da data indicada.
+     * @param desde Data a partir da qual assuntos serão considerados.
+     * @param aPartirDe Ordem do assunto a partir da qual os resultados
+     *                  serão produzidos. Ou seja, no máximo, os 100
+     *                  assuntos seguintes, conforme esta ordem.
+     *
+     * @return Lista, em ordem cronológica crescente, do mais antido
+     * para o mais recente dos assuntos submetidos à ouvidoria e para
+     * os quais não existe resposta. No máximo 100 assuntos são retornados.
+     *
+     * @see #naoRespondidos(org.joda.time.DateTime)
+     */
+    List<Assunto> naoRespondidos(DateTime desde, int aPartirDe);
+
+    /**
+     * Acrescenta ao repositório o assunto.
+     * @param assunto Assunto a ser inserido no repositório.
+     * @return {@code true} se e somente se o assunto foi
+     * inserido de forma satisfatória.
+     */
+    boolean insere(Assunto assunto);
 }
