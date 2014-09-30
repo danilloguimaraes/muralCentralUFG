@@ -52,8 +52,23 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
+import org.joda.time.DateTime;
+
+import java.util.List;
+
 /**
  * Manutenção das informações de ouvidoria.
  */
-public class OuvidoriaRepository {
+public interface OuvidoriaRepository {
+
+    /**
+     * Recupera os assuntos submetidos à ouvidoria, ainda
+     * sem resposta, a partir da data indicada.
+     * @param desde Data a partir da qual assuntos serão considerados.
+     *
+     * @return Lista, em ordem cronológica crescente, do mais antido
+     * para o mais recente dos assuntos submetidos à ouvidoria e para
+     * os quais não existe resposta.
+     */
+    List<Assunto> naoRespondidos(DateTime desde);
 }
