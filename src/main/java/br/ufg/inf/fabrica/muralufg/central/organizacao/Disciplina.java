@@ -52,88 +52,9 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-import java.util.Set;
-
 /**
- * Mantém informações sobre a estrutura organizacional da UFG.
+ * Representa uma disciplina.
  */
-public interface OrganizacaoRepository {
-
-    /**
-     * Obtém todos os dispositivos (ids) dos alunos e do
-     * docente responsável por uma dada turma.
-     * @param turma A turma da qual os ids dos dispositivos serão
-     *              obtidos.
-     * @return Conjunto de todos os ids disponíveis dos usuários,
-     * alunos e docente responsável, da turma em questão.
-     */
-    Set<String> dispositivos(Turma turma);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos alunos da
-     * turma.
-     * @param turma
-     * @return
-     */
-    Set<String> dispositivosAlunos(Turma turma);
-
-    /**
-     * Obtém o conjunto de alunos de uma turma.
-     * @param turma
-     * @return
-     */
-    Set<Aluno> alunos(Turma turma);
-
-    /**
-     * Obtém os docentes
-     * responsáveis pela turma.
-     * @param turma
-     * @return
-     */
-    Set<Docente> docentes(Turma turma);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos
-     * docentes do curso.
-     * @param curso
-     * @return
-     */
-    Set<String> docentes(Curso curso);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos docentes
-     * lotados no órgão em questão.
-     * @param orgao
-     * @return
-     */
-    Set<String> docentes(Orgao orgao);
-
-    /**
-     * Obtém os dispositivos cadastrados (ids) dos técnicos
-     * do órgão.
-     * @param orgao
-     * @return
-     */
-    Set<String> tecnicos(Orgao orgao);
-
-    /**
-     * Obtém as turmas de uma dada disciplina.
-     * @param disciplina
-     * @return
-     */
-    Set<Turma> turmas(Disciplina disciplina);
-
-    /**
-     * Obtém o conjunto de disciplinas de um dado curso.
-     * @param curso
-     * @return
-     */
-    Set<Disciplina> disciplinas(Curso curso);
-
-    /**
-     * Obtém o conjunto de cursos oferecidos por um órgão.
-     * @param orgao
-     * @return
-     */
-    Set<Curso> cursos(Orgao orgao);
+public class Disciplina {
+    private String nome;
 }
