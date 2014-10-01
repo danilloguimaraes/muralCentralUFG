@@ -50,7 +50,7 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central;
+package br.ufg.inf.fabrica.muralufg.central.configuracao;
 
 /**
  * Acesso a informações de configuração utilizadas pela Central.
