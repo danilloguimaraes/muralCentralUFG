@@ -153,6 +153,11 @@ public class CredencialImpl implements CredencialService {
 		return salt;
 	}
 	
+	/**
+	 * 
+	 * @param usuario
+	 * @return caminho do arquivo que será criado
+	 */
 	private String getCaminhoArquivo(String usuario) {
 		return SYSTEM_PATH + usuario + ".bin";
 	}
