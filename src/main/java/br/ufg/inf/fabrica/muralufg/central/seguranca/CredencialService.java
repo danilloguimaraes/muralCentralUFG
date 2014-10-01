@@ -52,9 +52,6 @@
 
 package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
-import java.io.IOException;
-
-
 /**
  * Serviço de manutenção e verificação de credenciais.
  * <p>Por meio deste serviço é possível armazenar credenciais,
@@ -82,7 +79,7 @@ public interface CredencialService {
      * @see #autenticar(String, String)
      * @throws java.lang.IllegalArgumentException Caso
      */
-    boolean insere(String usuario, String senha) throws IOException;
+    boolean insere(String usuario, String senha);
 
     /**
      * Autentica a credencial fornecida, ou seja, retorna {@code true}
