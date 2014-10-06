@@ -49,7 +49,6 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.util.Set;
@@ -60,12 +59,11 @@ import java.util.Set;
 public interface OportunidadeRepository {
 
     /**
-     * Identifica, para o instante em que a chamada é realizada,
-     * o conjunto de oportunidades vigentes, ou seja, cuja execução
-     * está em andamento.
-     * @return O conjunto de oportunidades vigentes. Se nenhuma
-     * oportunidade estiver vigente, então o conjunto retornado
-     * não possui nenhuma entrada.
+     * Identifica, para o instante em que a chamada é realizada, o conjunto de
+     * oportunidades vigentes, ou seja, cuja execução está em andamento.
+     *
+     * @return O conjunto de oportunidades vigentes. Se nenhuma oportunidade
+     * estiver vigente, então o conjunto retornado não possui nenhuma entrada.
      */
-    Set<Oportunidade> vigentes();
+    public Set<Oportunidade> vigentes();
 }

@@ -49,16 +49,77 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
- * Representa uma oportunidade de estágio, emprego ou
- * pesquisa, por exemplo.
+ * Representa uma oportunidade de estágio, emprego ou pesquisa, por exemplo.
  */
-public class Oportunidade {
+public class Oportunidade implements Serializable {
+
     private Date dataInicio;
     private Date dataTermino;
+    private String descricao;
+    private static final long serialVersionUID = 1L;
+
+    public Oportunidade() {
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataTermino() {
+        return dataTermino;
+    }
+
+    public void setDataTermino(Date dataTermino) {
+        this.dataTermino = dataTermino;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.dataInicio);
+        hash = 53 * hash + Objects.hashCode(this.dataTermino);
+        hash = 53 * hash + Objects.hashCode(this.descricao);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Oportunidade other = (Oportunidade) obj;
+        if (!Objects.equals(this.dataInicio, other.dataInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataTermino, other.dataTermino)) {
+            return false;
+        }
+        if (!Objects.equals(this.descricao, other.descricao)) {
+            return false;
+        }
+        return true;
+    }
+
 }
