@@ -50,35 +50,12 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
-
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Representa um aluno devidamente matriculado em determinada disciplina,
+ * ou seja, aluno de uma dada turma.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
-
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
-
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+public class Aluno {
+    private String nome;
 }

@@ -50,7 +50,7 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
 import java.util.*;
 

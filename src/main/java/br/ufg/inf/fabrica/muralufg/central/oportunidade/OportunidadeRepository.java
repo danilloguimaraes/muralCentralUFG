@@ -50,35 +50,22 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Set;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Mantém oportunidades.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface OportunidadeRepository {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
-
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Identifica, para o instante em que a chamada é realizada,
+     * o conjunto de oportunidades vigentes, ou seja, cuja execução
+     * está em andamento.
+     * @return O conjunto de oportunidades vigentes. Se nenhuma
+     * oportunidade estiver vigente, então o conjunto retornado
+     * não possui nenhuma entrada.
+     */
+    Set<Oportunidade> vigentes();
 }

@@ -50,35 +50,53 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.frase;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Date;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Manutenção de informação, mensagem, fato ou "frase" considerado
+ * relevante.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface FraseDoDiaRepository {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Adiciona informação considerada relevante associada ao dia
+     * indicado.
+     * @param data Data assoicada à informação.
+     * @param frase Informação considerada relevante.
+     * @return {@code true} se e somente se a adição foi
+     * realizada de forma satisfatória, ou {@code false},
+     * caso contrário.
+     */
+    boolean adiciona(Date data, String frase);
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Adiciona informação considerada relevente.
+     * @param frase Frase ou informação considerada relevante.
+     * @return {@code true} se a frase foi inserida de forma
+     * satisfatóri e, {@code false}, caso contrário.
+     */
+    boolean adiciona(String frase);
+
+    /**
+     * Recupera, de forma arbitrária, frase ou informação
+     * considerada relevante e disponível no repositório,
+     * associada à data.
+     * @param data Data associada à informação relevante a ser
+     *             retornada. Se não houver frase associada à data,
+     *             o valor {@code null} é retornado.
+     *
+     * @return Frase ou informação relevante associada à data.
+     */
+    String recupera(Date data);
+
+    /**
+     * Recupera, de forma arbitrária, frase ou informação
+     * relevante disponível no repositório.
+     * <p>Chamdas subsequentes podem retornar outras frases.</p>
+     * @return Frase ou informação relevante disponível no
+     * repositório.
+     */
+    String recupera();
 }

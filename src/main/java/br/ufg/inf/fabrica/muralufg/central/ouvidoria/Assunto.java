@@ -50,46 +50,41 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import java.util.UUID;
+import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
+import org.joda.time.DateTime;
+
+import java.util.Set;
 
 /**
- * Metadados de uma imagem, geralmente arquivo no formato
- * jpg ou png.
- *
- * Nenhuma suposição é feita acerca do mecanismo empregado para
- * persistir uma imagem, EXCETO que o identificador da imagem
- * deve ser suficiente para localizá-la.
+ * Detalhe de uma submissão dirigida à ouvidoria da UFG.
+ * <p>Uma instância desta classe é um <i>value object</i>.</p>
  */
-public class Imagem {
+public class Assunto {
 
     /**
-     * Identificador único da imagem. Deve ser suficiente
-     * para recuperar a imagem propriamente dita (arquivo
-     * correspondente).
+     * Identifica anexos associados à submissão.
+     * Não é obrigatória a existência de anexo.
      */
-    private UUID id;
+    private Set<Arquivo> anexos;
 
     /**
-     * Cria instância de Imagem.
-     * @param id Identificador único da imagem
-     *           cuja instância contém metadados.
+     * Conteúdo (mensagem) associada à submissão.
+     * Descreve a reclamação, denúncia, elogio ou, de forma
+     * ampla, a mensagem de interesse do emissor.
      */
-    public Imagem(UUID id) {
-        this.id = id;
-    }
-
-    public Imagem(String id) {
-        this.id = UUID.fromString(id);
-    }
+    private String conteudo;
 
     /**
-     * Obtém o identificador único da Imagem.
-     * @return A sequência de caracteres correspondente
-     * ao identificador único da imagem.
+     * Data em que o assunto é criado.
      */
-    public String getId() {
-        return id.toString();
-    }
+    private DateTime data;
+
+    /**
+     * Identificação da origem (autor) da mensagem, caso
+     * tenha sido fornecido pelo interessado.
+     * <b>ESTA INFORMAÇÃO NÃO É OBRIGATÓRIA.</b>
+     */
+    private String fonte;
 }

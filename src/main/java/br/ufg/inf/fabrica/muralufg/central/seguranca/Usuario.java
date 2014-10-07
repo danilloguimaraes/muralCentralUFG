@@ -50,35 +50,16 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Set;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Identifica um usuário da Central.
+ * <p>Um usuário pode ser tanto quem recebe informações da Central
+ * quanto quem envia informações para a Central.</p>
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
-
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
-
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+public class Usuario {
+    private String nome;
+    private Set<String> registrationIds;
 }

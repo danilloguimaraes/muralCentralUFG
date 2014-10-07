@@ -50,35 +50,23 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
-
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Serviço que permite autenticar o responsável
+ * por uma determinada requisição.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface AutenticacaoService {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
-
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Determina se a credencial fornecida, usuário e
+     * senha, existe. Isto significa que o usuário em
+     * questão está autenticado.
+     * @param usuario O usuário (nome) de uma credencial.
+     * @param senha A senha da credencial.
+     * @return {@code true} se e somente se o usuário em
+     * questão está autenticado, tende em vista a senha
+     * fornecida. Caso contrário, retorna {@code false}.
+     */
+    boolean autentica(String usuario, String senha);
 }
