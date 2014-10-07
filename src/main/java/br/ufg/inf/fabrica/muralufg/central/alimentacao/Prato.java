@@ -73,13 +73,21 @@ public class Prato {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Prato prato = (Prato) o;
 
-        if (!descricao.equals(prato.descricao)) return false;
-        if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) return false;
+        if (!descricao.equals(prato.descricao)) {
+            return false;
+        }
+        if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) {
+            return false;
+        }
 
         return true;
     }
