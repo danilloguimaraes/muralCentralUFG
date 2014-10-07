@@ -18,7 +18,7 @@ public class IdentificacaoHealthCheck extends HealthCheck {
         }
 
         String versao = configuracao.getVersao();
-        if (nome == null || nome.isEmpty()) {
+        if (versao == null || versao.isEmpty()) {
             return Result.unhealthy("identificação não inclui versão.");
         }
 
