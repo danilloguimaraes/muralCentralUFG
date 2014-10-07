@@ -1,4 +1,4 @@
-package ScheduleQuartz;
+package br.ufg.inf.fabrica.muralufg.central.contato;
 
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import org.quartz.CronTrigger;

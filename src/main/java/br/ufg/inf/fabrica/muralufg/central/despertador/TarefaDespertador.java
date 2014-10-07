@@ -1,6 +1,6 @@
-package ScheduleQuartz;
+package br.ufg.inf.fabrica.muralufg.central.contato;
 
-import DespertadorQuartz.ImplementaDespertador;
+import br.ufg.inf.fabrica.muralufg.central.despertador.ImplementaDespertador;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
