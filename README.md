@@ -8,3 +8,8 @@ exclusivamente via software, ou seja, tanto quem faz requisição quanto
 quem recebe informação é software. 
 
 O Termo de Abertura encontra-se disponível [aqui](https://docs.google.com/document/d/1WgDn-gA1G8GlzD4uLrQ0wX8P5q4KUviypfx0im36eCs/edit?usp=sharing). 
+
+Consulte também:
+- [HUDSON](http://projetos.fabrica.inf.ufg.br/hudson)
+- [ARTIFACTORY](http://projetos.fabrica.inf.ufg.br/artifactory) 
+- [SONAR](http://projetos.fabrica.inf.ufg.br/sonar)
