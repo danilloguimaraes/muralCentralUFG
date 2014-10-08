@@ -18,3 +18,15 @@ API para frase do dia
             {
                 "frase": "lorem ipsum"
             }
+
+# Raiz da Token [/token]
+API para obter nova token
+
+## Obter uma nova token [GET]
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "token": "01234567-89ab-cdef-0123-456789abcdef"
+            }
