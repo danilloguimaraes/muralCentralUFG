@@ -16,8 +16,6 @@ public class CredencialServiceTest {
 		CredencialService credencialService = new CredencialImpl();
 		
 		credencialService.invalidar("TesteUsuario");
-		
-		credencialService.invalidar("TesteUsuario");
 		credencialService.insere("TesteUsuario", "testeSenha");
 		
 		assertTrue(credencialService.autenticar("TesteUsuario", "testeSenha"));
