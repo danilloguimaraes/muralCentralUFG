@@ -100,9 +100,32 @@ Obtém nova token única.
             {
                 "token": "01234567-89ab-cdef-0123-456789abcdef"
             }
+
+# Envio [/envio]
+Envia e recupera arquivos e hashes de arquivos associados à tokens
+
+## Enviar novo arquivo [POST]
+Envia um novo arquivo e o associa a uma token.
+
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
             
-## Obter os envios de uma token [POST]
-Recupera a lista de hashes SHA512 dos envios associados a uma token.
+    + Body
+    
+            {
+                "token": "01234567-89ab-cdef-0123-456789abcdef",
+                "envio" : "I9IiIgdmVuZG9yc3ViPSIiLz4KCQkJPHVzZXJhZ2VudCBkZXNjcmlwdGlv"
+            }
+
++ Response 200
+
+## Remover os envios de uma token [DELETE]
+Remove a lista de hashes SHA512 dos envios associados a uma token.
 
 + Request (application/json)
 
@@ -115,9 +138,59 @@ Recupera a lista de hashes SHA512 dos envios associados a uma token.
     + Body
 
             {
-                "token": "01234567-89ab-cdef-0123-456789abcdef"
+                "token": "01234567-89ab-cdef-0123-456789abcdef",
+                "hashes": {
+                    "4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a",
+                    "40b244112641dd78dd4f93b6c9190dd46e0099194d5a44257b7efad6ef9ff4683da1eda0244448cb343aa688f5d3efd7314dafe580ac0bcbf115aeca9e8dc114"
+                }
             }
+            
++ Response 200 (application/json)
 
+## Envios [/envio/arquivo/{token}/{hash}]
+Recupera a lista de hashes SHA512 dos envios associados a uma token.
+
++ Parameters
+
+    + token (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+    + hash (optional, string) ... Uma hash especificando qual envio deverá ser baixado
+    
+### Obter os envios de uma token [GET]
+
++ Request (application/json)
+
+    + Headers
+        
+            Accept: application/json
+            User: username
+            Password: password
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "envios": {
+                    "I9IiIgdmVuZG9yc3ViPSIiLz4KCQkJPHVzZXJhZ2VudCBkZXNjcmlwdGlv"
+                }
+            }
+            
+## Envios [/envio/hash/{token}]
+Recupera a lista de hashes SHA512 dos envios associados a uma token.
+
++ Parameters
+
+    + token (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+    
+### Obter os envios de uma token [GET]
+
++ Request (application/json)
+
+    + Headers
+        
+            Accept: application/json
+            User: username
+            Password: password
 
 + Response 200 (application/json)
 
