@@ -7,17 +7,84 @@ A função é receber requisições de "divulgação de informações" e execut�
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
 
-# Raiz da Frase do Dia [/fraseDoDia]
-API para frase do dia
+# Frase do dia [/frase]
+Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
 
 ## Obter frase do dia [GET]
+Recupera uma frase, possivelmente associada ao dia em questão, ou procura
+por frase.
+
++ Request (application/json)
 
 + Response 200 (application/json)
     + Body
 
             {
-                "frase": "lorem ipsum"
+                "frase": "Sem autor, sem data."
             }
+
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+
+    + Body
+    
+            {
+                "busca": "mais rara",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            { 
+                "frases": [
+                    {
+                        "frase": "Viver é a coisa mais rara do mundo. A maioria das pessoas apenas existe.",
+                        "autor" : "Oscar Wilde"
+                        "id" : "f0ecfb49-3406-4d44-b294-c89896bd29aa"
+                    }
+                ]
+            }
+
+## Acrescentar frase a um dia [PUT]
+Insere uma frase possivelmente associada a um dado dia.
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "frase": "Viver é a coisa mais rara do mundo. A maioria das pessoas apenas existe.",
+                "autor" : "Oscar Wilde"
+            }
+
++ Response 200
+
+## Remove frase do dia [DELETE]
+Remove a frase associada ao identificador fornecido.
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "apagar": "f0ecfb49-3406-4d44-b294-c89896bd29aa"
+            }
+
++ Response 200
 
 # Raiz da Token [/token]
 API para obter nova token
