@@ -203,3 +203,30 @@ Recupera a lista de hashes SHA512 dos envios associados a uma token.
                     "3bafbf08882a2d10133093a1b8433f50563b93c14acd05b79028eb1d12799027241450980651994501423a66c276ae26c43b739bc65c4e16b10c3af6c202aebb"
                 }
             }
+
+# Registro de Alerta [/alerta]
+
+## Inserir novo alerta [POST]
+Insere um novo alerta na Central UFG. Os dados são específicos para cada ação.
+
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "acao": "Aviso de Devolucao",
+                "usuario": 1
+                "dados": {
+                    "codigo_obra": "abcd123",
+                    "data_limite": "2014-10-07T20:00:00-03:00"
+                },
+                "data": "2014-10-04T19:42:56-03:00"
+            }
+
++ Response 200
