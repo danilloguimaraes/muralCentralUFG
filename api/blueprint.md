@@ -86,11 +86,13 @@ Remove a frase associada ao identificador fornecido.
 
 + Response 200
 
-# Raiz da Token [/token]
-API para obter nova token
+# Token [/token]
+Obtém nova token e recupera listagem de hashes de uma dada token.
 
 ## Obter uma nova token [GET]
-Obter nova token
+Obtém nova token única.
+
++ Request (application/json)
 
 + Response 200 (application/json)
     + Body
@@ -98,16 +100,23 @@ Obter nova token
             {
                 "token": "01234567-89ab-cdef-0123-456789abcdef"
             }
-
-
+            
 ## Obter os envios de uma token [POST]
-A lista de hashes SHA512 dos envios de uma token.
+Recupera a lista de hashes SHA512 dos envios associados a uma token.
 
 + Request (application/json)
 
-        {
-            "token": "01234567-89ab-cdef-0123-456789abcdef"
-        }
+    + Headers
+        
+            Accept: application/json
+            User: username
+            Password: password
+
+    + Body
+
+            {
+                "token": "01234567-89ab-cdef-0123-456789abcdef"
+            }
 
 
 + Response 200 (application/json)
