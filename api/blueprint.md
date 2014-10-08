@@ -6,3 +6,15 @@ Central UFG, ou simplesmente Central, é um dos principais componentes do Projet
 A função é receber requisições de "divulgação de informações" e executá-las. 
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
+
+# Raiz da Frase do Dia [/fraseDoDia]
+API para frase do dia
+
+## Obter frase do dia [GET]
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "frase": "lorem ipsum"
+            }
