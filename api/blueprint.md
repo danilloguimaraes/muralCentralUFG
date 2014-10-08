@@ -23,10 +23,34 @@ API para frase do dia
 API para obter nova token
 
 ## Obter uma nova token [GET]
+Obter nova token
 
 + Response 200 (application/json)
     + Body
 
             {
                 "token": "01234567-89ab-cdef-0123-456789abcdef"
+            }
+
+
+## Obter os envios de uma token [POST]
+A lista de hashes SHA512 dos envios de uma token.
+
++ Request (application/json)
+
+        {
+            "token": "01234567-89ab-cdef-0123-456789abcdef"
+        }
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "hashes": {
+                    "4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a",
+                    "40b244112641dd78dd4f93b6c9190dd46e0099194d5a44257b7efad6ef9ff4683da1eda0244448cb343aa688f5d3efd7314dafe580ac0bcbf115aeca9e8dc114",
+                    "3bafbf08882a2d10133093a1b8433f50563b93c14acd05b79028eb1d12799027241450980651994501423a66c276ae26c43b739bc65c4e16b10c3af6c202aebb"
+                }
             }
