@@ -23,8 +23,8 @@ public class CentralApplication extends Application<CentralConfiguration> {
     public static void main(String[] args) {
         try {
             new CentralApplication().run(args);
-        } catch (Exception e) {
-            // adicionar os tratamentos de exceções para cada caso possível
+        } catch (Exception ex) {
+            Logger.getLogger(CentralApplication.class.getName()).log(Level.SEVERE, "Erro ao inicializar o aplicativo!", ex);
         }
     }
 
