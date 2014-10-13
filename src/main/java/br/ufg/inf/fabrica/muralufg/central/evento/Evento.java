@@ -52,13 +52,61 @@
 
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
+import java.util.Calendar;
 import java.util.Date;
 
+import javax.ws.rs.FormParam;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- * Representa uma palestra, um curso, um simpósio, um congresso ou
- * similar.
+ * Representa uma palestra, um curso, um simpósio, um congresso ou similar.
  */
+@XmlRootElement
 public class Evento {
-    private Date dataInicio;
-    private Date dataFim;
+
+	private Long id;
+
+	@FormParam("dataInicio")
+	private Date dataInicio;
+
+	@FormParam("dataFim")
+	private Date dataFim;
+
+	@FormParam("horaEvento")
+	private Calendar horaEvento;
+
+	public Evento(){}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+
+	public Calendar getHoraEvento() {
+		return horaEvento;
+	}
+
+	public void setHoraEvento(Calendar horaEvento) {
+		this.horaEvento = horaEvento;
+	}
+
 }

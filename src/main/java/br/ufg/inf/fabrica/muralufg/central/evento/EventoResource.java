@@ -55,47 +55,35 @@ package br.ufg.inf.fabrica.muralufg.central.evento;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Manutenção de eventos.
- */
-public interface EventoRepository {
+import javax.ws.rs.*;
 
-    /**
-     * Adiciona o evento ao repositório.
-     * @param evento O evento a ser adicionado.
-     * @return {@code true} se e somente se o evento
-     * foi adicionado de forma satisfatória.
-     */
-    boolean adiciona(Evento evento);    
-    
-    /**
-     * Identifica eventos do repositório cuja realização
-     * encontra-se no "raio" de tempo, em dias, com base
-     * no dia corrente.
-     * @param raioEmDias Número de dias passados e futuros
-     *                   perfazendo um período no qual qualquer
-     *                   realização de evento que há interseção
-     *                   com ele será fornecido na resposta.
-     * @return Eventos, em ordem cronológica, cuja realização
-     * coincide com o período determinado pela data corrente e
-     * o "raio" fornecidos.
-     *
-     * @see #proximos(java.util.Date, int)
-     */
-    List<Evento> proximos(int raioEmDias);
+@Path(value="/evento")
+public class EventoResource implements EventoRepository{
 
-    /**
-     * Identifica eventos cuja realização coincide com o período
-     * definido pela data e os dias indicados, tanto anteriores
-     * quanto posteriores à data.
-     * @param data Data que define período relevante para a busca de
-     *             eventos.
-     * @param raioEmDias Número de dias, tanto anteriores quanto
-     *                   posteriores à data indicada.
-     * @return Eventos cuja realização coincide com o período definido
-     * pela data e dias anteriores/posteriores fornecidos.
-     *
-     * @see #adiciona(Evento)
-     */
-    List<Evento> proximos(Date data, int raioEmDias);
+	EventoBusiness business = new EventoBusiness();
+	
+	@POST
+	@Override
+	public boolean adiciona(@BeanParam Evento evento) {
+		//se o beanparam nao funcionar, que tal se passarmos todos os parametros como @formparam?
+		//http://docs.oracle.com/javaee/7/api/javax/ws/rs/BeanParam.html
+		business.adicionaEvento(evento);
+		return true;
+		
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Override
+	public List<Evento> proximos(@PathParam("raio") int raioEmDias) {
+		return business.filtraEventoPorRaio(raioEmDias);
+	}
+
+	@GET
+	@Produces("application/json")
+	@Override
+	public List<Evento> proximos(@PathParam("data") Date data, @PathParam("raio") int raioEmDias) {
+		return business.filtraEventoPorDataERaio(data,raioEmDias);
+	}
+
 }
