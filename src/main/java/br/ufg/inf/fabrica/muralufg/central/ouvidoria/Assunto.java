@@ -53,6 +53,7 @@
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
 import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
+import com.google.api.client.util.DateTime;
 import org.joda.time.DateTime;
 
 import java.util.Set;
@@ -62,6 +63,7 @@ import java.util.Set;
  * <p>Uma instância desta classe é um <i>value object</i>.</p>
  */
 public class Assunto {
+
 
     /**
      * Identifica anexos associados à submissão.
@@ -87,4 +89,31 @@ public class Assunto {
      * <b>ESTA INFORMAÇÃO NÃO É OBRIGATÓRIA.</b>
      */
     private String fonte;
+
+    public Assunto() {
+    }
+
+    public String getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public DateTime getData() {
+        return data;
+    }
+
+    public void setData(DateTime data) {
+        this.data = data;
+    }
+
+    public String getFonte() {
+        return fonte;
+    }
+
+    public void setFonte(String fonte) {
+        this.fonte = fonte;
+    }
 }

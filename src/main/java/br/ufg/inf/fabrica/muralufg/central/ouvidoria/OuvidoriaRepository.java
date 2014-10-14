@@ -52,6 +52,8 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
+import com.google.api.services.datastore.client.Datastore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +67,7 @@ public interface OuvidoriaRepository {
      * Realiza a conexão com o Google Cloud Datastore.
      * @return Datastore, com a conexão já configurada.
      */
-    Datastore conectar();
+    void conectar();
 
 
     /**
