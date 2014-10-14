@@ -50,25 +50,20 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.seguranca;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-import java.util.Set;
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
 /**
- * Identifica um usuário da Central.
- * <p>Um usuário pode ser tanto quem recebe informações da Central
- * quanto quem envia informações para a Central.</p>
+ * Representa um técnico da UFG.
  */
-public class Usuario {
+public class Tecnico extends Usuario {
     private String nome;
-    private Set<String> registrationIds;
+    private Orgao orgao;
 
-    public Usuario() {
-    }
-
-    public Usuario(String nome, Set<String> registrationIds) {
+    public Tecnico(String nome, Orgao orgao) {
         this.nome = nome;
-        this.registrationIds = registrationIds;
+        this.orgao = orgao;
     }
 
     public String getNome() {
@@ -79,11 +74,11 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public Set<String> getRegistrationIds() {
-        return registrationIds;
+    public Orgao getOrgao() {
+        return orgao;
     }
 
-    public void setRegistrationIds(Set<String> registrationIds) {
-        this.registrationIds = registrationIds;
+    public void setOrgao(Orgao orgao) {
+        this.orgao = orgao;
     }
 }
