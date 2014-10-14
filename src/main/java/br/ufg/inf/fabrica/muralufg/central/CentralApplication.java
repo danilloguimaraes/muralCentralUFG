@@ -24,6 +24,7 @@ public class CentralApplication extends Application<CentralConfiguration> {
         try {
             new CentralApplication().run(args);
         } catch (Exception ex) {
+            //A aplicação não está tratando o que esta sendo exibido no log.
             Logger.getLogger(CentralApplication.class.getName()).log(Level.SEVERE, "Erro ao inicializar o aplicativo!", ex);
         }
     }
