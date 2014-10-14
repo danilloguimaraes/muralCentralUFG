@@ -52,9 +52,45 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+
+import java.util.Set;
+
 /**
  * Representa um docente, lotado em um dado órgão.
  */
-public class Docente {
+public class Docente extends Usuario {
     private String nome;
+    private Set<Turma> turmas;
+    private Orgao orgao;
+
+    public Docente(String nome, Set<Turma> turmas, Orgao orgao) {
+        this.nome = nome;
+        this.turmas = turmas;
+        this.orgao = orgao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Set<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(Set<Turma> turmas) {
+        this.turmas = turmas;
+    }
+
+    public Orgao getOrgao() {
+        return orgao;
+    }
+
+    public void setOrgao(Orgao orgao) {
+        this.orgao = orgao;
+    }
 }

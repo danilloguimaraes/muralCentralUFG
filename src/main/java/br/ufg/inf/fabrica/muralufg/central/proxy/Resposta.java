@@ -50,40 +50,38 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.seguranca;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
-import java.util.Set;
+import java.util.Date;
 
 /**
- * Identifica um usuário da Central.
- * <p>Um usuário pode ser tanto quem recebe informações da Central
- * quanto quem envia informações para a Central.</p>
+ * Encapsula resposta fornecida pela RMTC e
+ * outras informações relevantes para a
+ * atuação da Central como "proxy".
  */
-public class Usuario {
-    private String nome;
-    private Set<String> registrationIds;
+public class Resposta {
 
-    public Usuario() {
+    /**
+     * Identificação única da requisição submetida pelo
+     * cliente da Central.
+     */
+    private String guid;
+
+    /**
+     * Resposta produzida pela RMTC e "guardada"
+     * até que o Cliente da Central requisite-a
+     * pelo guid correspondente.
+     */
+    private String resposta;
+
+    /**
+     * Data em que a requisição foi submetida
+     * pelo Cliente.
+     */
+    private Date geradaEm;
+
+    public String getResposta() {
+        return resposta;
     }
 
-    public Usuario(String nome, Set<String> registrationIds) {
-        this.nome = nome;
-        this.registrationIds = registrationIds;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Set<String> getRegistrationIds() {
-        return registrationIds;
-    }
-
-    public void setRegistrationIds(Set<String> registrationIds) {
-        this.registrationIds = registrationIds;
-    }
 }

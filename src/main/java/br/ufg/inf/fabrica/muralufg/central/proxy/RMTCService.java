@@ -50,40 +50,17 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.seguranca;
-
-import java.util.Set;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
 /**
- * Identifica um usuário da Central.
- * <p>Um usuário pode ser tanto quem recebe informações da Central
- * quanto quem envia informações para a Central.</p>
+ * Serviço que encapsula operações oferecidas pela RMTC.
  */
-public class Usuario {
-    private String nome;
-    private Set<String> registrationIds;
+public interface RMTCService {
 
-    public Usuario() {
-    }
-
-    public Usuario(String nome, Set<String> registrationIds) {
-        this.nome = nome;
-        this.registrationIds = registrationIds;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Set<String> getRegistrationIds() {
-        return registrationIds;
-    }
-
-    public void setRegistrationIds(Set<String> registrationIds) {
-        this.registrationIds = registrationIds;
-    }
+    /**
+     * Obtém uma "linha". Este é uma operação "espúria",
+     * está aguardando definição precisa dos serviços.
+     * @return
+     */
+    String getLinha();
 }
