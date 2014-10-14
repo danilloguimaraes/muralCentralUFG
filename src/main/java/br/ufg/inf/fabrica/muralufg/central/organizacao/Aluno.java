@@ -57,19 +57,22 @@ import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 /**
  * Representa um aluno devidamente matriculado em determinada disciplina,
  * ou seja, aluno de uma dada turma.
+ * <p>Trata-se de um <i>value object</i>.</p>
  */
 public class Aluno extends Usuario {
     private String nome;
-
-    public Aluno(String nome) {
-        this.nome = nome;
-    }
+    private String matricula;
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public Aluno(String nome, String matricula) {
         this.nome = nome;
+        this.matricula = matricula;
     }
 }
