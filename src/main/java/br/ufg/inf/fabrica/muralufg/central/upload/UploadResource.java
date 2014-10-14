@@ -52,14 +52,14 @@
 
 package br.ufg.inf.fabrica.muralufg.central.upload;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -74,15 +74,36 @@ import java.util.UUID;
 @Produces(MediaType.APPLICATION_JSON)
 public class UploadResource {
 
+    private Set<String> ids = new HashSet<String>();
+
     /**
      * Cria uma nova "sessão", representada por
      * identificador único.
+     *
      * @return Identificador único da sessão a ser
      * empregado para enviar um ou mais arquivos.
      */
+    @Path("/iniciar")
     @POST
-    @Timed
     public String novaSessao() {
-        return UUID.randomUUID().toString();
+        String novaSessao = UUID.randomUUID().toString();
+        ids.add(novaSessao);
+
+        return novaSessao;
+    }
+
+    /**
+     * Indica que sessão não receberá mais uploads de
+     * arquivos.
+     */
+    @Path("/fechar/{id}")
+    @POST
+    public Response fechaSessao(@PathParam("id") String sessaoId) {
+        if (ids.contains(sessaoId)) {
+            ids.remove(sessaoId);
+            return Response.ok().build();
+        } else {
+            return Response.status(404).build();
+        }
     }
 }

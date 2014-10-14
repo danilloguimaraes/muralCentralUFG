@@ -2,6 +2,7 @@ package br.ufg.inf.fabrica.muralufg.central;
 
 import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoHealthCheck;
 import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoResource;
+import br.ufg.inf.fabrica.muralufg.central.upload.UploadResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -44,9 +45,11 @@ public class CentralApplication extends Application<CentralConfiguration> {
 
         environment.jersey().register(versaoResource);
 
+        final UploadResource ur = new UploadResource();
+        environment.jersey().register(ur);
+
         final IdentificacaoHealthCheck healthCheck =
                 new IdentificacaoHealthCheck(configuracao);
         environment.healthChecks().register("identificacao", healthCheck);
-        environment.jersey().register(versaoResource);
     }
 }
