@@ -50,40 +50,51 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.seguranca;
+package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
-import java.util.Set;
+import java.util.stream.Stream;
 
 /**
- * Identifica um usuário da Central.
- * <p>Um usuário pode ser tanto quem recebe informações da Central
- * quanto quem envia informações para a Central.</p>
+ * Serviços para manipulação de arquivos em meio persistente.
+ * <p>Esta interface foi projetada para admitir implementação
+ * que faz uso do sistema de arquivos de um sistema operacional
+ * como o Windows, ou ainda por serviço remoto de armazenamento.</p>
+ *
+ * <p>Uma implementação desta interface deve admitir um fluxo
+ * clássico onde arquivos são persistidos
+ * ({@link #persiste(Arquivo, java.util.stream.Stream)}) e
+ * recuperados. A recuperação é dividida em duas partes:
+ * (a) recuperação de metainformações ({@link #recupera(String)}) e
+ * (b) recuperação do conteúdo ({@link #conteudo(String)}).</p>
+ *
+ * <p>Observe que não há indicação de diretório, <i>bucket</i> ou
+ * outro elemento, por exemplo, credencial exigida para acesso aos
+ * serviços oferecidos pela interface. Tais itens são dependentes
+ * de cada implementação.</p>
  */
-public class Usuario {
-    private String nome;
-    private Set<String> registrationIds;
+public interface ArquivoRepository {
 
-    public Usuario() {
-    }
+    /**
+     * Persiste o conteúdo do arquivo.
+     * @param arquivo Detalhes do arquivo a ser persistido.
+     * @param conteudo {@link Stream} do qual o conteúdo do
+     *                               arquivo poderá ser recuperado.
+     */
+    public void persiste(Arquivo arquivo, Stream conteudo);
 
-    public Usuario(String nome, Set<String> registrationIds) {
-        this.nome = nome;
-        this.registrationIds = registrationIds;
-    }
+    /**
+     * Recupera metainformações sobre o arquivo cujo identificador único é
+     * fornecido.
+     * @param arquivoId String identificador do arquivo que se deseja obter.
+     * @return Instância de {@link Arquivo} correspondente ao identificador
+     * fornecido.
+     */
+    public Arquivo recupera(String arquivoId);
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Set<String> getRegistrationIds() {
-        return registrationIds;
-    }
-
-    public void setRegistrationIds(Set<String> registrationIds) {
-        this.registrationIds = registrationIds;
-    }
+    /**
+     * Obtém {@link Stream} para conteúdo do arquivo.
+     * @param arquivoId O identificador único do arquivo.
+     * @return {@link Stream} para o conteúdo do arquivo.
+     */
+    public Stream conteudo(String arquivoId);
 }

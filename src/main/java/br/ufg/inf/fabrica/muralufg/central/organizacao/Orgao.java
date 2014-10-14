@@ -52,8 +52,43 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import java.util.Set;
+
 /**
  * Representa um órgão da UFG.
  */
 public class Orgao {
+    private String nome;
+    private Set<Tecnico> tecnicos;
+    private Set<Docente> docentes;
+
+    public Orgao(String nome, Set<Tecnico> tecnicos, Set<Docente> docentes) {
+        this.nome = nome;
+        this.tecnicos = tecnicos;
+        this.docentes = docentes;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Set<Tecnico> getTecnicos() {
+        return tecnicos;
+    }
+
+    public void setTecnicos(Set<Tecnico> tecnicos) {
+        this.tecnicos = tecnicos;
+    }
+
+    public Set<Docente> getDocentes() {
+        return docentes;
+    }
+
+    public void setDocentes(Set<Docente> docentes) {
+        this.docentes = docentes;
+    }
 }
