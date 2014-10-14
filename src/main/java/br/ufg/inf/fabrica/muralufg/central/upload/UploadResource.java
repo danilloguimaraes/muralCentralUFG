@@ -52,23 +52,37 @@
 
 package br.ufg.inf.fabrica.muralufg.central.upload;
 
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
+
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 /**
- * Upload de arquivos para a Central.
- * <p>Permite criar uma "sessão" de <i>upload</i> por meio da
- * qual vários arquivos poderão ser enviados na mesma sessão.</p>
+ * Envio de arquivos para a Central.
+ *
+ * <p>Para enviar um arquivo para a Central é necessário
+ * criar uma "sessão". Esta sessão permite agrupar uma ou
+ * mais submissões de arquivos, enviadas independentemente,
+ * como se fosse uma única submissão.</p>
+ *
  * <p>Caso a sessão não seja fechada, então após transcorrido um
  * período de horas configurável, os arquivos associados à sessão
  * serão removidos.</p>
+ *
+ * <p>Para submeter um arquivo para a Central é obrigatório
+ * obter a sessão (identificador) correspondente. </p>
  */
 @Path("/upload")
 @Produces(MediaType.APPLICATION_JSON)
@@ -105,5 +119,22 @@ public class UploadResource {
         } else {
             return Response.status(404).build();
         }
+    }
+
+    /**
+     * Submete conteúdo de arquivo associado à sessão.
+     *
+     * <p>Para enviar via linha de comandos, execute:</p>
+     * <p>curl -v -include --form file=@ARQUIVO-AQUI http://localhost:8080/upload</p>
+     * @return Indicação se o <i>upload</i> foi realizado
+     * de forma satisfatória, ou não.
+     */
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response upload(@FormDataParam("file") InputStream uploadedInputStream,
+                           @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
+        java.nio.file.Path outputPath = FileSystems.getDefault().getPath("c:/tmp", "arquivo.txt");
+        Files.copy(uploadedInputStream, outputPath);
+        return Response.ok().build();
     }
 }

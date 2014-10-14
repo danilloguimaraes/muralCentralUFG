@@ -38,6 +38,7 @@ public class CentralApplication extends Application<CentralConfiguration> {
     @Override
     public void run(CentralConfiguration configuracao,
                     Environment environment) {
+
         final IdentificacaoResource versaoResource = new IdentificacaoResource(
                 configuracao.getNome(),
                 configuracao.getVersao()
