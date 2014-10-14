@@ -8,46 +8,62 @@ casos a execução não é executada imediatamente, mas agendada para o instante
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
 
-# Restaurantes [/restaurantes]
+# Restaurantes
 Serviços para recuperação e manutenção de restaurantes e pratos por eles oferecidos.
-## Obtém restaurantes [GET]
+## Restaurante [/restaurante/{id}]
 Recupera restaurantes "próximos" aos campi da UFG.
 
-+ Request (application/json)
++ Parameters
+    + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
 
-+ Response 200 (application/json)
++ Model  (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
     + Body
 
             {
-                "restaurantes": 
-                [
-                    {
-                        "nome" : "Restaurante Universitário",
-                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
-                    },
-                    
-                    {
-                        "nome" : "Churrascaria Boi na Brasa",
-                        "id" : "bbfbe012-b1ca-40c3-9bad-d48118e7ab8e"
-                    }
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "nome" : "Restaurante Universitário",
+                "endereco" : "Rua Peroba",
+                "horarios": [
+                    {"inicio": "07:00:00-03:00", "fim": "10:00:00-03:00"},
+                    {"inicio": "11:00:00-03:00", "fim": "15:00:00-03:00"},
+                    {"inicio": "17:00:00-03:00", "fim": "19:00:00-03:00"}
+                ],
+                "modalidades": [
+                    "Vegetariano", "Light", "Lanche"
+                ],
+                "formasPagamento": [
+                    "Cartão de Crédito", "Cartão de Débito", "Dinheiro"
                 ]
             }
- 
-## Acrescenta um restaurante à lista de restaurantes [PUT]
+
+### Obter um restaurante específico [GET]
++ Response 200
+    [Restaurante][]
+
+### Atualizar um restaurante [PATCH]
 + Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
     + Body
 
             {
-                "nome" : "Restaurante Universitário",
-                "endereco" : "Rua Peroba"
+                "endereco" : "Rua Esperança"
             }
-            
-+ Response 200 (application/json)
-    + Body
-    
-            { 
-                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
-            }
++ Response 200
+    [Restaurante][]
+
+
+### Remove um restaurante da lista de restaurantes [DELETE]
+Remove o restaurante associado ao identificador fornecido.
++ Response 204
 
 # Frase do dia [/frases]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
