@@ -8,7 +8,7 @@ casos a execução não é executada imediatamente, mas agendada para o instante
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
 
-# Cardápio [/cardapio/restaurantes]
+# Restaurantes [/restaurantes]
 Serviços para recuperação e manutenção de restaurantes e pratos por eles oferecidos.
 ## Obtém restaurantes [GET]
 Recupera restaurantes "próximos" aos campi da UFG.
@@ -49,7 +49,7 @@ Recupera restaurantes "próximos" aos campi da UFG.
                 "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
             }
 
-# Frase do dia [/frase]
+# Frase do dia [/frases]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
 
 ## Obter frase do dia [GET]
@@ -128,7 +128,7 @@ Remove a frase associada ao identificador fornecido.
 
 + Response 200
 
-# Token [/token]
+# Token [/tokens]
 Obtém nova token e recupera listagem de hashes de uma dada token.
 
 ## Obter uma nova token [GET]
@@ -143,7 +143,7 @@ Obtém nova token única.
                 "token": "01234567-89ab-cdef-0123-456789abcdef"
             }
 
-# Envio [/envio]
+# Envio [/envios]
 Envia e recupera arquivos e hashes de arquivos associados à tokens
 
 ## Enviar novo arquivo [POST]
@@ -189,7 +189,7 @@ Remove a lista de hashes SHA512 dos envios associados a uma token.
             
 + Response 200 (application/json)
 
-## Envios [/envio/arquivo/{token}/{hash}]
+## Envios [/envios/arquivos/{token}/{hash}]
 Recupera a lista de hashes SHA512 dos envios associados a uma token.
 
 + Parameters
@@ -217,7 +217,7 @@ Recupera a lista de hashes SHA512 dos envios associados a uma token.
                 }
             }
             
-## Envios [/envio/hash/{token}]
+## Envios [/envios/hashes/{token}]
 Recupera a lista de hashes SHA512 dos envios associados a uma token.
 
 + Parameters
@@ -246,7 +246,7 @@ Recupera a lista de hashes SHA512 dos envios associados a uma token.
                 }
             }
 
-# Registro de Alerta [/alerta]
+# Registro de Alerta [/alertas]
 
 ## Inserir novo alerta [POST]
 Insere um novo alerta na Central UFG. Os dados são específicos para cada ação.
