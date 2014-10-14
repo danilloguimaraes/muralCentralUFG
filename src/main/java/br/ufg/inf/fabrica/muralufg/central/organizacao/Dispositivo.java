@@ -50,40 +50,24 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.seguranca;
-
-import java.util.Set;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 /**
- * Identifica um usuário da Central.
- * <p>Um usuário pode ser tanto quem recebe informações da Central
- * quanto quem envia informações para a Central.</p>
+ * Representa um equipamento eletrônico que pode consumir informação
+ * disponibilizada pela Central UFG e que está vinculado a um usuário.
  */
-public class Usuario {
-    private String nome;
-    private Set<String> registrationIds;
+public class Dispositivo {
+    private String registrationId;
 
-    public Usuario() {
+    public Dispositivo(String registrationId) {
+        this.registrationId = registrationId;
     }
 
-    public Usuario(String nome, Set<String> registrationIds) {
-        this.nome = nome;
-        this.registrationIds = registrationIds;
+    public String getRegistrationId() {
+        return registrationId;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Set<String> getRegistrationIds() {
-        return registrationIds;
-    }
-
-    public void setRegistrationIds(Set<String> registrationIds) {
-        this.registrationIds = registrationIds;
+    public void setRegistrationId(String registrationId) {
+        this.registrationId = registrationId;
     }
 }

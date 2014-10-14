@@ -52,10 +52,24 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+
 /**
  * Representa um aluno devidamente matriculado em determinada disciplina,
  * ou seja, aluno de uma dada turma.
  */
-public class Aluno {
+public class Aluno extends Usuario {
     private String nome;
+
+    public Aluno(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
