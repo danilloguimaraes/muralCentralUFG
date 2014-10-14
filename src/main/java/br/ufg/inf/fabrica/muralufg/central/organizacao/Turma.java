@@ -62,4 +62,34 @@ public class Turma {
     private Date semestre;
     private Docente responsavel;
     private Set<Aluno> matriculados;
+
+    public Turma(Date semestre, Docente responsavel, Set<Aluno> matriculados) {
+        this.semestre = semestre;
+        this.responsavel = responsavel;
+        this.matriculados = matriculados;
+    }
+
+    public Date getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(Date semestre) {
+        this.semestre = semestre;
+    }
+
+    public Docente getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Docente responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public Set<Aluno> getMatriculados() {
+        return matriculados;
+    }
+
+    public void setMatriculados(Set<Aluno> matriculados) {
+        this.matriculados = matriculados;
+    }
 }

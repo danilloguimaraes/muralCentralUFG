@@ -52,10 +52,44 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import java.util.Set;
+
 /**
  * Representa um curso oferecido pela UFG (graduação ou
  * pós-graduação).
  */
 public class Curso {
     private String nome;
+    private Set<Disciplina> disciplinas;
+    private Orgao responsavel;
+
+    public Curso(String nome, Set<Disciplina> disciplinas, Orgao responsavel) {
+        this.nome = nome;
+        this.disciplinas = disciplinas;
+        this.responsavel = responsavel;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Set<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(Set<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
+
+    public Orgao getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Orgao responsavel) {
+        this.responsavel = responsavel;
+    }
 }
