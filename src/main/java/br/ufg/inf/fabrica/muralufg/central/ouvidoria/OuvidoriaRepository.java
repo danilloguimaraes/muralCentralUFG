@@ -77,7 +77,7 @@ public interface OuvidoriaRepository {
      * @return {@code true} se e somente se o assunto foi
      * inserido de forma satisfatória.
      */
-    boolean insere(Assunto assunto);
+    void insere(Assunto assunto);
 
 
     /**

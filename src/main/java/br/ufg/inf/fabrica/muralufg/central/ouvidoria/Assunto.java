@@ -53,7 +53,6 @@
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
 import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
-import com.google.api.client.util.DateTime;
 import org.joda.time.DateTime;
 
 import java.util.Set;
@@ -63,7 +62,6 @@ import java.util.Set;
  * <p>Uma instância desta classe é um <i>value object</i>.</p>
  */
 public class Assunto {
-
 
     /**
      * Identifica anexos associados à submissão.
@@ -90,7 +88,17 @@ public class Assunto {
      */
     private String fonte;
 
-    public Assunto() {
+    /**
+     * Situação do assunto em relação a ele ter sido respondido ou não.
+     */
+    private boolean respondido;
+
+    public DateTime getData() {
+        return data;
+    }
+
+    public void setData(DateTime data) {
+        this.data = data;
     }
 
     public String getConteudo() {
@@ -101,19 +109,19 @@ public class Assunto {
         this.conteudo = conteudo;
     }
 
-    public DateTime getData() {
-        return data;
-    }
-
-    public void setData(DateTime data) {
-        this.data = data;
-    }
-
     public String getFonte() {
         return fonte;
     }
 
     public void setFonte(String fonte) {
         this.fonte = fonte;
+    }
+
+    public boolean isRespondido() {
+        return respondido;
+    }
+
+    public void setRespondido(boolean respondido) {
+        this.respondido = respondido;
     }
 }
