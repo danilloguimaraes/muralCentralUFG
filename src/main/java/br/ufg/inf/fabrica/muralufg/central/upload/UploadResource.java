@@ -126,14 +126,20 @@ public class UploadResource {
      *
      * <p>Para enviar via linha de comandos, execute:</p>
      * <p>curl -v -include --form file=@ARQUIVO-AQUI http://localhost:8080/upload</p>
+     * @param sessaoId O identificador único da sessão associado ao presente
+     *                 <i>upload</i>.
      * @return Indicação se o <i>upload</i> foi realizado
      * de forma satisfatória, ou não.
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response upload(@FormDataParam("file") InputStream uploadedInputStream,
+    public Response upload(@FormDataParam("sessaoId") String sessaoId,
+                           @FormDataParam("file") InputStream uploadedInputStream,
                            @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
-        java.nio.file.Path outputPath = FileSystems.getDefault().getPath("c:/tmp", "arquivo.txt");
+
+        // TODO O diretório fixo abaixo deverá ser obtido da configuração
+        // TODO o nome do arquivo não pode ser o nome da sessão.
+        java.nio.file.Path outputPath = FileSystems.getDefault().getPath("c:/tmp", sessaoId);
         Files.copy(uploadedInputStream, outputPath);
         return Response.ok().build();
     }
