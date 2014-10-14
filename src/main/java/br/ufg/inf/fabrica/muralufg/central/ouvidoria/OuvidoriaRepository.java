@@ -60,6 +60,24 @@ import java.util.List;
  */
 public interface OuvidoriaRepository {
 
+
+    /**
+     * Realiza a conexão com o Google Cloud Datastore.
+     * @return Datastore, com a conexão já configurada.
+     */
+    Datastore conectar();
+
+
+    /**
+     * Acrescenta ao repositório o assunto.
+     * @param assunto Assunto a ser inserido no repositório.
+     *
+     * @return {@code true} se e somente se o assunto foi
+     * inserido de forma satisfatória.
+     */
+    boolean insere(Assunto assunto);
+
+
     /**
      * Recupera os assuntos submetidos à ouvidoria, ainda
      * sem resposta, a partir da data indicada.
@@ -70,7 +88,7 @@ public interface OuvidoriaRepository {
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      *
      */
-    List<Assunto> naoRespondidos(Date desde);
+    List<Assunto> buscaNaoRespondidos(Date desde);
 
     /**
      * Recupera os assuntos submetidos à ouvidoria, ainda
@@ -80,19 +98,51 @@ public interface OuvidoriaRepository {
      *                  serão produzidos. Ou seja, no máximo, os 100
      *                  assuntos seguintes, conforme esta ordem.
      *
-     * @return Lista, em ordem cronológica crescente, do mais antido
+     * @return Lista, em ordem cronológica crescente, do mais antigo
      * para o mais recente dos assuntos submetidos à ouvidoria e para
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      *
      * @see #naoRespondidos(java.util.Date)
      */
-    List<Assunto> naoRespondidos(Date desde, int aPartirDe);
+    List<Assunto> buscaNaoRespondidos(Date desde, int aPartirDe);
 
     /**
-     * Acrescenta ao repositório o assunto.
-     * @param assunto Assunto a ser inserido no repositório.
-     * @return {@code true} se e somente se o assunto foi
-     * inserido de forma satisfatória.
+     * Recupera os assuntos submetidos à ouvidoria, que já foram respondidos,
+     * a partir da data indicada
+     * @param desde Data a partir da qual os assuntos serão considerados.
+     *
+     * @return Lista, em ordem cronológica crescente, do mais antigo
+     * para o mais recente dos assuntos submetidos à ouvidoria e para
+     * os quais não existe resposta. No máximo 100 assuntos são retornados.
      */
-    boolean insere(Assunto assunto);
+    List<Assunto> buscaRespondidos(Date desde);
+
+
+    /**
+     * Recupera os assuntos submetidos à ouvidoria, que já foram respondidos,
+     * a partir da data indicada
+     * @param desde Data a partir da qual os assuntos serão considerados.
+     * @param aPartirDe Ordem do assunto a partir da qual os resultados
+     *                  serão produzidos. Ou seja, no máximo, os 100
+     *                  assuntos seguintes, conforme esta ordem.
+     *
+     * @return Lista, em ordem cronológica crescente, do mais antigo
+     * para o mais recente dos assuntos submetidos à ouvidoria e para
+     * os quais não existe resposta. No máximo 100 assuntos são retornados.
+     */
+    List<Assunto> buscaRespondidos(Date desde, int aPartirDe);
+
+    /**
+     * Recupera os assuntos submetidos a ouvidoria, que contenham
+     * a palavra chave que é passada como parâmetro.
+     * @param palavraChave uma palavra chave qualquer.
+     *
+     * @return Lista, com os Assuntos que contenham a palavra chave informada.
+     */
+    List<Assunto> buscaPalavraChave(String palavraChave);
+
+
+
+
+
 }
