@@ -29,5 +29,35 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
     }
 
 
+    public static boolean insere(Assunto assunto){
+        try {
+            Entity.Builder entAssunto = Entity.newBuilder();
+            entAssunto.setKey(makeKey());
+            entAssunto.addProperty(makeProperty(CONTEUDO, makeValue(assunto.getConteudo())));
+            entAssunto.addProperty(makeProperty(DATA, makeValue(assunto.getData())));
+            entAssunto.addProperty(makeProperty(FONTE, makeValue(assunto.getFonte())));
+
+            Mutation.Builder mutation = Mutation.newBuilder();
+            mutation.addInsertAutoId(entAssunto);
+
+            CommitRequest req = CommitRequest.newBuilder()
+                    .setMutation(mutation)
+                    .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
+                    .build();
+
+        }catch (DatastoreException exception){
+
+            System.err.println("Erro ao realizar operações no banco de dados");
+            // Log the exception, the name of the method called and the error code.
+            System.err.println(String.format("DatastoreException(%s): %s %s",
+                    exception.getMessage(),
+                    exception.getMethodName(),
+                    exception.getCode()));
+            System.exit(1);
+        }
+
+    }
+
+
 
 }
