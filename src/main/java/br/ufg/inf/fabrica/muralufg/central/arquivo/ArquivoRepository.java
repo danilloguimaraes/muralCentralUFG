@@ -59,12 +59,18 @@ import java.util.stream.Stream;
  * <p>Esta interface foi projetada para admitir implementação
  * que faz uso do sistema de arquivos de um sistema operacional
  * como o Windows, ou ainda por serviço remoto de armazenamento.</p>
+ *
  * <p>Uma implementação desta interface deve admitir um fluxo
  * clássico onde arquivos são persistidos
  * ({@link #persiste(Arquivo, java.util.stream.Stream)}) e
  * recuperados. A recuperação é dividida em duas partes:
  * (a) recuperação de metainformações ({@link #recupera(String)}) e
  * (b) recuperação do conteúdo ({@link #conteudo(String)}).</p>
+ *
+ * <p>Observe que não há indicação de diretório, <i>bucket</i> ou
+ * outro elemento, por exemplo, credencial exigida para acesso aos
+ * serviços oferecidos pela interface. Tais itens são dependentes
+ * de cada implementação.</p>
  */
 public interface ArquivoRepository {
 
