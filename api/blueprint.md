@@ -8,9 +8,10 @@ casos a execução não é executada imediatamente, mas agendada para o instante
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
 
-# Cardápio [/cardapio]
-## Lista de restaurantes [/cardapio/restaurantes]
-Adiciona, recupera, busca e remove restaurantes "próximos" aos campi da UFG.
+# Cardápio [/cardapio/restaurantes]
+Serviços para recuperação e manutenção de restaurantes e pratos por eles oferecidos.
+## Obtém restaurantes [GET]
+Recupera restaurantes "próximos" aos campi da UFG.
 
 + Request (application/json)
 
@@ -31,7 +32,23 @@ Adiciona, recupera, busca e remove restaurantes "próximos" aos campi da UFG.
                     }
                 ]
             }
+ 
+## Acrescenta um restaurante à lista de restaurantes [PUT]
++ Request (application/json)
+    + Body
+
+            {
+                "nome" : "Restaurante Universitário",
+                "endereco" : "Rua Peroba"
+            }
             
++ Response 200 (application/json)
+    + Body
+    
+            { 
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+            }
+
 # Frase do dia [/frase]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
 
