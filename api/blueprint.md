@@ -3,10 +3,35 @@ HOST: http://mural.ufg.br
 
 # Central UFG (REST API)
 Central UFG, ou simplesmente Central, é um dos principais componentes do Projeto Mural UFG. 
-A função é receber requisições de "divulgação de informações" e executá-las.
+A função é receber requisições de "divulgação de informações" e executá-las. Em alguns
+casos a execução não é executada imediatamente, mas agendada para o instante desejado.
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
 
+# Cardápio [/cardapio]
+## Lista de restaurantes [/cardapio/restaurantes]
+Adiciona, recupera, busca e remove restaurantes "próximos" aos campi da UFG.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "restaurantes": 
+                [
+                    {
+                        "nome" : "Restaurante Universitário",
+                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                    },
+                    
+                    {
+                        "nome" : "Churrascaria Boi na Brasa",
+                        "id" : "bbfbe012-b1ca-40c3-9bad-d48118e7ab8e"
+                    }
+                ]
+            }
+            
 # Frase do dia [/frase]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
 
