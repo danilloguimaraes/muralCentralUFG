@@ -64,7 +64,11 @@ import org.quartz.JobExecutionException;
  */
 
 public class TarefaDespertador implements Job{
-    
+ /**
+  * Metodo que executara o agendamento conforme definido no tempo
+  * @param jec
+  * @throws JobExecutionException 
+  */
     @Override
     public void execute(JobExecutionContext jec) throws JobExecutionException {
         ImplementaDespertador despertador = new ImplementaDespertador();

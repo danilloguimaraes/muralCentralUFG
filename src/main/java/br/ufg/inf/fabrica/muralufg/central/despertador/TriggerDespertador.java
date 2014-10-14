@@ -63,7 +63,10 @@ import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
 public class TriggerDespertador implements Runnable{
-    
+    /**
+     * Metodo de agendamento da repetição que define de tempo em tempo
+     * um determinado job ira rodar
+     */
     public void agendamentoDespertador(){
         try{        
             //Obtem a referencia do scheduler
