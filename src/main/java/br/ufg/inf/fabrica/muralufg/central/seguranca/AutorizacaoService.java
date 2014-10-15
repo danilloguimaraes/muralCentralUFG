@@ -79,5 +79,5 @@ public interface AutorizacaoService {
      * @return {@code true} se e somente se o usuário está
      * autorizado a requisitar a ação para o escopo indicado.
      */
-    boolean autoriza(String usuario, String acao, String escopo);
+    boolean autoriza(Usuario usuario, String acao, String escopo);
 }
