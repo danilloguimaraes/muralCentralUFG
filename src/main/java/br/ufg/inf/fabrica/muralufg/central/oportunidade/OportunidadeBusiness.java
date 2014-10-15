@@ -51,21 +51,27 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
+import br.ufg.inf.fabrica.muralufg.central.oportunidade.dao.OportunidadeDAO;
 import java.util.Set;
 
 /**
- * Mantém oportunidades.
+ *
+ * @author Luiz
  */
-public interface OportunidadeRepository {
+public class OportunidadeBusiness {
 
-    /**
-     * Identifica, para o instante em que a chamada é realizada, o conjunto de
-     * oportunidades vigentes, ou seja, cuja execução está em andamento.
-     *
-     * @return O conjunto de oportunidades vigentes. Se nenhuma oportunidade
-     * estiver vigente, então o conjunto retornado não possui nenhuma entrada.
-     */
-    public Set<Oportunidade> vigentes();
-    
-    public void adicionar(Oportunidade oportunidade);
+    private OportunidadeDAO oportunidadeDAO;
+
+    public OportunidadeBusiness() {
+        oportunidadeDAO = new OportunidadeDAO();
+    }
+
+    public Set<Oportunidade> buscarOportunidadesVigentes() {
+        return oportunidadeDAO.buscarOportunidadesVigentes();
+    }
+
+    public void adicionar(Oportunidade oportunidade) {
+        oportunidadeDAO.adicionar(oportunidade);
+    }
+
 }

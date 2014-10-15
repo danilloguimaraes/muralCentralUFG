@@ -52,20 +52,31 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.util.Set;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
- * Mantém oportunidades.
+ *
+ * @author Luiz
  */
-public interface OportunidadeRepository {
+@Path("/oportunidade")
+public class OportunidadeResource implements OportunidadeRepository {
 
-    /**
-     * Identifica, para o instante em que a chamada é realizada, o conjunto de
-     * oportunidades vigentes, ou seja, cuja execução está em andamento.
-     *
-     * @return O conjunto de oportunidades vigentes. Se nenhuma oportunidade
-     * estiver vigente, então o conjunto retornado não possui nenhuma entrada.
-     */
-    public Set<Oportunidade> vigentes();
-    
-    public void adicionar(Oportunidade oportunidade);
+    private Set<Oportunidade> vigentes;
+    private final OportunidadeBusiness business = new OportunidadeBusiness();
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    public Set<Oportunidade> vigentes() {
+//        vigentes = business.buscarOportunidadesVigentes();
+        return vigentes;
+    }
+
+//    @Override
+    public void adicionar(Oportunidade oportunidade) {
+        business.adicionar(oportunidade);
+    }
 }
