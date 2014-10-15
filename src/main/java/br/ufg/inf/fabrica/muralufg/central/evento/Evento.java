@@ -68,12 +68,15 @@ public class Evento {
 
 	@FormParam("dataInicio")
 	private Date dataInicio;
+	
+	@FormParam("nome")
+	private String nomeEvento;
 
 	@FormParam("dataFim")
 	private Date dataFim;
 
 	@FormParam("horaEvento")
-	private Calendar horaEvento;
+	private String horaEvento;
 
 	public Evento(){}
 	
@@ -83,6 +86,14 @@ public class Evento {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getNome() {
+		return nomeEvento;
+	}
+
+	public void setNome(String nomeEvento) {
+		this.nomeEvento = nomeEvento;
 	}
 
 	public Date getDataInicio() {
@@ -101,11 +112,11 @@ public class Evento {
 		this.dataFim = dataFim;
 	}
 
-	public Calendar getHoraEvento() {
+	public String getHoraEvento() {
 		return horaEvento;
 	}
 
-	public void setHoraEvento(Calendar horaEvento) {
+	public void setHoraEvento(String horaEvento) {
 		this.horaEvento = horaEvento;
 	}
 

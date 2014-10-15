@@ -64,9 +64,7 @@ public class EventoResource implements EventoRepository{
 	
 	@POST
 	@Override
-	public boolean adiciona(@BeanParam Evento evento) {
-		//se o beanparam nao funcionar, que tal se passarmos todos os parametros como @formparam?
-		//http://docs.oracle.com/javaee/7/api/javax/ws/rs/BeanParam.html
+	public boolean adiciona(Evento evento) {
 		business.adicionaEvento(evento);
 		return true;
 		
