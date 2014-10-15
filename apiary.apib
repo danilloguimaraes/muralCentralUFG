@@ -305,7 +305,8 @@ Recupera a lista de hashes SHA512 dos envios associados a uma token.
     + token (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
     + hash (optional, string) ... Uma hash especificando qual envio deverá ser baixado
     
-### Obter os envios de uma token [GET]
+### Obter os envios associados à esta token [GET]
+Opcionalmente, informa a hash de um dos envios para obter apenas o envio desejado.
 
 + Request (application/json)
 
@@ -332,7 +333,7 @@ Recupera a lista de hashes SHA512 dos envios associados a uma token.
 
     + token (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
     
-### Obter os envios de uma token [GET]
+### Obter as hashes dos envios associados à uma token [GET]
 
 + Request (application/json)
 
