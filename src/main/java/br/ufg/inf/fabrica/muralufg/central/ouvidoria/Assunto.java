@@ -54,14 +54,21 @@ package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
 import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * Detalhe de uma submissão dirigida à ouvidoria da UFG.
  * <p>Uma instância desta classe é um <i>value object</i>.</p>
  */
-public class Assunto {
+public class Assunto implements Comparable<Assunto>{
+    public Assunto(String conteudo, DateTime data, String fonte) {
+        this.conteudo = conteudo;
+        this.data = data;
+        this.fonte = fonte;
+        this.respondido = false;
+    }
 
     /**
      * Identifica anexos associados à submissão.
@@ -87,4 +94,58 @@ public class Assunto {
      * <b>ESTA INFORMAÇÃO NÃO É OBRIGATÓRIA.</b>
      */
     private String fonte;
+
+    /**
+     * Situação do assunto em relação a ele ter sido respondido ou não.
+     */
+    private boolean respondido;
+
+    public DateTime getData() {
+        return data;
+    }
+
+    public void setData(DateTime data) {
+        this.data = data;
+    }
+
+    public String getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public String getFonte() {
+        return fonte;
+    }
+
+    public void setFonte(String fonte) {
+        this.fonte = fonte;
+    }
+
+    public boolean isRespondido() {
+        return respondido;
+    }
+
+    public void foiRespondido() {
+        this.respondido = true;
+    }
+
+
+
+//
+
+
+
+    //	@Override
+    public int compareTo(Assunto o) {
+        // TODO Auto-generated method stub
+
+        DateTimeComparator comparador = DateTimeComparator.getInstance();
+
+        int resultadoComparacao = comparador.compare(this.getData(), o.getData());
+
+        return resultadoComparacao;
+    }
 }
