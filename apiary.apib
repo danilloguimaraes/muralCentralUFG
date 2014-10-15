@@ -17,11 +17,6 @@ Recupera restaurantes "próximos" aos campi da UFG.
     + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
 
 + Model  (application/json)
-    + Headers
-
-            Accept: application/json
-            User: username
-            Password: password
     + Body
 
             {
@@ -42,6 +37,13 @@ Recupera restaurantes "próximos" aos campi da UFG.
             }
 
 ### Obter um restaurante específico [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
 + Response 200
     [Restaurante][]
 
@@ -57,13 +59,103 @@ Recupera restaurantes "próximos" aos campi da UFG.
             {
                 "endereco" : "Rua Esperança"
             }
+            
 + Response 200
     [Restaurante][]
 
-
 ### Remove um restaurante da lista de restaurantes [DELETE]
 Remove o restaurante associado ao identificador fornecido.
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
 + Response 204
+
+## Restaurantes [/restaurantes]
+
++ Model  (application/json)
+    + Body
+
+            {
+                "restaurantes": [
+                    {
+                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "nome" : "Restaurante Universitário",
+                        "endereco" : "Rua Peroba",
+                        "horarios": [
+                            {"inicio": "07:00:00-03:00", "fim": "10:00:00-03:00"},
+                            {"inicio": "11:00:00-03:00", "fim": "15:00:00-03:00"},
+                            {"inicio": "17:00:00-03:00", "fim": "19:00:00-03:00"}
+                        ],
+                        "modalidades": [
+                            "Vegetariano", "Light", "Lanche"
+                        ],
+                        "formasPagamento": [
+                            "Cartão de Crédito", "Cartão de Débito", "Dinheiro"
+                        ]
+                    },
+                    
+                    {
+                        "id" : "af2d7407-12b9-a09f-42a9-4382018eb00e",
+                        "nome" : "Churrascaria do Boi",
+                        "endereco" : "Rua Esperança",
+                        "horarios": [
+                            {"inicio": "11:00:00-03:00", "fim": "17:00:00-03:00"},
+                            {"inicio": "19:00:00-03:00", "fim": "01:00:00-03:00"}
+                        ],
+                        "modalidades": [
+                            "Churrasco", "Rodízio"
+                        ],
+                        "formasPagamento": [
+                            "Cartão de Crédito", "Cartão de Débito", "Dinheiro", "Crediário", "Cheque"
+                        ]
+                    },
+                ]
+            }
+
+### Obter listagem com todos os restaurantes [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Restaurantes][]
+
+### Criar um novo restaurante [POST]
+Para criar um novo restaurante, forneça um *nome*, *endereco*, uma lista de *horarios* com *inicio* e *fim*, uma lista de *modalidades* e uma lista de *formas de pagamento*.
+
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "nome" : "Restaurante Universitário",
+                "endereco" : "Rua Peroba",
+                "horarios": [
+                    {"inicio": "07:00:00-03:00", "fim": "10:00:00-03:00"},
+                    {"inicio": "11:00:00-03:00", "fim": "15:00:00-03:00"},
+                    {"inicio": "17:00:00-03:00", "fim": "19:00:00-03:00"}
+                ],
+                "modalidades": [
+                    "Vegetariano", "Light", "Lanche"
+                ],
+                "formasPagamento": [
+                    "Cartão de Crédito", "Cartão de Débito", "Dinheiro"
+                ]
+            }
+            
++ Response 200
+    [Restaurante][]
 
 # Frase do dia [/frases]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
