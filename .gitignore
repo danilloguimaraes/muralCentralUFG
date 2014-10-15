@@ -2,4 +2,6 @@ out
 target
 workspace.xml
 tasks.xml
-.classpath
+*.classpath
+*.project
+*.prefs
