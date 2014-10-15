@@ -52,72 +52,36 @@
 
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-import javax.ws.rs.FormParam;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.ws.rs.*;
 
-/**
- * Representa uma palestra, um curso, um simpósio, um congresso ou similar.
- */
-@XmlRootElement
-public class Evento {
+@Path(value="/evento")
+public class EventoResource implements EventoRepository{
 
-	private Long id;
-
-	@FormParam("dataInicio")
-	private Date dataInicio;
+	EventoBusiness business = new EventoBusiness();
 	
-	@FormParam("nome")
-	private String nomeEvento;
-
-	@FormParam("dataFim")
-	private Date dataFim;
-
-	@FormParam("horaEvento")
-	private String horaEvento;
-
-	public Evento(){}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	@POST
+	@Override
+	public boolean adiciona(Evento evento) {
+		business.adicionaEvento(evento);
+		return true;
+		
 	}
 	
-	public String getNome() {
-		return nomeEvento;
+	@GET
+	@Produces("application/json")
+	@Override
+	public List<Evento> proximos(@PathParam("raio") int raioEmDias) {
+		return business.filtraEventoPorRaio(raioEmDias);
 	}
 
-	public void setNome(String nomeEvento) {
-		this.nomeEvento = nomeEvento;
-	}
-
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
-
-	public String getHoraEvento() {
-		return horaEvento;
-	}
-
-	public void setHoraEvento(String horaEvento) {
-		this.horaEvento = horaEvento;
+	@GET
+	@Produces("application/json")
+	@Override
+	public List<Evento> proximos(@PathParam("data") Date data, @PathParam("raio") int raioEmDias) {
+		return business.filtraEventoPorDataERaio(data,raioEmDias);
 	}
 
 }
