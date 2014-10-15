@@ -52,7 +52,6 @@
 
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.ws.rs.FormParam;
@@ -63,8 +62,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Evento {
-
+	
+	@FormParam("id")
 	private Long id;
+	
+	@FormParam("nome")
+	private String nomeEvento;
 
 	@FormParam("dataInicio")
 	private Date dataInicio;
@@ -73,10 +76,8 @@ public class Evento {
 	private Date dataFim;
 
 	@FormParam("horaEvento")
-	private Calendar horaEvento;
+	private String horaEvento;
 
-	public Evento(){}
-	
 	public Long getId() {
 		return id;
 	}
@@ -84,6 +85,15 @@ public class Evento {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public String getNome() {
+		return nomeEvento;
+	}
+
+	public void setNome(String nomeEvento) {
+		this.nomeEvento = nomeEvento;
+	}
+
 
 	public Date getDataInicio() {
 		return dataInicio;
@@ -101,11 +111,11 @@ public class Evento {
 		this.dataFim = dataFim;
 	}
 
-	public Calendar getHoraEvento() {
+	public String getHoraEvento() {
 		return horaEvento;
 	}
 
-	public void setHoraEvento(Calendar horaEvento) {
+	public void setHoraEvento(String horaEvento) {
 		this.horaEvento = horaEvento;
 	}
 

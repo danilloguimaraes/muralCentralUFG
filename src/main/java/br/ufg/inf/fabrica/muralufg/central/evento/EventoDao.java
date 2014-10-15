@@ -53,20 +53,80 @@
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
 import java.util.List;
+import br.ufg.inf.fabrica.muralufg.central.evento.Evento;
+import com.google.api.services.datastore.DatastoreV1;
+import com.google.api.services.datastore.client.Datastore;
+import com.google.api.services.datastore.client.DatastoreException;
+import com.google.protobuf.ByteString;
 
 public class EventoDao {
 
 	public void salvar(Evento evento) {
-		System.out.println("Implementar adição de eventos");
+		Datastore datastore = DaoHelper.getDataStore();
+		DatastoreV1.BeginTransactionRequest.Builder treq = DatastoreV1.BeginTransactionRequest
+				.newBuilder();
+		try {
+			DatastoreV1.BeginTransactionResponse tres = datastore
+					.beginTransaction(treq.build());
+			ByteString tx = tres.getTransaction();
+			DatastoreV1.LookupRequest.Builder lreq = DatastoreV1.LookupRequest
+					.newBuilder();
+			DatastoreV1.Key.Builder key = DatastoreV1.Key.newBuilder()
+					.addPathElement(
+							DatastoreV1.Key.PathElement.newBuilder()
+									.setKind("Evento").setId(evento.getId()));
+			lreq.addKey(key);
+			lreq.getReadOptionsBuilder().setTransaction(tx);
+			DatastoreV1.LookupResponse lresp = datastore.lookup(lreq.build());
+			DatastoreV1.CommitRequest.Builder creq = DatastoreV1.CommitRequest
+					.newBuilder();
+			creq.setTransaction(tx);
+			DatastoreV1.Entity entity;
+			if (lresp.getFoundCount() > 0) {
+				entity = lresp.getFound(0).getEntity();
+			} else {
+				DatastoreV1.Entity.Builder entityBuilder = DatastoreV1.Entity
+						.newBuilder();
+				entityBuilder.setKey(key);
+				entityBuilder.addProperty(DatastoreV1.Property
+						.newBuilder()
+						.setName("id")
+						.setValue(DatastoreV1.Value.newBuilder().setIntegerValue(
+										evento.getId())));
+				entityBuilder.addProperty(DatastoreV1.Property
+						.newBuilder()
+						.setName("nome")
+						.setValue(DatastoreV1.Value.newBuilder().setStringValue(
+										evento.getNome())));
+				entityBuilder.addProperty(DatastoreV1.Property
+						.newBuilder()
+						.setName("dataInicio")
+						.setValue(DatastoreV1.Value.newBuilder().setStringValue(
+										evento.getDataInicio().toString())));
+				entityBuilder.addProperty(DatastoreV1.Property
+						.newBuilder()
+						.setName("dataFim")
+						.setValue(DatastoreV1.Value.newBuilder().setStringValue(
+										evento.getDataFim().toString())));
+				entityBuilder.addProperty(DatastoreV1.Property
+						.newBuilder()
+						.setName("horaEvento")
+						.setValue(DatastoreV1.Value.newBuilder().setStringValue(
+										evento.getHoraEvento().toString())));
+				entity = entityBuilder.build();
+				creq.getMutationBuilder().addInsert(entity);
+			}
+			datastore.commit(creq.build());
+		} catch (DatastoreException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<Evento> filtraEventoPorRaio(int raioEmDias) {
-		System.out.println("Implementar filtro por raio");
 		return null;
 	}
 
 	public List<Evento> filtraEventoPorDataERaio(int raioEmDias) {
-		System.out.println("Implementar filtro por data e raio");
 		return null;
 	}
 
