@@ -27,9 +27,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Victor/Desktop/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-all-deps-v1beta2-rev1-2.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Victor/Desktop/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-all-deps-v1beta2-rev1-2.1.0-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Victor/Desktop/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-demos-all-deps-v1beta2-rev1-2.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Victor/Desktop/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-demos-all-deps-v1beta2-rev1-2.1.0-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -57,17 +57,21 @@ import java.util.List;
 
 import javax.ws.rs.*;
 
-@Path(value = "/evento")
-public class EventoResource implements EventoRepository {
-	EventoBusiness business = new EventoBusiness();
+@Path(value="/evento")
+public class EventoResource implements EventoRepository{
 
+	EventoBusiness business = new EventoBusiness();
+	
 	@POST
 	@Override
-	public boolean adiciona(Evento evento) {
+	public boolean adiciona(@BeanParam Evento evento) {
+		//se o beanparam nao funcionar, que tal se passarmos todos os parametros como @formparam?
+		//http://docs.oracle.com/javaee/7/api/javax/ws/rs/BeanParam.html
 		business.adicionaEvento(evento);
 		return true;
+		
 	}
-
+	
 	@GET
 	@Produces("application/json")
 	@Override
@@ -78,9 +82,8 @@ public class EventoResource implements EventoRepository {
 	@GET
 	@Produces("application/json")
 	@Override
-	public List<Evento> proximos(@PathParam("data") Date data,
-			@PathParam("raio") int raioEmDias) {
-		return business.filtraEventoPorDataERaio(data, raioEmDias);
+	public List<Evento> proximos(@PathParam("data") Date data, @PathParam("raio") int raioEmDias) {
+		return business.filtraEventoPorDataERaio(data,raioEmDias);
 	}
 
 }
