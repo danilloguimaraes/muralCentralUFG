@@ -2,6 +2,7 @@ package br.ufg.inf.fabrica.muralufg.central;
 
 import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoHealthCheck;
 import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoResource;
+import br.ufg.inf.fabrica.muralufg.central.identificacao.IdentificacaoResourceURL;
 import br.ufg.inf.fabrica.muralufg.central.upload.UploadResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -34,6 +35,17 @@ public class CentralApplication extends Application<CentralConfiguration> {
     public void initialize(Bootstrap<CentralConfiguration> bootstrap) {
         // nothing to do yet
     }
+    
+    public void iniciarURLBibioteca(CentralConfiguration configuracao, Environment environment){
+    	final IdentificacaoResourceURL versaoResource = new IdentificacaoResourceURL(
+                configuracao.getURL(),
+                configuracao.getKeyURL()
+        );
+        final IdentificacaoHealthCheck healthCheck =
+                new IdentificacaoHealthCheck(configuracao);
+        environment.healthChecks().register("identificacao", healthCheck);
+        environment.jersey().register(versaoResource);
+    }
 
     @Override
     public void run(CentralConfiguration configuracao,
@@ -52,5 +64,7 @@ public class CentralApplication extends Application<CentralConfiguration> {
         final IdentificacaoHealthCheck healthCheck =
                 new IdentificacaoHealthCheck(configuracao);
         environment.healthChecks().register("identificacao", healthCheck);
+        
+        iniciarURLBibioteca(configuracao, environment);
     }
 }
