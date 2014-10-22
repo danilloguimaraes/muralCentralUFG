@@ -55,7 +55,14 @@ import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;
 import com.google.api.services.datastore.DatastoreV1;
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreException;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import com.google.protobuf.ByteString;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -76,15 +83,33 @@ import java.util.Set;
  * */
 /**
  *
- * @author Luiz 
- * Classe responsável pela persistência dos dados relativos a
+ * @author Luiz Classe responsável pela persistência dos dados relativos a
  * Oportunidade, que deve ser feita no Google Datastore
  */
 public class OportunidadeDAO {
 
-    //Ainda não implementado
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+    //Ainda não finalizado 
     public Set<Oportunidade> buscarOportunidadesVigentes() {
-        return null;
+        Set<Oportunidade> oportunidades = new HashSet<>();
+        Query q = new Query("Oportunidade");
+        PreparedQuery pq = datastore.prepare(q);
+        for (Entity result : pq.asIterable()) {
+            Date dataInicio = (Date) result.getProperty("data_inicio");
+            Date dataFim = (Date) result.getProperty("data_fim");
+            String descricao = (String) result.getProperty("descricao");
+            int id = (int) result.getProperty("id");
+
+            Oportunidade oportunidade = new Oportunidade();
+            oportunidade.setDescricao(descricao);
+            oportunidade.setDataInicio(dataInicio);
+            oportunidade.setDataTermino(dataFim);
+            oportunidade.setId(id);
+
+            oportunidades.add(oportunidade);
+        }
+        return oportunidades;
     }
 
     public boolean adicionar(Oportunidade oportunidade) {

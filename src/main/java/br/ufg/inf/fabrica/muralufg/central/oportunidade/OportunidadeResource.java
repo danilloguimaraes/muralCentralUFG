@@ -71,11 +71,11 @@ public class OportunidadeResource implements OportunidadeRepository {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Set<Oportunidade> vigentes() {
-//        vigentes = business.buscarOportunidadesVigentes();
+        vigentes = business.buscarOportunidadesVigentes();
         return vigentes;
     }
 
-//    @Override
+    @Override
     public void adicionar(Oportunidade oportunidade) {
         business.adicionar(oportunidade);
     }
