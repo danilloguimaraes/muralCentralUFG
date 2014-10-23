@@ -51,21 +51,20 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observer;
 
 /**
- *
  * Classe de implementação dos metodos da classe abstrata Despertador
  */
 public class ImplementaDespertador extends Despertador {
 
-/**
- * No metodo que inicia o agendador e onde e feita a chamada do metodo
- * que verifica os agendamentos feitos 
- * @return 
- */
+    /**
+     * No metodo que inicia o agendador e onde e feita a chamada do metodo que
+     * verifica os agendamentos feitos
+     *
+     * @return
+     */
     @Override
     public boolean inicie() {
         boolean liberaDespertador;
@@ -81,17 +80,25 @@ public class ImplementaDespertador extends Despertador {
         return liberaDespertador;
     }
 
+    /**
+     *
+     * @param identificador
+     * @param instante
+     * @return
+     */
     @Override
-    public String desperteEm(String identificador, Date instante) {
-        return null;
+    public boolean desperteEm(String identificador, Date instante) {
+        boolean saidaDesperta = true;
+        
+        return saidaDesperta;
     }
 
     /**
-     * Para remover o agendamento e verificado na lista onde estão 
-     * os agendamentos comparando o indentificador passado com o identificador
-     * unico do agendamento na lista
+     * Metodo que remove o agendamento e verificado na lista onde estão os
+     * agendamentos
+     *
      * @param identificador
-     * @return 
+     * @return
      */
     @Override
     public boolean remove(String identificador) {
@@ -102,8 +109,8 @@ public class ImplementaDespertador extends Despertador {
             throw new IllegalArgumentException("Identificador vazio ou null!");
         } else {
             for (int loopLista = 0; loopLista < tamanhoLista; loopLista++) {
-                if (identificador == ListaAgendamentos.listaAgendamentos.get(loopLista).getId()) {
-                    ListaAgendamentos.listaAgendamentos.get(loopLista) = null;
+                if (identificador.equals(ListaAgendamentos.listaAgendamentos.get(loopLista).getId())) {
+                    //ListaAgendamentos.listaAgendamentos.get(loopLista) = null;
                     saida = true;
                 } else {
                     saida = false;
@@ -113,9 +120,17 @@ public class ImplementaDespertador extends Despertador {
         return saida;
     }
 
+    /**
+     *
+     * @param observador
+     * @return
+     */
     @Override
     public boolean adicionaObservador(Observer observador) {
-        return true;
+        boolean saidaObserver = true;
+        ListaAgendamentos.listaObservers.add(observador);
+        
+        return saidaObserver;
     }
 
 }

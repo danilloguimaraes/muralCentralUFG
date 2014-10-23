@@ -55,19 +55,19 @@ package br.ufg.inf.fabrica.muralufg.central.despertador;
 import java.util.Date;
 
 /**
- * Classe que modela os agendamentos que serão passados atraves de uma lista
+ * Classe que modela os agendamentos 
  */
 public class Agendamentos {
     
-    private int id;
+    private String id;
     private String descricao;
     private Date data;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

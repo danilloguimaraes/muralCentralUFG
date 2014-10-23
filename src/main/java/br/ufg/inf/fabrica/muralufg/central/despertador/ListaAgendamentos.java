@@ -49,20 +49,20 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
 import java.util.ArrayList;
+import java.util.Observer;
 
 /**
- *
- * Aqui parto do principio de que os agendamentos serão 
- * repassados atravez de uma lista onde os objetos passados são os agendamentos
- * criei uma classe Agendamento para mapear esse agendamentos e para que seja 
- * mais facil manupula-los
+ * Aqui parto do principio de que os agendamentos serão repassados atravez de
+ * uma lista onde os objetos passados são os agendamentos criei uma classe
+ * Agendamento para mapear esse agendamentos e para que seja mais facil
+ * manupula-los
  */
 public class ListaAgendamentos {
-    
+
     public static ArrayList<Agendamentos> listaAgendamentos;
-    
+    public static ArrayList<Observer> listaObservers;
+
 }

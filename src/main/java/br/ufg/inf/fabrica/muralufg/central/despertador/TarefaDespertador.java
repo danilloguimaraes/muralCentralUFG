@@ -49,7 +49,6 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
 import org.quartz.Job;
@@ -58,17 +57,17 @@ import org.quartz.JobExecutionException;
 
 /**
  *
- * Classe que reponde pelo agendamento que sera gerado,
- * e essa classe que sera executada no agendamento implementado
- * 
+ * Classe que reponde pelo agendamento que sera gerado, e essa classe que sera
+ * executada no agendamento implementado
+ *
  */
+public class TarefaDespertador implements Job {
 
-public class TarefaDespertador implements Job{
- /**
-  * Metodo que executara o agendamento conforme definido no tempo
-  * @param jec
-  * @throws JobExecutionException 
-  */
+    /**
+     * Metodo que executara o agendamento conforme definido no tempo
+     * @param jec
+     * @throws JobExecutionException
+     */
     @Override
     public void execute(JobExecutionContext jec) throws JobExecutionException {
         ImplementaDespertador despertador = new ImplementaDespertador();

@@ -49,7 +49,6 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
 import static org.quartz.CronScheduleBuilder.cronSchedule;
@@ -62,35 +61,39 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
-public class TriggerDespertador implements Runnable{
+public class TriggerDespertador implements Runnable {
+
     /**
-     * Metodo de agendamento da repetição que define de tempo em tempo
-     * um determinado job ira rodar
+     * Metodo de agendamento da repetição que define de tempo em tempo um
+     * determinado job ira rodar
      */
-    public void agendamentoDespertador(){
-        try{        
+    public void agendamentoDespertador() {
+        try {
             //Obtem a referencia do scheduler
             SchedulerFactory sf = new StdSchedulerFactory();
             Scheduler sched = sf.getScheduler();
-            
+
             //Criar um jobdetail
             JobDetail job = newJob(TarefaDespertador.class).withIdentity("Despertador", "grupo").build();
-            
+
             //Criar uma crontrigger - de 10 em 10 segundos
             CronTrigger trigger = newTrigger().withIdentity("agendamentoDespertador", "grupo")
-                .withSchedule(cronSchedule("0/10 * * * * ?")).build();
-            
+                    .withSchedule(cronSchedule("0/10 * * * * ?")).build();
+
             //Adicionar o job e cron
             sched.scheduleJob(job, trigger);
-            
+
             //Iniciar o scheduler
             sched.start();
-            
-        }catch(Exception x){
+
+        } catch (Exception x) {
             System.out.println("Erro ao iniciar crontab: " + x.getMessage());
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         agendamentoDespertador();
