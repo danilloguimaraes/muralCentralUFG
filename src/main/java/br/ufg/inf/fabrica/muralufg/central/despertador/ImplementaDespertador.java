@@ -51,8 +51,10 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observer;
+import java.util.Random;
 
 /**
  * Classe de implementação dos metodos da classe abstrata Despertador
@@ -67,14 +69,13 @@ public class ImplementaDespertador extends Despertador {
      */
     @Override
     public boolean inicie() {
-        boolean liberaDespertador;
+        boolean liberaDespertador = true;
 
         if (!ListaAgendamentos.listaAgendamentos.isEmpty()) {
-            TriggerDespertador trigger = new TriggerDespertador();
-            Thread t1 = new Thread(trigger);
-            t1.start();
-            liberaDespertador = true;
+            throw new IllegalArgumentException("Lista de agendamentos vazia crontab não iniciado");
         } else {
+            Crontab.agendamentoDespertador();
+            System.out.println("Crontab dos agendamentos iniciado com sucesso");
             liberaDespertador = false;
         }
         return liberaDespertador;
@@ -89,7 +90,12 @@ public class ImplementaDespertador extends Despertador {
     @Override
     public boolean desperteEm(String identificador, Date instante) {
         boolean saidaDesperta = true;
-        
+
+        Agendamentos obj = new Agendamentos();
+        obj.setData(instante);
+        obj.setId(identificador);
+        PersistenciaDespertador.inserirAgendamento(obj);
+
         return saidaDesperta;
     }
 
@@ -102,15 +108,17 @@ public class ImplementaDespertador extends Despertador {
      */
     @Override
     public boolean remove(String identificador) {
-        int tamanhoLista = ListaAgendamentos.listaAgendamentos.size();
+        ArrayList<Agendamentos> lista = PersistenciaDespertador.caregaAgendamentos();
+        int tamanhoLista = lista.size();
         boolean saida = true;
 
-        if (identificador.equals("") || identificador == null) {
-            throw new IllegalArgumentException("Identificador vazio ou null!");
+        if (identificador.equals("")) {
+            throw new IllegalArgumentException("Identificador vazio!");
         } else {
             for (int loopLista = 0; loopLista < tamanhoLista; loopLista++) {
-                if (identificador.equals(ListaAgendamentos.listaAgendamentos.get(loopLista).getId())) {
-                    //ListaAgendamentos.listaAgendamentos.get(loopLista) = null;
+                if (identificador.equals(lista.get(loopLista).getId())) {
+                    PersistenciaDespertador.deletarAgendamento(lista.get(loopLista));
+                    System.out.println("Agendamento deletado com sucesso");
                     saida = true;
                 } else {
                     saida = false;
@@ -128,9 +136,26 @@ public class ImplementaDespertador extends Despertador {
     @Override
     public boolean adicionaObservador(Observer observador) {
         boolean saidaObserver = true;
-        ListaAgendamentos.listaObservers.add(observador);
+        /**
+         * Aqui peguei um id aleatorio na lista de agendamentos para que o observer
+         * seja lincado com um agendamento de seu interesse, essa implementação 
+         * pode ser alterada aqui fiz assim para ter o agendamento funcionando
+         */
+        Random rd = new Random();
+        String id = ListaAgendamentos.listaAgendamentos.get(rd.nextInt(ListaAgendamentos.listaAgendamentos.size())).getId();
         
+        Observadores obs = new Observadores();
+        obs.setObserv(observador);
+        obs.setId(id);
+        
+        if (observador == null) {
+            saidaObserver = false;
+            throw new IllegalArgumentException("Observer passado e nulo");
+        } else {
+            ListaAgendamentos.listaObservers.add(obs);
+            System.out.println("Observer adicionado com sucesso");
+            saidaObserver = true;
+        }
         return saidaObserver;
     }
-
 }

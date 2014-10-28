@@ -51,53 +51,46 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import org.quartz.CronTrigger;
+import static org.quartz.JobBuilder.newJob;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerFactory;
+import static org.quartz.TriggerBuilder.newTrigger;
+import org.quartz.impl.StdSchedulerFactory;
 
-public class TriggerDespertador implements Runnable {
+/**
+ *
+ * @author 3db
+ */
+public class Crontab {
 
     /**
-     * Esse e o metodo que faz a chamada de execução da tarefa conforme
-     * agendamento
-     *
-     * @return
+     * Metodo de agendamento da repetição que define de tempo em tempo um
+     * determinado job ira rodar
      */
-    public boolean acionaUpdateObserver() {
-        boolean saidaUpdateObserver = true;
-        ArrayList<Observadores> listaObservers = ListaAgendamentos.listaObservers;
-        ArrayList<Agendamentos> listaAgendamentos = ListaAgendamentos.listaAgendamentos;
-        Calendar calendar = Calendar.getInstance();
+    public static void agendamentoDespertador() {
+        try {
+            //Obtem a referencia do scheduler
+            SchedulerFactory sf = new StdSchedulerFactory();
+            Scheduler sched = sf.getScheduler();
 
-        for (int loopObs = 0; loopObs < listaObservers.size(); loopObs++) {
-            for (int loopAgd = 0; loopAgd < listaAgendamentos.size(); loopAgd++) {
-                if ((listaObservers.get(loopObs).getId().equals(listaAgendamentos.get(loopAgd).getId()))
-                        && (listaAgendamentos.get(loopAgd).getData().compareTo(calendar.getTime())) == 1) {
-                    listaObservers.get(loopObs).getObserv().update(null, listaObservers.get(loopObs));
-                }
-            }
+            //Criar um jobdetail
+            JobDetail job = newJob(TarefaDespertador.class).withIdentity("Despertador", "grupo").build();
+
+            //Criar uma crontrigger - de 10 em 10 segundos
+            CronTrigger trigger = newTrigger().withIdentity("agendamentoDespertador", "grupo")
+                    .withSchedule(cronSchedule("0/10 * * * * ?")).build();
+
+            //Adicionar o job e cron
+            sched.scheduleJob(job, trigger);
+
+            //Iniciar o scheduler
+            sched.start();
+
+        } catch (Exception x) {
+            System.out.println("Erro ao iniciar crontab: " + x.getMessage());
         }
-        return saidaUpdateObserver;
     }
-
-    /**
-     * Metodo que formata a data
-     *
-     * @param data
-     * @return
-     */
-    public String formataData(Date data) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(data);
-    }
-
-    /**
-     * Metodo que executado quando a thread e iniciada
-     */
-    @Override
-    public void run() {
-        acionaUpdateObserver();
-    }
-
 }

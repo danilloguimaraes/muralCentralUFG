@@ -63,6 +63,6 @@ import java.util.Observer;
 public class ListaAgendamentos {
 
     public static ArrayList<Agendamentos> listaAgendamentos;
-    public static ArrayList<Observer> listaObservers;
+    public static ArrayList<Observadores> listaObservers;
 
 }

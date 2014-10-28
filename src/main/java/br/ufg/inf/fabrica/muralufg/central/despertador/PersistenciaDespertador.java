@@ -51,53 +51,36 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
-public class TriggerDespertador implements Runnable {
-
+/**
+ * Classe base para a persistencia
+ * obs: a parte de persistencia nao de competencia da implementação do despertador
+ * essa classe base foi criada para os metodos possam ser chamados
+ * @author 3db
+ */
+public class PersistenciaDespertador {
+    
     /**
-     * Esse e o metodo que faz a chamada de execução da tarefa conforme
-     * agendamento
-     *
-     * @return
+     * Insere um agendamento
+     * @param agendamento 
      */
-    public boolean acionaUpdateObserver() {
-        boolean saidaUpdateObserver = true;
-        ArrayList<Observadores> listaObservers = ListaAgendamentos.listaObservers;
-        ArrayList<Agendamentos> listaAgendamentos = ListaAgendamentos.listaAgendamentos;
-        Calendar calendar = Calendar.getInstance();
-
-        for (int loopObs = 0; loopObs < listaObservers.size(); loopObs++) {
-            for (int loopAgd = 0; loopAgd < listaAgendamentos.size(); loopAgd++) {
-                if ((listaObservers.get(loopObs).getId().equals(listaAgendamentos.get(loopAgd).getId()))
-                        && (listaAgendamentos.get(loopAgd).getData().compareTo(calendar.getTime())) == 1) {
-                    listaObservers.get(loopObs).getObserv().update(null, listaObservers.get(loopObs));
-                }
-            }
-        }
-        return saidaUpdateObserver;
+    public static void inserirAgendamento(Agendamentos agendamento){
     }
-
+    
     /**
-     * Metodo que formata a data
-     *
-     * @param data
-     * @return
+     * Deleta um agendamento
+     * @param agendamento 
      */
-    public String formataData(Date data) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(data);
+    public static void deletarAgendamento(Agendamentos agendamento){      
     }
-
+    
     /**
-     * Metodo que executado quando a thread e iniciada
+     *  Carrega todos os agendamentos feitos em uma lista
+     * @return 
      */
-    @Override
-    public void run() {
-        acionaUpdateObserver();
+    public static ArrayList<Agendamentos> caregaAgendamentos(){
+        ArrayList<Agendamentos> list = null;
+        return list;
     }
-
 }

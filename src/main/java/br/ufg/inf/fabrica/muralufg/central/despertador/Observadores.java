@@ -49,55 +49,33 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
+
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Observer;
 
-public class TriggerDespertador implements Runnable {
+/**
+ *
+ * @author 3db
+ */
+public class Observadores {
+    
+    String id;
+    Observer observ;
 
-    /**
-     * Esse e o metodo que faz a chamada de execução da tarefa conforme
-     * agendamento
-     *
-     * @return
-     */
-    public boolean acionaUpdateObserver() {
-        boolean saidaUpdateObserver = true;
-        ArrayList<Observadores> listaObservers = ListaAgendamentos.listaObservers;
-        ArrayList<Agendamentos> listaAgendamentos = ListaAgendamentos.listaAgendamentos;
-        Calendar calendar = Calendar.getInstance();
-
-        for (int loopObs = 0; loopObs < listaObservers.size(); loopObs++) {
-            for (int loopAgd = 0; loopAgd < listaAgendamentos.size(); loopAgd++) {
-                if ((listaObservers.get(loopObs).getId().equals(listaAgendamentos.get(loopAgd).getId()))
-                        && (listaAgendamentos.get(loopAgd).getData().compareTo(calendar.getTime())) == 1) {
-                    listaObservers.get(loopObs).getObserv().update(null, listaObservers.get(loopObs));
-                }
-            }
-        }
-        return saidaUpdateObserver;
+    public String getId() {
+        return id;
     }
 
-    /**
-     * Metodo que formata a data
-     *
-     * @param data
-     * @return
-     */
-    public String formataData(Date data) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(data);
+    public void setId(String id) {
+        this.id = id;
     }
 
-    /**
-     * Metodo que executado quando a thread e iniciada
-     */
-    @Override
-    public void run() {
-        acionaUpdateObserver();
+    public Observer getObserv() {
+        return observ;
     }
 
+    public void setObserv(Observer observ) {
+        this.observ = observ;
+    }
 }

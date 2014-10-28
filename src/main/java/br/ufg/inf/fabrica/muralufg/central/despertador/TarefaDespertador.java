@@ -70,7 +70,8 @@ public class TarefaDespertador implements Job {
      */
     @Override
     public void execute(JobExecutionContext jec) throws JobExecutionException {
-        ImplementaDespertador despertador = new ImplementaDespertador();
-        despertador.desperteEm(null, null);
+        TriggerDespertador trigger = new TriggerDespertador();
+        Thread threadUpdate = new Thread(trigger);
+        threadUpdate.start();
     }
 }

@@ -60,7 +60,6 @@ import java.util.Date;
 public class Agendamentos {
     
     private String id;
-    private String descricao;
     private Date data;
 
     public String getId() {
@@ -69,14 +68,6 @@ public class Agendamentos {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public Date getData() {
