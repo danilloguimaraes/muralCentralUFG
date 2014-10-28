@@ -52,20 +52,12 @@
 
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
-import java.util.Date;
-import java.util.List;
-
 /**
  * Estabelecimento destinado ao preparo, comercialização ou distribuição
  * de refeições ou alimentos, localizado próximo aos campi da UFG.
  */
 public class Restaurante {
-    private String id;
-    private String campus;
-    private String nome;
-    private List<String> formaPagamento;
-    private Date inicioHorario;
-    private Date fimHorario;
+   
 
     /**
      * Identifica se o presente restaurante é "semelhante"

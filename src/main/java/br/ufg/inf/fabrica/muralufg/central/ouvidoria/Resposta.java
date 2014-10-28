@@ -52,7 +52,7 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+
 
 /**
  * Resposta produzida para um dado assunto submetido para a ouvidoria.
@@ -60,5 +60,5 @@ import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
  * identifica, uma resposta obrigatoriamente identifica o seu autor.</p>
  */
 public class Resposta extends Assunto {
-    private Usuario autor;
+   
 }

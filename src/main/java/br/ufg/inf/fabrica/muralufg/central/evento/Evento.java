@@ -52,13 +52,12 @@
 
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
-import java.util.Date;
+
 
 /**
  * Representa uma palestra, um curso, um simpósio, um congresso ou
  * similar.
  */
 public class Evento {
-    private Date dataInicio;
-    private Date dataFim;
+
 }

@@ -21,8 +21,13 @@ public class CentralApplication extends Application<CentralConfiguration> {
      * @param args Argumentos fornecidos.
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
-        new CentralApplication().run(args);
+    public static void main(String[] args)  {
+        try {
+			new CentralApplication().run(args);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
