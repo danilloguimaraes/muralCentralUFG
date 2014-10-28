@@ -52,30 +52,28 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.util.Set;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
- * @author Luiz
+ * 
+ * @author Luiz Henrique
+ * 
+ * Essa classe é a implementação da interface OportunidadeRepository
  */
-@Path("/oportunidade")
-public class OportunidadeResource implements OportunidadeRepository {
 
-    private Set<Oportunidade> vigentes;
-    private final OportunidadeBusiness business = new OportunidadeBusiness();
+@Path(value = "/oportunidade")
+public class OportunidadeResource {
+
+    private OportunidadeBusiness business = new OportunidadeBusiness();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
     public Set<Oportunidade> vigentes() {
-        vigentes = business.buscarOportunidadesVigentes();
-        return vigentes;
+        return business.vigentes();
     }
 
-    @Override
+    @POST
     public void adicionar(Oportunidade oportunidade) {
         business.adicionar(oportunidade);
     }

@@ -50,30 +50,50 @@ package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
+
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreFactory;
 import com.google.api.services.datastore.client.DatastoreHelper;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
 /**
- * 
- * @author Luiz
- * 
- * Essa classe é utilitária para configurações do Google Datastore
- */
+ *
+ * @author Luiz Henrique
+ *
+ * Essa classe é utilitária para configurações do Google Datastore para servidor local de simulação do datastore
+ * Para testar o DAO usando o Google Datastore localmente
+ *
+ * 1 - Baixar o arquivo http://storage.googleapis.com/gcd/tools/gcd-v1beta2-rev1-2.1.1.zip
+ * 2 - Descompactar o arquivo em uma pasta
+ * 3 - Executar na linha de comando:
+ *       gcd-v1beta2-rev1-2.1.1/gcd.exe create my-dataset
+ *       gcd-v1beta2-rev1-2.1.1/gcd.sh start my-dataset
+ * 4 - Criar duas variáveis de ambiente:
+ *       DATASTORE_HOST=http://localhost:8080
+ *       DATASTORE_DATASET=my-dataset
+ * */
 public class DaoHelper {
+
     //Nome do dataset escolhido no momento da configuração local
-    private static final String DATASET_ID = "dataset-id";
+
+    private static final String DATASET_ID = "my-dataset";
+
+    /**
+     * 
+     * @return configuração da conexão com o google data store retornando uma instância do Datastore a partir do DATASET_ID informado.
+     */
     public static Datastore getDataStore() {
         Datastore datastore = null;
         try {
-            //configuração da conexão com o google data store
             datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsfromEnv().dataset(DATASET_ID).build());
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (GeneralSecurityException exception) {
+            System.err.println("Erro de segurança ao fazer a conexão com o banco de dados: " + exception.getMessage());
+            System.exit(1);
+        } catch (IOException exception) {
+            System.err.println("Erro de E/S ao conectar com o banco de dados: " + exception.getMessage());
+            System.exit(1);
         }
         return datastore;
     }

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
 
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;
 import java.util.Date;
 import java.util.Set;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,25 +18,25 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Luiz
+ * @author Luiz Henrique
  */
 public class OportunidadeDAOTest {
-    
+
     public OportunidadeDAOTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -47,13 +47,17 @@ public class OportunidadeDAOTest {
     //Ainda não implementado
     @Test
     public void testBuscarOportunidadesVigentes() {
-        System.out.println("buscarOportunidadesVigentes - ainda não implementado");
+        System.out.println("buscarOportunidadesVigentes");
+        Oportunidade oportunidade = new Oportunidade();
+        oportunidade.setId(36);
+        oportunidade.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
+        oportunidade.setDataInicio(new DateTime(System.currentTimeMillis()));
+        oportunidade.setDataFim(new DateTime(System.currentTimeMillis()));
+
         OportunidadeDAO instance = new OportunidadeDAO();
-        Set<Oportunidade> expResult = null;
-        Set<Oportunidade> result = instance.buscarOportunidadesVigentes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.adicionar(oportunidade);
+        Set<Oportunidade> oportunidadesVigentes = instance.buscarOportunidadesVigentes();
+        assertEquals(1, oportunidadesVigentes.size());
     }
 
     /**
@@ -61,16 +65,17 @@ public class OportunidadeDAOTest {
      */
     @Test
     public void testAdicionar() {
-        System.out.println("adicionar");
+        System.out.println("inserir");
         Oportunidade oportunidade = new Oportunidade();
-        oportunidade.setId(3);
-        oportunidade.setDescricao("Oportunidade de Estagio no LabTime.");
-        oportunidade.setDataInicio(new Date(System.currentTimeMillis()));
-        oportunidade.setDataTermino(new Date(System.currentTimeMillis()));
-        
+        oportunidade.setId(36);
+        oportunidade.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
+        oportunidade.setDataInicio(new DateTime(System.currentTimeMillis()));
+        oportunidade.setDataFim(new DateTime(System.currentTimeMillis()));
+
         OportunidadeDAO instance = new OportunidadeDAO();
-        boolean result = instance.adicionar(oportunidade);
-        assertTrue(result);
+        instance.adicionar(oportunidade);
+        Set<Oportunidade> oportunidadesVigentes = instance.buscarOportunidadesVigentes();
+        assertEquals(1, oportunidadesVigentes.size());
     }
-    
+
 }

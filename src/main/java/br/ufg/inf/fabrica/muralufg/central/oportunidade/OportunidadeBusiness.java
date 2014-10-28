@@ -55,10 +55,14 @@ import br.ufg.inf.fabrica.muralufg.central.oportunidade.dao.OportunidadeDAO;
 import java.util.Set;
 
 /**
- *
- * @author Luiz
+ * 
+ * @author Luiz Henrique
+ * 
+ * Classe responsável pela regra de negócio relacioda a entidade Oportunidade.
+ * Implementando todos os Métodos da OportunidadeRepository.
+ * Essa classe oferece os serviços relaciodados a Oportunidade.
  */
-public class OportunidadeBusiness {
+public class OportunidadeBusiness implements OportunidadeRepository {
 
     private OportunidadeDAO oportunidadeDAO;
 
@@ -66,12 +70,14 @@ public class OportunidadeBusiness {
         oportunidadeDAO = new OportunidadeDAO();
     }
 
-    public Set<Oportunidade> buscarOportunidadesVigentes() {
-        return oportunidadeDAO.buscarOportunidadesVigentes();
-    }
-
+    @Override
     public void adicionar(Oportunidade oportunidade) {
         oportunidadeDAO.adicionar(oportunidade);
+    }
+
+    @Override
+    public Set<Oportunidade> vigentes() {
+        return oportunidadeDAO.buscarOportunidadesVigentes();
     }
 
 }
