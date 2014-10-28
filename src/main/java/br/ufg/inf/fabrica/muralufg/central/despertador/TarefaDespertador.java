@@ -64,7 +64,8 @@ import org.quartz.JobExecutionException;
 public class TarefaDespertador implements Job {
 
     /**
-     * Metodo que executara o agendamento conforme definido no tempo
+     * Metodo que sera executado executado quando agendamento na classe Crontab
+     * na classe Crontab for chamado
      * @param jec
      * @throws JobExecutionException
      */

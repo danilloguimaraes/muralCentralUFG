@@ -52,7 +52,6 @@
 package br.ufg.inf.fabrica.muralufg.central.despertador;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 /**
  * Aqui parto do principio de que os agendamentos serão repassados atravez de

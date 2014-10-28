@@ -55,7 +55,7 @@ package br.ufg.inf.fabrica.muralufg.central.despertador;
 import java.util.Observer;
 
 /**
- *
+ * Esta e classe que modela os observadores
  * @author 3db
  */
 public class Observadores {

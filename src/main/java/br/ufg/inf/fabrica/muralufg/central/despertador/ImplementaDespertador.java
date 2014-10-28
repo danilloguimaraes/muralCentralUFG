@@ -69,27 +69,27 @@ public class ImplementaDespertador extends Despertador {
      */
     @Override
     public boolean inicie() {
-        boolean liberaDespertador = true;
+        boolean saidaDespertador = false;
 
         if (!ListaAgendamentos.listaAgendamentos.isEmpty()) {
             throw new IllegalArgumentException("Lista de agendamentos vazia crontab não iniciado");
         } else {
             Crontab.agendamentoDespertador();
             System.out.println("Crontab dos agendamentos iniciado com sucesso");
-            liberaDespertador = false;
+            saidaDespertador = true;
         }
-        return liberaDespertador;
+        return saidaDespertador;
     }
 
     /**
-     *
+     * Metódo que recebe as informações do agendamento
      * @param identificador
      * @param instante
      * @return
      */
     @Override
     public boolean desperteEm(String identificador, Date instante) {
-        boolean saidaDesperta = true;
+        boolean saidaDesperta = false;
 
         Agendamentos obj = new Agendamentos();
         obj.setData(instante);
@@ -100,7 +100,7 @@ public class ImplementaDespertador extends Despertador {
     }
 
     /**
-     * Metodo que remove o agendamento e verificado na lista onde estão os
+     * Metódo que remove o agendamento e verificado na lista onde estão os
      * agendamentos
      *
      * @param identificador
@@ -108,9 +108,9 @@ public class ImplementaDespertador extends Despertador {
      */
     @Override
     public boolean remove(String identificador) {
+        boolean saidaRemove = false;
         ArrayList<Agendamentos> lista = PersistenciaDespertador.caregaAgendamentos();
         int tamanhoLista = lista.size();
-        boolean saida = true;
 
         if (identificador.equals("")) {
             throw new IllegalArgumentException("Identificador vazio!");
@@ -119,37 +119,35 @@ public class ImplementaDespertador extends Despertador {
                 if (identificador.equals(lista.get(loopLista).getId())) {
                     PersistenciaDespertador.deletarAgendamento(lista.get(loopLista));
                     System.out.println("Agendamento deletado com sucesso");
-                    saida = true;
-                } else {
-                    saida = false;
+                    saidaRemove = true;
                 }
             }
         }
-        return saida;
+        return saidaRemove;
     }
 
     /**
-     *
+     * Neste metodo adicionamos observer interessado em agendamentos
      * @param observador
      * @return
      */
     @Override
     public boolean adicionaObservador(Observer observador) {
-        boolean saidaObserver = true;
+        boolean saidaObserver = false;
         /**
-         * Aqui peguei um id aleatorio na lista de agendamentos para que o observer
-         * seja lincado com um agendamento de seu interesse, essa implementação 
-         * pode ser alterada aqui fiz assim para ter o agendamento funcionando
+         * Aqui peguei um id aleatorio na lista de agendamentos para que o
+         * observer seja lincado com um agendamento de seu interesse, essa
+         * implementação pode ser alterada aqui fiz assim para ter o agendamento
+         * funcionando
          */
         Random rd = new Random();
         String id = ListaAgendamentos.listaAgendamentos.get(rd.nextInt(ListaAgendamentos.listaAgendamentos.size())).getId();
-        
+
         Observadores obs = new Observadores();
         obs.setObserv(observador);
         obs.setId(id);
-        
+
         if (observador == null) {
-            saidaObserver = false;
             throw new IllegalArgumentException("Observer passado e nulo");
         } else {
             ListaAgendamentos.listaObservers.add(obs);
