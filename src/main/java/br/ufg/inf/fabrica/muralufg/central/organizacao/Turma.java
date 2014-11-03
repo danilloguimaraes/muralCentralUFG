@@ -59,14 +59,24 @@ import java.util.Set;
  * Representa uma turma.
  */
 public class Turma {
+    private String turmaId;
     private Date semestre;
     private Docente responsavel;
     private Set<Aluno> matriculados;
 
-    public Turma(Date semestre, Docente responsavel, Set<Aluno> matriculados) {
+    public Turma(String turmaId, Date semestre, Docente responsavel, Set<Aluno> matriculados) {
         this.semestre = semestre;
         this.responsavel = responsavel;
         this.matriculados = matriculados;
+        this.turmaId = turmaId;
+    }
+
+    public String getTurmaId() {
+        return turmaId;
+    }
+
+    public void setTurmaId(String turmaId) {
+        this.turmaId = turmaId;
     }
 
     public Date getSemestre() {
