@@ -62,7 +62,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
-    private static String URI = "http://testedatastore1000.appspot.com";
+     private static String URI = "http://testedatastore1000.appspot.com";
+   // private static String URI = "http://localhost:8082";
 
     /**
      * Obtém o JSON via http REST da servidor
@@ -86,7 +87,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<String> dispositivos(Turma turma) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/dispositivos/turmaid/" + turma.getTurmaId());
+        Set<String> dispositivos = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            dispositivos = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dispositivos;
     }
 
     /**
