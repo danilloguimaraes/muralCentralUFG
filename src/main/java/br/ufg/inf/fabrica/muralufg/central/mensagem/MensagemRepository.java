@@ -107,6 +107,6 @@ public interface MensagemRepository {
      * @param idUsuario
      * @return true ou false
      */
-    public boolean isUsuarioPodeExcluir(Long idUsuario);
+    public boolean isUsuarioPodeCancelar(Long idUsuario);
 
 }

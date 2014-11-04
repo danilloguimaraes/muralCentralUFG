@@ -16,8 +16,8 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 			return autorizarEnvio(new Long(usuario), escopo);
 		}
 		
-		if (acao.equals(AcaoEnum.EXCLUIR_REGISTRO)){
-			return autorizaExcluir(new Long(usuario));
+		if (acao.equals(AcaoEnum.CANCELAR_MENSAGEM)){
+			return autorizaCancelar(new Long(usuario));
 		}
 		
 		if (acao.equals(AcaoEnum.GRAVA_REGISTRO)){
@@ -80,11 +80,11 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		return autorizado;
 	}
 
-	public boolean autorizaExcluir(Long idUsuario) {
+	public boolean autorizaCancelar(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
-		autorizado = mensagemRepository.isUsuarioPodeExcluir(idUsuario);
+		autorizado = mensagemRepository.isUsuarioPodeCancelar(idUsuario);
 		
 		return autorizado;
 	}
