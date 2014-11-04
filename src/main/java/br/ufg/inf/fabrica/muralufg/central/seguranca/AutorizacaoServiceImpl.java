@@ -21,14 +21,10 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 
 	/**
 	 * 
-	 * @param usuario
-	 * @param acao
-	 * @param escopo
+	 * @param idRemetente
+	 * @param idsDestinatariosString
 	 *            String definindo os destinarios para quais a mensagem será
-	 *            enviada, seguindo a seguinte regra TIPO_ESCOPO_ENUM:ID_ESCOPO,
-	 *            onde o TIPO_ESCOPO_ENUM representa um enumerado
-	 *            TipoEscopoEnum, e o ID_ESCOPO o id do respectivo escopo que o
-	 *            enum representa.
+	 *            enviada, podendo ser id de um curso, turma, aluno, instituto, etc.
 	 * @return
 	 * 
 	 */
