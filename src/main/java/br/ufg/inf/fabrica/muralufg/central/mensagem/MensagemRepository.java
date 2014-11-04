@@ -93,4 +93,20 @@ public interface MensagemRepository {
      * de mensagem.
      */
     public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente);
+    
+    
+    
+    /**	Verifica se o usuário passado tem permissão de gravar determinado item
+     * @param idUsuario
+     * @return true ou false
+     */
+    public boolean isUsuarioPodeGravar(Long idUsuario);
+    
+    
+    /**	Verifica se o usuário passado tem permissão de excluir determinado item
+     * @param idUsuario
+     * @return true ou false
+     */
+    public boolean isUsuarioPodeExcluir(Long idUsuario);
+
 }

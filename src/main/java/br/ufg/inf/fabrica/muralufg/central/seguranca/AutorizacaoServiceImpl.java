@@ -15,6 +15,14 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		if (acao.equals(AcaoEnum.ENVIAR_MENSAGEM) && escopo != null) {
 			return autorizarEnvio(new Long(usuario), escopo);
 		}
+		
+		if (acao.equals(AcaoEnum.EXCLUIR_REGISTRO)){
+			return autorizaExcluir(new Long(usuario));
+		}
+		
+		if (acao.equals(AcaoEnum.GRAVA_REGISTRO)){
+			return autorizaGravar(new Long(usuario));
+		}
 
 		return false;
 	}
@@ -42,7 +50,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 			}
 		}
 		
-		verificarSePossuiPermissaoDeEnvioParaTodosOsIds(idsPermitidosParaEnvioDeMensagem, idsDestinatarios);
+		autorizado = verificarSePossuiPermissaoDeEnvioParaTodosOsIds(idsPermitidosParaEnvioDeMensagem, idsDestinatarios);
 		
 		return autorizado;
 	}
@@ -61,5 +69,23 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		return true;
+	}
+	
+	public boolean autorizaGravar(Long idUsuario) {
+		
+		boolean autorizado = false;
+		
+		autorizado = mensagemRepository.isUsuarioPodeGravar(idUsuario);
+		
+		return autorizado;
+	}
+
+	public boolean autorizaExcluir(Long idUsuario) {
+		
+		boolean autorizado = false;
+		
+		autorizado = mensagemRepository.isUsuarioPodeExcluir(idUsuario);
+		
+		return autorizado;
 	}
 }
