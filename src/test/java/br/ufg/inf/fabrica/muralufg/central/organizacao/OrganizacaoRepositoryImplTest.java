@@ -49,12 +49,10 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-package central.organizacao;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 
-import br.ufg.inf.fabrica.muralufg.central.organizacao.OrganizacaoRepository;
-import br.ufg.inf.fabrica.muralufg.central.organizacao.OrganizacaoRepositoryImpl;
-import br.ufg.inf.fabrica.muralufg.central.organizacao.Turma;
+import br.ufg.inf.fabrica.muralufg.central.organizacao.*;
 import org.junit.*;
 
 import java.util.HashSet;
@@ -67,13 +65,13 @@ import static org.junit.Assert.assertEquals;
  * @author Eurismar
  */
 public class OrganizacaoRepositoryImplTest {
-
+    static OrganizacaoRepository repository = null;
     public OrganizacaoRepositoryImplTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("Iniciando os testes");
+        repository = new OrganizacaoRepositoryImpl();
     }
 
     @AfterClass
@@ -94,6 +92,21 @@ public class OrganizacaoRepositoryImplTest {
     @Test
     public void testDispositivos(){
         Set<String> dispositivosEsperados = new HashSet<String>();
+        dispositivosEsperados.add("854938594398588385398583");
+        dispositivosEsperados.add("39290309239032");
+        dispositivosEsperados.add("390248284320989");
+        dispositivosEsperados.add("38832883823888");
+        dispositivosEsperados.add("93093290239902");
+
+        Turma turma = new Turma("1",null,null,null);
+        Set<String> dispositivosResultado =   repository.dispositivos(turma);
+
+        assertEquals(dispositivosEsperados,dispositivosResultado);
+    }
+
+    @Test
+    public void testDispositivosAlunos() {
+        Set<String> dispositivosEsperados = new HashSet<String>();
         dispositivosEsperados.add("93093290239902");
         dispositivosEsperados.add("38832883823888");
         dispositivosEsperados.add("390248284320989");
@@ -101,22 +114,41 @@ public class OrganizacaoRepositoryImplTest {
 
 
         Turma turma = new Turma("1",null,null,null);
-        OrganizacaoRepository repository = new OrganizacaoRepositoryImpl();
+
         Set<String> dispositivosResultado =   repository.dispositivosAlunos(turma);
 
         assertEquals(dispositivosEsperados,dispositivosResultado);
     }
-
-    @Test
-    public void testDispositivosAlunos() {
-
-    }
     @Test
     public void testAlunos() {
+        Turma turma = new Turma("1",null,null,null);
+        Set<Aluno> alunosEsperados = new HashSet<>();
 
+        Aluno aluno1 = new Aluno("João","123456");
+        Aluno aluno2 = new Aluno("Pedro","11223344");
+        Aluno aluno3 = new Aluno("Filipe","22334455");
+
+        alunosEsperados.add(aluno1);
+        alunosEsperados.add(aluno2);
+        alunosEsperados.add(aluno3);
+
+        Set<Aluno> alunosResultado = repository.alunos(turma);
+        assertEquals(alunosEsperados, alunosResultado);
     }
     @Test
     public void testDocentes_Turma() {
+        Turma turma = new Turma("1",null,null,null);
+        Set<Docente> docentesEsperados = new HashSet<>();
+        Set<Turma> turmas = new HashSet<>();
+        turmas.add(turma);
+        Orgao orgao = new Orgao("INF",null,null);
+        Docente docente1 = new Docente("Marcelo",turmas,orgao);
+        Docente docente2 = new Docente("Fabio",turmas,orgao);
+        docentesEsperados.add(docente1);
+        docentesEsperados.add(docente2);
+
+        Set<Docente> docentesResultado = repository.docentes(turma);
+        assertEquals(docentesEsperados, docentesResultado);
 
     }
     @Test
