@@ -82,4 +82,15 @@ public interface MensagemRepository {
      * @see #getPorId(String)
      */
     public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
+    
+    /**
+     * Recupera todos os ids para o qual um usuário possui permissão para o envio de mensagem,
+     * seja esse destinatário um curso, turma, aluno, instituto, ou qualquer outra entidade
+     * que possa ser um destino.
+     * 
+     * @param idRemetente Id do usuário remetente da mensagem
+     * @return Ids de todos os remetentes para os quais o usuário possui permissão de envio
+     * de mensagem.
+     */
+    public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente);
 }
