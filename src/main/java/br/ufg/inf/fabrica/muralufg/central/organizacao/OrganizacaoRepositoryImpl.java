@@ -53,7 +53,6 @@
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.deploy.util.SessionState;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
@@ -70,7 +69,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      * @param Uri A URI do recurso
      * @return recurso no formato JSON
      */
-    private String getJsonFromURI(String Uri){
+    public String getJsonFromURI(String Uri){
         Client c = Client.create();
         WebResource webResource = c.resource(Uri);
         return webResource.get(String.class);
