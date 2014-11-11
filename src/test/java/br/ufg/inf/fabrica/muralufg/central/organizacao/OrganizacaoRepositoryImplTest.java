@@ -52,18 +52,17 @@
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 
-import br.ufg.inf.fabrica.muralufg.central.organizacao.*;
 import org.junit.*;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
-/**
- *
- * @author Eurismar
- */
+
 public class OrganizacaoRepositoryImplTest {
     static OrganizacaoRepository repository = null;
     public OrganizacaoRepositoryImplTest() {
@@ -124,18 +123,35 @@ public class OrganizacaoRepositoryImplTest {
         Turma turma = new Turma("1",null,null,null);
         Set<Aluno> alunosEsperados = new HashSet<>();
 
-        Aluno aluno1 = new Aluno("João","123456");
-        Aluno aluno2 = new Aluno("Pedro","11223344");
-        Aluno aluno3 = new Aluno("Filipe","22334455");
+        Aluno aluno1 = new Aluno("Alice","123456");
+
+        Set<String> reg1 = new HashSet<String>();
+        reg1.add("3293029023");
+        aluno1.setRegistrationIds(reg1);
+
+
+        Aluno aluno2 = new Aluno("Bob","4994393");
+        Set<String> reg2 = new HashSet<String>();
+        reg2.add("4499393993");
+        reg2.add("69593949439");
+        reg2.add("39943949999");
+        aluno2.setRegistrationIds(reg2);
+
 
         alunosEsperados.add(aluno1);
         alunosEsperados.add(aluno2);
-        alunosEsperados.add(aluno3);
+
+        for (Aluno a: alunosEsperados){
+            System.out.println(a.getNome() + "-" + a.getMatricula() + "-" + a.getRegistrationIds());
+        }
 
         Set<Aluno> alunosResultado = repository.alunos(turma);
-        assertEquals(alunosEsperados, alunosResultado);
+        System.out.println("alunosEsperados: " + alunosEsperados);
+        System.out.println("alunosResultado: " + alunosResultado);
+
+        assertEquals(alunosEsperados.size(), alunosResultado.size());
+
     }
-    @Test
     public void testDocentes_Turma() {
         Turma turma = new Turma("1",null,null,null);
         Set<Docente> docentesEsperados = new HashSet<>();
@@ -150,28 +166,29 @@ public class OrganizacaoRepositoryImplTest {
         Set<Docente> docentesResultado = repository.docentes(turma);
         assertEquals(docentesEsperados, docentesResultado);
 
+
     }
-    @Test
+
     public void testDocentes_Curso() {
 
     }
-    @Test
+
     public void testDocentes_Orgao() {
 
     }
-    @Test
+
     public void testTecnicos() {
 
     }
-    @Test
+
     public void testTurmas() {
 
     }
-    @Test
+
     public void testDisciplinas() {
 
     }
-    @Test
+
     public void testCursos() {
 
     }
