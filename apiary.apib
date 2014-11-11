@@ -8,8 +8,6 @@ casos a execução não é executada imediatamente, mas agendada para o instante
 A interação com a Central ocorre exclusivamente via software, ou seja, 
 tanto quem faz requisição quanto quem recebe informação é software. 
 
-# Restaurantes
-Serviços para recuperação e manutenção de restaurantes e pratos por eles oferecidos.
 ## Restaurante [/restaurante/{id}]
 Recupera restaurantes "próximos" aos campi da UFG.
 
@@ -156,6 +154,134 @@ Para criar um novo restaurante, forneça um *nome*, *endereco*, uma lista de *ho
             
 + Response 200
     [Restaurante][]
+
+## Prato [/prato/{id}]
+Recupera um prato
+
++ Parameters
+    + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+
++ Model  (application/json)
+    + Body
+
+            {
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "descricao" : "Prato Feito",
+                "preco" : 3.50,
+                "calorias": 500,
+                "imagens": [
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                ]
+            }
+
+### Obter um prato específico [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Prato][]
+
+### Atualizar um prato [PATCH]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "calorias" : 600
+            }
+            
++ Response 200
+    [Prato][]
+
+### Remove um prato da lista de pratos [DELETE]
+Remove o prato associado ao identificador fornecido.
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 204
+
+## Pratos [/pratos]
+
++ Model  (application/json)
+    + Body
+
+            {
+                "pratos": [
+                    {
+                         "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                          "descricao" : "Prato Feito",
+                          "preco" : 3.50,
+                          "calorias": 500,
+                          "imagens": [
+                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                              "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                          ]
+                    },
+                    {
+                         "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                          "descricao" : "Prato Feito Duplo",
+                          "preco" : 6.50,
+                          "calorias": 1000,
+                          "imagens": [
+                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                              "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                          ]
+                    }
+                ]
+            }
+
+### Obter listagem com todos os pratos [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Pratos][]
+
+### Criar um novo prato [POST]
+Para criar um novo prato, forneça uma *descricao*, *preco*, *calorias* uma lista de *tokens* que representam as imagens associadas ao prato.
+
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+             {
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "descricao" : "Prato Feito Duplo",
+                "preco" : 6.50,
+                "calorias": 1000,
+                "imagens": [
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                ]
+            }
+            
++ Response 200
+    [Prato][]
 
 # Frase do dia [/frases]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
