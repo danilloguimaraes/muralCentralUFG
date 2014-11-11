@@ -165,14 +165,13 @@ Recupera um prato
     + Body
 
             {
-                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "id" : "42f1c2d2-c587-4efc-973d-dbda970ffcec1",
                 "descricao" : "Prato Feito",
                 "preco" : 3.50,
                 "calorias": 500,
                 "imagens": [
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                    "32dd770b-8ae0-4872-ae82-ffcd2b875ade", 
+                    "6dc6c30a-7c92-410e-9d0a-5b1cb0703f71"
                 ]
             }
 
@@ -222,26 +221,24 @@ Remove o prato associado ao identificador fornecido.
             {
                 "pratos": [
                     {
-                         "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
-                          "descricao" : "Prato Feito",
-                          "preco" : 3.50,
-                          "calorias": 500,
-                          "imagens": [
-                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                              "7ecc7007-42bd-4e9a-b819-4382018eb00e"
-                          ]
+                        "id" : "42f1c2d2-c587-4efc-973d-dbda970ffcec1",
+                        "descricao" : "Prato Feito",
+                        "preco" : 3.50,
+                        "calorias": 500,
+                        "imagens": [
+                            "32dd770b-8ae0-4872-ae82-ffcd2b875ade", 
+                            "6dc6c30a-7c92-410e-9d0a-5b1cb0703f71"
+                        ]
                     },
                     {
-                         "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
-                          "descricao" : "Prato Feito Duplo",
-                          "preco" : 6.50,
-                          "calorias": 1000,
-                          "imagens": [
-                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                              "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                              "7ecc7007-42bd-4e9a-b819-4382018eb00e"
-                          ]
+                        "id" : "5c0262ad-934f-4163-8409-4df80203a860",
+                        "descricao" : "Prato Feito Duplo",
+                        "preco" : 6.50,
+                        "calorias": 1000,
+                        "imagens": [
+                            "fdcb4b39-e587-4db1-9aa0-331ea2c2ca40",
+                            "e04aba4a-c5d9-49b0-8711-3425406abbef"
+                        ]
                     }
                 ]
             }
@@ -269,14 +266,14 @@ Para criar um novo prato, forneça uma *descricao*, *preco*, *calorias* uma list
     + Body
 
              {
-                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "id" : "5c0262ad-934f-4163-8409-4df80203a860",
                 "descricao" : "Prato Feito Duplo",
                 "preco" : 6.50,
                 "calorias": 1000,
                 "imagens": [
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                    "964c9048-0e68-4c3a-91de-2fce68d3519c", 
+                    "3937e674-201b-4846-9f22-d5c7b3d9eceb", 
+                    "d02415ac-1db1-498d-a8b4-2a02778054ee"
                 ]
             }
             
@@ -293,12 +290,14 @@ Recupera um cardápio
     + Body
 
             {
-                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "id" : "0304a4d3-d8c9-4549-ae71-350b54ca2e22",
                 "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
                 "pratos": [
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                    "5c0262ad-934f-4163-8409-4df80203a860", 
+                    "cd6bca46-3390-4f8b-8c65-db08587f84cc", 
+                    "1a9bd6c3-ef5e-4fd2-84bc-737d67583482",
+                    "0e66d59f-46b8-4782-8f77-193d583bb7c9",
+                    "7be0b17f-277a-4b1f-9abb-b16edd24a8c0"
                 ]
             }
 
@@ -323,7 +322,7 @@ Recupera um cardápio
     + Body
 
             {
-                "restaurante" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                "restaurante" : "7ecc7007-42bd-4e9a-b819-4382018eb00f"
             }
             
 + Response 200
@@ -348,21 +347,25 @@ Remove o cardápio associado ao identificador fornecido.
             {
                 "cardapios": [
                     {
-                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "id" : "0304a4d3-d8c9-4549-ae71-350b54ca2e22",
                         "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
                         "pratos": [
-                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                            "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                            "5c0262ad-934f-4163-8409-4df80203a860", 
+                            "cd6bca46-3390-4f8b-8c65-db08587f84cc", 
+                            "1a9bd6c3-ef5e-4fd2-84bc-737d67583482",
+                            "0e66d59f-46b8-4782-8f77-193d583bb7c9",
+                            "7be0b17f-277a-4b1f-9abb-b16edd24a8c0"
                         ]
                     },
                     {
-                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
-                        "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "id" : "9cda836a-78cc-414e-adb7-9f5cedba43cc",
+                        "restaurante": "f09db349-c498-4cbc-85c0-5ef8aeb4e0ec",
                         "pratos": [
-                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                            "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                            "0d332c37-5405-4fda-8b43-3f0787e3dbed", 
+                            "251908f8-e4d7-464a-bfcf-967e63bb3ac7", 
+                            "99181373-46ec-47d9-8c04-e597be956635",
+                            "9d97f378-a679-4b02-ac67-80100e122ae4",
+                            "df717c99-7c82-4255-87c5-8f38e2ff62ef"
                         ]
                     }
                 ]
@@ -391,12 +394,14 @@ Para criar um novo cardápio, forneça um *restaurante* e uma lista de *tokens* 
     + Body
 
              {
-                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
-                "restaurante" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "id" : "0304a4d3-d8c9-4549-ae71-350b54ca2e22",
+                "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
                 "pratos": [
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
-                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                    "5c0262ad-934f-4163-8409-4df80203a860", 
+                    "cd6bca46-3390-4f8b-8c65-db08587f84cc", 
+                    "1a9bd6c3-ef5e-4fd2-84bc-737d67583482",
+                    "0e66d59f-46b8-4782-8f77-193d583bb7c9",
+                    "7be0b17f-277a-4b1f-9abb-b16edd24a8c0"
                 ]
             }
             
