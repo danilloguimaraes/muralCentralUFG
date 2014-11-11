@@ -14,7 +14,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	public boolean autoriza(String usuario, String acao, String escopo) {
 
 		if (acao.equals(AcaoEnum.ENVIAR_MENSAGEM.toString()) && escopo != null) {
-			return autorizarEnvio(new Long(usuario), escopo);
+			return autorizarEnvio(usuario, escopo);
 		}
 		
 		if (acao.equals(AcaoEnum.CANCELAR_MENSAGEM.toString())){
@@ -39,23 +39,43 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	 * @return
 	 * 
 	 */
-	public boolean autorizarEnvio(Long idRemetente, String idsDestinatariosString) {
+	public boolean autorizarEnvio(String idRemetenteString, String idsDestinatariosString){
 		
 		boolean autorizado = true;
-	
-		List<Long> idsPermitidosParaEnvioDeMensagem = getIdsPermitidosParaEnvioDeMensagem(idRemetente);
-	
-		List<Long> idsDestinatarios = new ArrayList<Long>();
 		
-		if(!idsDestinatariosString.equals("")){
-			for(String idDestinatario : idsDestinatariosString.split(",")){
-				idsDestinatarios.add(new Long(idDestinatario));
-			}
+		if(!verificarSeIdsForamInformados(idRemetenteString, idsDestinatariosString)){
+			return false;
 		}
 		
-		autorizado = idsPermitidosParaEnvioDeMensagem.containsAll(idsDestinatarios);
+		try{
+		
+			Long idRemetente = new Long(idRemetenteString);
+			
+			List<Long> idsPermitidosParaEnvioDeMensagem = getIdsPermitidosParaEnvioDeMensagem(idRemetente);
+		
+			List<Long> idsDestinatarios = new ArrayList<Long>();
+			
+			if(!idsDestinatariosString.equals("")){
+				for(String idDestinatario : idsDestinatariosString.split(",")){
+					idsDestinatarios.add(new Long(idDestinatario));
+				}
+			}
+			
+			autorizado = idsPermitidosParaEnvioDeMensagem.containsAll(idsDestinatarios);
+		
+		}catch(NumberFormatException numberFormatException){
+			
+			return false;
+		}
 		
 		return autorizado;
+	}
+
+
+	private boolean verificarSeIdsForamInformados(String idRemetente,	String idsDestinatariosString) {
+		
+		return idsDestinatariosString != null && !idsDestinatariosString.equals("")
+				&& idRemetente != null && !idRemetente.equals("");
 	}
 
 
