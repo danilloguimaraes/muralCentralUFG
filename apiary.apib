@@ -283,6 +283,126 @@ Para criar um novo prato, forneça uma *descricao*, *preco*, *calorias* uma list
 + Response 200
     [Prato][]
 
+## Cardapio [/cardapio/{id}]
+Recupera um cardápio
+
++ Parameters
+    + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+
++ Model  (application/json)
+    + Body
+
+            {
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "pratos": [
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                ]
+            }
+
+### Obter um cardápio específico [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Cardapio][]
+
+### Atualizar um cardápio [PATCH]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "restaurante" : "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+            }
+            
++ Response 200
+    [Cardapio][]
+
+### Remove um cardápio da lista de cardápios [DELETE]
+Remove o cardápio associado ao identificador fornecido.
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 204
+
+## Cardapios [/cardapios]
+
++ Model  (application/json)
+    + Body
+
+            {
+                "cardapios": [
+                    {
+                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "pratos": [
+                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                            "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                        ]
+                    },
+                    {
+                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "pratos": [
+                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                            "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                            "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                        ]
+                    }
+                ]
+            }
+
+### Obter listagem com todos os cardápios [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Cardapios][]
+
+### Criar um novo cardápio [POST]
+Para criar um novo cardápio, forneça um *restaurante* e uma lista de *tokens* que representam os pratos associados ao cardápio.
+
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+             {
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "restaurante" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "pratos": [
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e", 
+                    "7ecc7007-42bd-4e9a-b819-4382018eb00e"
+                ]
+            }
+            
++ Response 200
+    [Cardapio][]
+
 # Frase do dia [/frases]
 Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
 
