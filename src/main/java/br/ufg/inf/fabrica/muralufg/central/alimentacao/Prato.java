@@ -58,10 +58,12 @@ import java.util.Date;
  * Refeição (<i>value object</i>).
  */
 public class Prato {
+
+	private double precoEmReais;
+	private String imagemId;
+	private String mimeTypeImage;
 	private String descricao;
 	private Date diaEmQueEstaDisponivel;
-	
-	
 
 	/**
 	 * Dois pratos são considerados idênticos (iguais) se o dia e a descrição
@@ -85,7 +87,7 @@ public class Prato {
 		if (!descricao.equals(prato.descricao)) {
 			return false;
 		}
-		if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)){
+		if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) {
 			return false;
 		}
 		return true;
@@ -96,5 +98,45 @@ public class Prato {
 		int result = descricao.hashCode();
 		result = 31 * result + diaEmQueEstaDisponivel.hashCode();
 		return result;
+	}
+
+	public double getPrecoEmReais() {
+		return precoEmReais;
+	}
+
+	public void setPrecoEmReais(double precoEmReais) {
+		this.precoEmReais = precoEmReais;
+	}
+
+	public String getImagemId() {
+		return imagemId;
+	}
+
+	public void setImagemId(String imagemId) {
+		this.imagemId = imagemId;
+	}
+
+	public String getMimeTypeImage() {
+		return mimeTypeImage;
+	}
+
+	public void setMimeTypeImage(String mimeTypeImage) {
+		this.mimeTypeImage = mimeTypeImage;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Date getDiaEmQueEstaDisponivel() {
+		return diaEmQueEstaDisponivel;
+	}
+
+	public void setDiaEmQueEstaDisponivel(Date diaEmQueEstaDisponivel) {
+		this.diaEmQueEstaDisponivel = diaEmQueEstaDisponivel;
 	}
 }

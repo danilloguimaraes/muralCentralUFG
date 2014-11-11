@@ -52,12 +52,29 @@
 
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
-
+import java.util.Date;
 
 /**
- * Representa uma oportunidade de estágio, emprego ou
- * pesquisa, por exemplo.
+ * Representa uma oportunidade de estágio, emprego ou pesquisa, por exemplo.
  */
 public class Oportunidade {
+	private Date dataInicio;
+	private Date dataTermino;
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataTermino() {
+		return dataTermino;
+	}
+
+	public void setDataTermino(Date dataTermino) {
+		this.dataTermino = dataTermino;
+	}
 
 }

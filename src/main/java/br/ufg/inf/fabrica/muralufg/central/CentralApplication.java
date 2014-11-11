@@ -25,8 +25,7 @@ public class CentralApplication extends Application<CentralConfiguration> {
         try {
 			new CentralApplication().run(args);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//implementar notificação, liberar recursos e reiniciar @aupz@kamuie
 		}
     }
 
