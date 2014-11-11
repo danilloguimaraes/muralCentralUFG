@@ -98,7 +98,7 @@ public class OrganizacaoRepositoryDispositivosTest {
         Set<String> dispositivosResultado =   repository.dispositivos(turma);
 
         assertEquals(dispositivosEsperados,dispositivosResultado);
-        ass
+
 
     }
 
