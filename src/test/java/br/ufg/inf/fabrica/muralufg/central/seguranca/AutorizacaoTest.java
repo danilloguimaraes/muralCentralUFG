@@ -11,6 +11,7 @@ import org.junit.Test;
  */
 public class AutorizacaoTest {
 
+	
 	@Test
 	public void testAutorizaEnvioIdsPermitidos() {
 
@@ -89,5 +90,14 @@ public class AutorizacaoTest {
 		String escopo = "35";
 
 		Assert.assertFalse(autorizacaoService.autoriza("a", "ENVIAR_MENSAGEM", escopo));
+	}
+	
+	
+	@Test
+	public void testAutorizaAcaoInvalida() {
+
+		AutorizacaoServiceImplMock autorizacaoService = new AutorizacaoServiceImplMock();
+
+		Assert.assertFalse(autorizacaoService.autoriza("", "ACAO_INVALIDA", ""));
 	}
 }

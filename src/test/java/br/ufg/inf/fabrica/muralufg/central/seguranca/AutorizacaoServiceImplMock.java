@@ -9,6 +9,9 @@ public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 	List<Long> idsCursosPermitidos;
 	List<Long> idsInstitutos;
 	
+	/**
+	 * Cria dados para testes, que serão usados na classe AutorizacaoTest.
+	 */
 	public AutorizacaoServiceImplMock(){
 		
 		idsTurmasPermitidos = new ArrayList<Long>();

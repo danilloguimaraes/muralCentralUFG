@@ -3,12 +3,8 @@ package br.ufg.inf.fabrica.muralufg.central.seguranca;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufg.inf.fabrica.muralufg.central.mensagem.MensagemRepository;
-
 public class AutorizacaoServiceImpl implements AutorizacaoService {
 
-	private MensagemRepository mensagemRepository;
-	
 	
 	@Override
 	public boolean autoriza(String usuario, String acao, String escopo) {
@@ -72,6 +68,14 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	}
 
 
+	/**
+	 * Verifica se os ids do remetente e do destinatário foram informados,
+	 * ou seja, se não estão nulos ou vazios.
+	 * 
+	 * @param idRemetente Id do remetente da mensagem.
+	 * @param idsDestinatariosString Ids dos destinatarios da mensagem (String separada por virgulas).
+	 * @return
+	 */
 	private boolean verificarSeIdsForamInformados(String idRemetente,	String idsDestinatariosString) {
 		
 		return idsDestinatariosString != null && !idsDestinatariosString.equals("")
