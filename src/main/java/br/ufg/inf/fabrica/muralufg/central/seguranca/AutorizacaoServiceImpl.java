@@ -9,6 +9,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 
 	private MensagemRepository mensagemRepository;
 	
+	
 	@Override
 	public boolean autoriza(String usuario, String acao, String escopo) {
 
@@ -17,22 +18,24 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		if (acao.equals(AcaoEnum.CANCELAR_MENSAGEM)){
-			return autorizaCancelar(new Long(usuario));
+			return autorizaCancelarMensagem(new Long(usuario));
 		}
 		
 		if (acao.equals(AcaoEnum.GRAVA_REGISTRO)){
-			return autorizaGravar(new Long(usuario));
+			return autorizaGravarMensagem(new Long(usuario));
 		}
 
 		return false;
 	}
+	
 
 	/**
 	 * 
-	 * @param idRemetente
+	 * @param idRemetente Id do usuário que pretende enviar a mensagem.
 	 * @param idsDestinatariosString
 	 *            String definindo os destinarios para quais a mensagem será
 	 *            enviada, podendo ser id de um curso, turma, aluno, instituto, etc.
+	 *            Os ids devem vir separados por virgula. (Ex.: "34,35,36").
 	 * @return
 	 * 
 	 */
@@ -55,6 +58,15 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		return autorizado;
 	}
 
+	
+	/**
+	 * Verifica se o usuário possui permissão de envio para todos os destinatários que
+	 * está tentando enviar.
+	 * 
+	 * @param idsPermitidosParaEnvioDeMensagem Todos os ids que o usuário possui permissão de envio.
+	 * @param idsDestinatarios Ids que o usuário pretende enviar a mensagem.
+	 * @return
+	 */
 	private boolean verificarSePossuiPermissaoDeEnvioParaTodosOsIds(List<Long> idsPermitidosParaEnvioDeMensagem,
 			List<Long> idsDestinatarios) {
 		
@@ -71,7 +83,8 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		return true;
 	}
 	
-	public boolean autorizaGravar(Long idUsuario) {
+	
+	public boolean autorizaGravarMensagem(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
@@ -79,8 +92,9 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		
 		return autorizado;
 	}
+	
 
-	public boolean autorizaCancelar(Long idUsuario) {
+	public boolean autorizaCancelarMensagem(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
