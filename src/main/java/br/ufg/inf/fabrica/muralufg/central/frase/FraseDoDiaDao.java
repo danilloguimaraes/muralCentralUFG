@@ -26,8 +26,8 @@ public class FraseDoDiaDao {
             // Defina a chave de entidade com apenas um ` path_element` : nenhum pai .
             DatastoreV1.Key.Builder key = DatastoreV1.Key.newBuilder().addPathElement(
                     DatastoreV1.Key.PathElement.newBuilder()
-                            .setKind("Frase")
-                            .setName(fraseDoDia.getFrase()));
+                            .setKind("FraseDoDia")
+                            .setId(fraseDoDia.getId()));
 
             //Adicionar uma chave para a solicitação de pesquisa .
             lreq.addKey(key);
@@ -55,6 +55,12 @@ public class FraseDoDiaDao {
                 entityBuilder.addProperty(DatastoreV1.Property.newBuilder()
                         .setName("frase")
                         .setValue(DatastoreV1.Value.newBuilder().setStringValue(fraseDoDia.getFrase())));
+                entityBuilder.addProperty(DatastoreV1.Property.newBuilder()
+                        .setName("autor")
+                        .setValue(DatastoreV1.Value.newBuilder().setStringValue(fraseDoDia.getAutor())));
+                entityBuilder.addProperty(DatastoreV1.Property.newBuilder()
+                        .setName("data")
+                        .setValue(DatastoreV1.Value.newBuilder().setTimestampMicrosecondsValue(fraseDoDia.getData().getTime())));
                 // Cria a entidade
                 entity = entityBuilder.build();
                 // Insere a entidade na confirmação da mutação de requisição

@@ -19,11 +19,13 @@ public class TestesFraseDoDia {
     
 	public static void main(String[] args) {
         FraseDoDia frase1 = new FraseDoDia(
+        		1,
         		new Date(), 
         		"E assista depois capítulo inédito de Vale a Pena Ver de Novo!", 
         		"Galvão Bueno");
         
         FraseDoDia frase2 = new FraseDoDia(
+        		2,
         		new Date(), 
         		"Estou louca para ir a Nova Yorke. Eu sempre quis conhecer a Europa!", 
         		"Carla Perez");

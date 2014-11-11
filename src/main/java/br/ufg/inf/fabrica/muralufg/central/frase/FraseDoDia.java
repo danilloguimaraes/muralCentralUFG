@@ -4,15 +4,25 @@ import java.util.Date;
 
 public class FraseDoDia {
 	
+	private int id;
 	private Date data;
 	private String frase;
 	private String autor;
 	
-	public FraseDoDia(Date data, String frase, String autor) {
+	public FraseDoDia(int id, Date data, String frase, String autor) {
 		super();
+		this.id = id;
 		this.data = data;
 		this.frase = frase;
 		this.autor = autor;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public Date getData() {
