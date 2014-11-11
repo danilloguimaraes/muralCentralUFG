@@ -3,6 +3,13 @@ package br.ufg.inf.fabrica.muralufg.central.seguranca;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe utilizada para simular o comportamento de retorno de ids para 
+ * os testes de autorização.
+ * 
+ * @author italogustavomirandamelo
+ *
+ */
 public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 	
 	List<Long> idsTurmasPermitidos;
@@ -31,7 +38,10 @@ public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 		idsInstitutos.add(33l);
 	}
 	
-
+	
+	/**
+	 * Retorna ids para serem usados nos testes de unidade de autorização.
+	 */
 	@Override
 	public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente) {
 		
