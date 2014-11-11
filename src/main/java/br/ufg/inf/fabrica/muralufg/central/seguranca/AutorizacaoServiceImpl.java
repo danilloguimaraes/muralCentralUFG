@@ -13,15 +13,15 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	@Override
 	public boolean autoriza(String usuario, String acao, String escopo) {
 
-		if (acao.equals(AcaoEnum.ENVIAR_MENSAGEM) && escopo != null) {
+		if (acao.equals(AcaoEnum.ENVIAR_MENSAGEM.toString()) && escopo != null) {
 			return autorizarEnvio(new Long(usuario), escopo);
 		}
 		
-		if (acao.equals(AcaoEnum.CANCELAR_MENSAGEM)){
+		if (acao.equals(AcaoEnum.CANCELAR_MENSAGEM.toString())){
 			return autorizaCancelarMensagem(new Long(usuario));
 		}
 		
-		if (acao.equals(AcaoEnum.GRAVA_REGISTRO)){
+		if (acao.equals(AcaoEnum.GRAVA_REGISTRO.toString())){
 			return autorizaGravarMensagem(new Long(usuario));
 		}
 
@@ -43,7 +43,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		
 		boolean autorizado = true;
 	
-		List<Long> idsPermitidosParaEnvioDeMensagem = mensagemRepository.getIdsPermitidosParaEnvioDeMensagem(idRemetente);
+		List<Long> idsPermitidosParaEnvioDeMensagem = getIdsPermitidosParaEnvioDeMensagem(idRemetente);
 	
 		List<Long> idsDestinatarios = new ArrayList<Long>();
 		
@@ -53,53 +53,49 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 			}
 		}
 		
-		autorizado = verificarSePossuiPermissaoDeEnvioParaTodosOsIds(idsPermitidosParaEnvioDeMensagem, idsDestinatarios);
+		autorizado = idsPermitidosParaEnvioDeMensagem.containsAll(idsDestinatarios);
 		
 		return autorizado;
 	}
 
-	
-	/**
-	 * Verifica se o usuário possui permissão de envio para todos os destinatários que
-	 * está tentando enviar.
-	 * 
-	 * @param idsPermitidosParaEnvioDeMensagem Todos os ids que o usuário possui permissão de envio.
-	 * @param idsDestinatarios Ids que o usuário pretende enviar a mensagem.
-	 * @return
-	 */
-	private boolean verificarSePossuiPermissaoDeEnvioParaTodosOsIds(List<Long> idsPermitidosParaEnvioDeMensagem,
-			List<Long> idsDestinatarios) {
-		
-		if(idsPermitidosParaEnvioDeMensagem.isEmpty() || idsDestinatarios.isEmpty()){
-			return false;
-		}
-		
-		for(Long idDestinatario : idsDestinatarios){
-			if(!idsPermitidosParaEnvioDeMensagem.contains(idDestinatario)){
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	
+
 	public boolean autorizaGravarMensagem(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
-		autorizado = mensagemRepository.isUsuarioPodeGravar(idUsuario);
+		autorizado = isUsuarioPodeGravar(idUsuario);
 		
 		return autorizado;
 	}
-	
+
 
 	public boolean autorizaCancelarMensagem(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
-		autorizado = mensagemRepository.isUsuarioPodeCancelar(idUsuario);
+		autorizado = isUsuarioPodeCancelar(idUsuario);
 		
 		return autorizado;
+	}
+
+
+	@Override
+	public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean isUsuarioPodeGravar(Long idUsuario) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isUsuarioPodeCancelar(Long idUsuario) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

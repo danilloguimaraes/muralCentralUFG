@@ -52,6 +52,8 @@
 
 package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
+import java.util.List;
+
 /**
  * Serviço de autorização para realizar determinada ação,
  * conforme o escopo definido, para um dado usuário.
@@ -80,4 +82,31 @@ public interface AutorizacaoService {
      * autorizado a requisitar a ação para o escopo indicado.
      */
     boolean autoriza(String usuario, String acao, String escopo);
+
+    
+    /**
+     * Recupera todos os ids para o qual um usuário possui permissão para o envio de mensagem,
+     * seja esse destinatário um curso, turma, aluno, instituto, ou qualquer outra entidade
+     * que possa ser um destino.
+     * 
+     * @param idRemetente Id do usuário remetente da mensagem
+     * @return Ids de todos os remetentes para os quais o usuário possui permissão de envio
+     * de mensagem.
+     */
+    public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente);
+    
+    
+    
+    /**	Verifica se o usuário passado tem permissão de gravar determinado item
+     * @param idUsuario
+     * @return true ou false
+     */
+    public boolean isUsuarioPodeGravar(Long idUsuario);
+    
+    
+    /**	Verifica se o usuário passado tem permissão de excluir determinado item
+     * @param idUsuario
+     * @return true ou false
+     */
+    public boolean isUsuarioPodeCancelar(Long idUsuario);
 }
