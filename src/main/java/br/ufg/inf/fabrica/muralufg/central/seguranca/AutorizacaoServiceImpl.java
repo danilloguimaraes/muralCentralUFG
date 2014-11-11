@@ -35,7 +35,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	 * @return
 	 * 
 	 */
-	public boolean autorizarEnvio(String idRemetenteString, String idsDestinatariosString){
+	private boolean autorizarEnvio(String idRemetenteString, String idsDestinatariosString){
 		
 		boolean autorizado = true;
 		
@@ -44,18 +44,10 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		try{
-		
 			Long idRemetente = new Long(idRemetenteString);
 			
 			List<Long> idsPermitidosParaEnvioDeMensagem = getIdsPermitidosParaEnvioDeMensagem(idRemetente);
-		
-			List<Long> idsDestinatarios = new ArrayList<Long>();
-			
-			if(!idsDestinatariosString.equals("")){
-				for(String idDestinatario : idsDestinatariosString.split(",")){
-					idsDestinatarios.add(new Long(idDestinatario));
-				}
-			}
+			List<Long> idsDestinatarios = getIdsDestinatariosList(idsDestinatariosString);
 			
 			autorizado = idsPermitidosParaEnvioDeMensagem.containsAll(idsDestinatarios);
 		
@@ -65,6 +57,29 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		return autorizado;
+	}
+
+	
+	/**
+	 * Faz o split da string recebida pela requisicao (ids separados por virgula)
+	 * e retorna um list com os ids.
+	 * 
+	 * @param idsDestinatariosString String com os ids dos destinatários separados por virgula.
+	 * 
+	 * @return ArrayList<Long> dos ids informados na string.
+	 * 
+	 */
+	private List<Long> getIdsDestinatariosList(String idsDestinatariosString) throws NumberFormatException{
+		
+		List<Long> idsDestinatariosList = new ArrayList<Long>();
+		
+		if(idsDestinatariosString != null && !idsDestinatariosString.equals("")){
+			for(String idDestinatario : idsDestinatariosString.split(",")){
+				idsDestinatariosList.add(new Long(idDestinatario));
+			}
+		}
+		
+		return idsDestinatariosList;
 	}
 
 
