@@ -125,7 +125,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Aluno> alunos(Turma turma) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/alunos/turmaid/" + turma.getTurmaId());
+        Set<Aluno> alunos = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            alunos = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return alunos;
     }
 
     /**
@@ -137,7 +145,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Docente> docentes(Turma turma) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/docentes/turmaid/" + turma.getTurmaId());
+        Set<Docente> docentes = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            docentes = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return docentes;
     }
 
     /**
@@ -149,7 +165,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<String> docentes(Curso curso) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/docentes/curso/" + curso.getNome());
+        Set<String> docentes = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            docentes = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return docentes;
     }
 
     /**
@@ -161,7 +185,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<String> docentes(Orgao orgao) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/docentes/orgao/" + orgao.getNome());
+        Set<String> docentes = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            docentes = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return docentes;
     }
 
     /**
@@ -173,7 +205,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<String> tecnicos(Orgao orgao) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/tecnicos/orgao/" + orgao.getNome());
+        Set<String> tecnicos = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            tecnicos = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tecnicos;
     }
 
     /**
@@ -184,7 +224,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Turma> turmas(Disciplina disciplina) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/turmas/disciplina/" + disciplina.getNome());
+        Set<Turma> turmas = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            turmas = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return turmas;
     }
 
     /**
@@ -195,7 +243,15 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Disciplina> disciplinas(Curso curso) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/turmas/disciplina/" + curso.getNome());
+        Set<Disciplina> disciplinas = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            disciplinas = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return disciplinas;
     }
 
     /**
@@ -206,6 +262,14 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Curso> cursos(Orgao orgao) {
-        return null;
+        String jsom = getJsonFromURI(URI + "/resources/turmas/disciplina/" + orgao.getNome());
+        Set<Curso> cursos = new HashSet<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            cursos = objectMapper.readValue(jsom,Set.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cursos;
     }
 }
