@@ -61,8 +61,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
-     private static String URI = "http://testedatastore1000.appspot.com";
-   // private static String URI = "http://localhost:8082";
+   //  private static String URI = "http://testedatastore1000.appspot.com";
+    private static String URI = "http://localhost:8082";
 
     /**
      * Obtém o JSON via http REST da servidor
@@ -243,7 +243,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Disciplina> disciplinas(Curso curso) {
-        String jsom = getJsonFromURI(URI + "/resources/turmas/disciplina/" + curso.getNome());
+        String jsom = getJsonFromURI(URI + "/resources/disciplinas/curso/" + curso.getNome());
         Set<Disciplina> disciplinas = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -262,7 +262,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository{
      */
     @Override
     public Set<Curso> cursos(Orgao orgao) {
-        String jsom = getJsonFromURI(URI + "/resources/turmas/disciplina/" + orgao.getNome());
+        String jsom = getJsonFromURI(URI + "/resources/cursos/orgao/" + orgao.getNome());
         Set<Curso> cursos = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {

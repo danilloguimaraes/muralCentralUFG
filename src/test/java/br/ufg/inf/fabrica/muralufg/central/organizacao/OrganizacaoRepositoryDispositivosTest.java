@@ -51,17 +51,18 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-
 import org.junit.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
 
+
 public class OrganizacaoRepositoryDispositivosTest {
     static OrganizacaoRepository repository = null;
+    private Turma turma;
+    private Orgao orgao;
     public OrganizacaoRepositoryDispositivosTest() {
     }
 
@@ -77,7 +78,8 @@ public class OrganizacaoRepositoryDispositivosTest {
 
     @Before
     public void setUp() {
-
+        turma = new Turma("1",null,null,null);
+        orgao = new Orgao("INF",null,null);
     }
 
     @After
@@ -94,65 +96,34 @@ public class OrganizacaoRepositoryDispositivosTest {
         dispositivosEsperados.add("38832883823888");
         dispositivosEsperados.add("93093290239902");
 
-        Turma turma = new Turma("1",null,null,null);
+
         Set<String> dispositivosResultado =   repository.dispositivos(turma);
 
         assertEquals(dispositivosEsperados,dispositivosResultado);
-
 
     }
 
     @Test
     public void testDispositivosAlunos() {
         Set<String> dispositivosEsperados = new HashSet<String>();
-        dispositivosEsperados.add("93093290239902");
-        dispositivosEsperados.add("38832883823888");
-        dispositivosEsperados.add("390248284320989");
-        dispositivosEsperados.add("39290309239032");
-
-
-        Turma turma = new Turma("1",null,null,null);
-
+        dispositivosEsperados.add("32893892392393");
+        dispositivosEsperados.add("32929329392923");
+        dispositivosEsperados.add("84884884388348");
         Set<String> dispositivosResultado =   repository.dispositivosAlunos(turma);
-
         assertEquals(dispositivosEsperados,dispositivosResultado);
     }
     @Test
     public void testAlunos() {
-        Turma turma = new Turma("1",null,null,null);
-        Set<Aluno> alunosEsperados = new HashSet<>();
+      Set<Aluno> alunosEsperados = new HashSet<>();
+      alunosEsperados.add(new Aluno("Pedro","92932"));
+      alunosEsperados.add(new Aluno("Felipe","39922"));
+      Set<Aluno> alunosRetornados = repository.alunos(turma);
 
-        Aluno aluno1 = new Aluno("Alice","123456");
-
-        Set<String> reg1 = new HashSet<String>();
-        reg1.add("3293029023");
-        aluno1.setRegistrationIds(reg1);
-
-
-        Aluno aluno2 = new Aluno("Bob","4994393");
-        Set<String> reg2 = new HashSet<String>();
-        reg2.add("4499393993");
-        reg2.add("69593949439");
-        reg2.add("39943949999");
-        aluno2.setRegistrationIds(reg2);
-
-
-        alunosEsperados.add(aluno1);
-        alunosEsperados.add(aluno2);
-
-        for (Aluno a: alunosEsperados){
-            System.out.println(a.getNome() + "-" + a.getMatricula() + "-" + a.getRegistrationIds());
-        }
-
-        Set<Aluno> alunosResultado = repository.alunos(turma);
-        System.out.println("alunosEsperados: " + alunosEsperados);
-        System.out.println("alunosResultado: " + alunosResultado);
-
-//        assertEquals(alunosEsperados.size(), alunosResultado.size());
-
+      assertEquals(alunosEsperados.size(),alunosRetornados.size());
+     // assertTrue(alunosEsperados.equals(alunosRetornados));
     }
+    @Test
     public void testDocentes_Turma() {
-        Turma turma = new Turma("1",null,null,null);
         Set<Docente> docentesEsperados = new HashSet<>();
         Set<Turma> turmas = new HashSet<>();
         turmas.add(turma);
@@ -163,32 +134,63 @@ public class OrganizacaoRepositoryDispositivosTest {
         docentesEsperados.add(docente2);
 
         Set<Docente> docentesResultado = repository.docentes(turma);
-        assertEquals(docentesEsperados, docentesResultado);
-
-
+        assertEquals(docentesEsperados.size(), docentesResultado.size());
     }
-
+    @Test
     public void testDocentes_Curso() {
+        Set<String> docentesEsperados = new HashSet<>();
 
+        docentesEsperados.add("Marcelo");
+        docentesEsperados.add("Fabio");
+
+       Curso curso = new Curso("Engenharia de Software",null,null);
+       Set<String> docentesResultado = repository.docentes(curso);
+       assertEquals(docentesEsperados, docentesResultado);
     }
 
+    @Test
     public void testDocentes_Orgao() {
-
+        Set<String> docentesEsperados = new HashSet<>();
+        docentesEsperados.add("Marcelo");
+        docentesEsperados.add("Fabio");
+        docentesEsperados.add("Juliano");
+        Set<String> docentesResultado = repository.docentes(orgao);
+        assertEquals(docentesEsperados, docentesResultado);
     }
-
+    @Test
     public void testTecnicos() {
+        Set<String> tecnicosEsperados = new HashSet<>();
+        tecnicosEsperados.add("Maria");
+        tecnicosEsperados.add("Joana");
+        tecnicosEsperados.add("Joaquim");
+        Set<String> tecnicosResultado = repository.tecnicos(orgao);
+        assertEquals(tecnicosEsperados, tecnicosResultado);
 
     }
-
+    @Test
     public void testTurmas() {
-
+        Set<Turma> turmasEsperadas = new HashSet<>();
+        turmasEsperadas.add(turma);
+        Disciplina disciplina = new Disciplina("Pratica em ES",turma);
+        Set<Turma> turmasResultado = repository.turmas(disciplina);
+        assertEquals(turmasEsperadas.size(),turmasResultado.size());
     }
-
+    @Test
     public void testDisciplinas() {
-
+        Set<Disciplina> disciplinasEsperadas = new HashSet<>();
+        disciplinasEsperadas.add(new Disciplina("Algoritmos em Grafos",null));
+        disciplinasEsperadas.add(new Disciplina("Construção de Software",null));
+        Curso curso = new Curso("Engenharia de Software",null,null);
+        Set<Disciplina> disciplinasResultado = repository.disciplinas(curso);
+        assertEquals(disciplinasEsperadas.size(),disciplinasResultado.size());
     }
-
+    @Test
     public void testCursos() {
-
+        Set<Curso> cursosEsperados = new HashSet<>();
+        cursosEsperados.add(new Curso("Engenharia de Software",null,null));
+        cursosEsperados.add(new Curso("Sistemas de Informação",null,null));
+        cursosEsperados.add(new Curso("Ciencias da Computação",null,null));
+        Set<Curso> cursosResultado = repository.cursos(orgao);
+        assertEquals(cursosEsperados.size(),cursosResultado.size());
     }
 }
