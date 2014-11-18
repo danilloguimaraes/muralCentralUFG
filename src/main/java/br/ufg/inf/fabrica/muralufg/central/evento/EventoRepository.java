@@ -66,8 +66,8 @@ public interface EventoRepository {
      * @return {@code true} se e somente se o evento
      * foi adicionado de forma satisfatória.
      */
-    boolean adiciona(Evento evento);
-
+    boolean adiciona(Evento evento);    
+    
     /**
      * Identifica eventos do repositório cuja realização
      * encontra-se no "raio" de tempo, em dias, com base

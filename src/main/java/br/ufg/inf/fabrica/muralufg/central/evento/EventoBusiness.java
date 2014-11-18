@@ -52,72 +52,27 @@
 
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-import javax.ws.rs.FormParam;
-import javax.xml.bind.annotation.XmlRootElement;
+public class EventoBusiness {
 
-/**
- * Representa uma palestra, um curso, um simpósio, um congresso ou similar.
- */
-@XmlRootElement
-public class Evento {
-
-	private Long id;
-
-	@FormParam("dataInicio")
-	private Date dataInicio;
+	EventoDao dao;
 	
-	@FormParam("nome")
-	private String nomeEvento;
-
-	@FormParam("dataFim")
-	private Date dataFim;
-
-	@FormParam("horaEvento")
-	private String horaEvento;
-
-	public Evento(){}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public EventoBusiness(){
+		dao = new EventoDao();
 	}
 	
-	public String getNome() {
-		return nomeEvento;
+	public void adicionaEvento(Evento evento) {
+		dao.salvar(evento);
 	}
 
-	public void setNome(String nomeEvento) {
-		this.nomeEvento = nomeEvento;
+	public List<Evento> filtraEventoPorRaio(int raioEmDias) {
+		return dao.filtraEventoPorRaio(raioEmDias);
 	}
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
-
-	public String getHoraEvento() {
-		return horaEvento;
-	}
-
-	public void setHoraEvento(String horaEvento) {
-		this.horaEvento = horaEvento;
+	public List<Evento> filtraEventoPorDataERaio(Date data, int raioEmDias) {
+		return dao.filtraEventoPorDataERaio(raioEmDias);
 	}
 
 }
