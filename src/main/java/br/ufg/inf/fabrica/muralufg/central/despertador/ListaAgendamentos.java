@@ -61,7 +61,14 @@ import java.util.ArrayList;
  */
 public class ListaAgendamentos {
 
+    /**
+     * Array de agendamentos
+     */
     public static ArrayList<Agendamentos> listaAgendamentos;
+    
+    /**
+     * Array de observer
+     */
     public static ArrayList<Observadores> listaObservers;
 
 }
