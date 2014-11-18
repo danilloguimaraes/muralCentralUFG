@@ -64,6 +64,7 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
 
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;
+import br.ufg.inf.fabrica.muralufg.central.oportunidade.OportunidadeRepositoryDatastore;
 import java.util.Date;
 
 public class MainTeste {
@@ -82,9 +83,9 @@ public class MainTeste {
         oportunidade2.setDataTermino(new Date(System.currentTimeMillis()));
         
         
-        OportunidadeDAO dao = new OportunidadeDAO();
+        OportunidadeRepositoryDatastore dao = new OportunidadeRepositoryDatastore();
         dao.adicionar(oportunidade1);
         dao.adicionar(oportunidade2);
-        dao.buscarOportunidadesVigentes();
+        dao.vigentes();
     }
 }

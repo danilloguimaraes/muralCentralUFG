@@ -64,7 +64,8 @@ public class Oportunidade implements Serializable {
     private Date dataInicio;
     private Date dataTermino;
     private String descricao;
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 6471090092659054860L;
 
     public Oportunidade() {
     }
@@ -104,10 +105,10 @@ public class Oportunidade implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 71 * hash + Objects.hashCode(this.dataInicio);
-        hash = 71 * hash + Objects.hashCode(this.dataTermino);
-        hash = 71 * hash + Objects.hashCode(this.descricao);
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.dataInicio);
+        hash = 97 * hash + Objects.hashCode(this.dataTermino);
+        hash = 97 * hash + Objects.hashCode(this.descricao);
         return hash;
     }
 
@@ -116,19 +117,25 @@ public class Oportunidade implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+
+        if (obj instanceof Oportunidade == false) {
             return false;
         }
+
         final Oportunidade other = (Oportunidade) obj;
+
         if (this.id != other.id) {
             return false;
         }
+
         if (!Objects.equals(this.dataInicio, other.dataInicio)) {
             return false;
         }
+
         if (!Objects.equals(this.dataTermino, other.dataTermino)) {
             return false;
         }
+
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }

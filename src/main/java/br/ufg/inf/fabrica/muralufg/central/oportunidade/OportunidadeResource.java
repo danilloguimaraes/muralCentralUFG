@@ -57,26 +57,26 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author Luiz
- */
 @Path("/oportunidade")
 public class OportunidadeResource implements OportunidadeRepository {
 
     private Set<Oportunidade> vigentes;
-    private final OportunidadeBusiness business = new OportunidadeBusiness();
+    private final OportunidadeRepositoryDatastore oportunidadeDAO;
+
+    public OportunidadeResource() {
+        oportunidadeDAO = new OportunidadeRepositoryDatastore();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Set<Oportunidade> vigentes() {
-        vigentes = business.buscarOportunidadesVigentes();
+        vigentes = oportunidadeDAO.vigentes();
         return vigentes;
     }
 
     @Override
     public void adicionar(Oportunidade oportunidade) {
-        business.adicionar(oportunidade);
+        oportunidadeDAO.adicionar(oportunidade);
     }
 }

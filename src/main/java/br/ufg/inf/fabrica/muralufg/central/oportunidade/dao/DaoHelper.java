@@ -50,21 +50,24 @@ package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
+
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreFactory;
 import com.google.api.services.datastore.client.DatastoreHelper;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-/**
- * 
- * @author Luiz
- * 
+
+/* 
  * Essa classe é utilitária para configurações do Google Datastore
  */
+
 public class DaoHelper {
+
     //Nome do dataset escolhido no momento da configuração local
+
     private static final String DATASET_ID = "dataset-id";
+
     public static Datastore getDataStore() {
         Datastore datastore = null;
         try {

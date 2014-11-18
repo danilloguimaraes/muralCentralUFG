@@ -49,9 +49,11 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
+package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
+import br.ufg.inf.fabrica.muralufg.central.oportunidade.dao.*;
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;
+import br.ufg.inf.fabrica.muralufg.central.oportunidade.OportunidadeRepository;
 import com.google.api.services.datastore.DatastoreV1;
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreException;
@@ -83,15 +85,15 @@ import java.util.Set;
  * */
 /**
  *
- * @author Luiz Classe responsável pela persistência dos dados relativos a
+ * Classe responsável pela persistência dos dados relativos a
  * Oportunidade, que deve ser feita no Google Datastore
  */
-public class OportunidadeDAO {
+public class OportunidadeRepositoryDatastore implements OportunidadeRepository{
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    //Ainda não finalizado 
-    public Set<Oportunidade> buscarOportunidadesVigentes() {
+    @Override
+    public Set<Oportunidade> vigentes() {
         Set<Oportunidade> oportunidades = new HashSet<>();
         Query q = new Query("Oportunidade");
         PreparedQuery pq = datastore.prepare(q);
@@ -112,7 +114,8 @@ public class OportunidadeDAO {
         return oportunidades;
     }
 
-    public boolean adicionar(Oportunidade oportunidade) {
+    @Override
+    public void adicionar(Oportunidade oportunidade) {
         Datastore datastore = DaoHelper.getDataStore();
 
         // Cria uma requisição RPC para iniciar uma nova transação
@@ -173,10 +176,8 @@ public class OportunidadeDAO {
             // Aplicar a mutação de inserção se a entidade não foi encontrado e fecha
             // A transação.
             datastore.commit(creq.build());
-            return true;
         } catch (DatastoreException e) {
             e.printStackTrace();
-            return false;
         }
     }
 }
