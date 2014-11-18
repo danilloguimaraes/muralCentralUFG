@@ -49,7 +49,6 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import java.util.Date;
@@ -58,6 +57,7 @@ import java.util.Date;
  * Refeição (<i>value object</i>).
  */
 public class Prato {
+
     private String descricao;
     private double precoEmReais;
     private Date diaEmQueEstaDisponivel;
@@ -65,21 +65,30 @@ public class Prato {
     private String mimeTypeImage;
 
     /**
-     * Dois pratos são considerados idênticos (iguais) se o
-     * dia e a descrição correspondente coincidirem.
+     * Dois pratos são considerados idênticos (iguais) se o dia e a descrição
+     * correspondente coincidirem.
+     *
      * @param o O objeto com o qual será feita a comparação.
-     * @return {@code true} se e somente se as descrições e os
-     * dias em que estão disponíveis forem idênticos.
+     * @return {@code true} se e somente se as descrições e os dias em que estão
+     * disponíveis forem idênticos.
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Prato prato = (Prato) o;
 
-        if (!descricao.equals(prato.descricao)) return false;
-        if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) return false;
+        if (!descricao.equals(prato.descricao)) {
+            return false;
+        }
+        if (!diaEmQueEstaDisponivel.equals(prato.diaEmQueEstaDisponivel)) {
+            return false;
+        }
 
         return true;
     }
@@ -89,5 +98,45 @@ public class Prato {
         int result = descricao.hashCode();
         result = 31 * result + diaEmQueEstaDisponivel.hashCode();
         return result;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public double getPrecoEmReais() {
+        return precoEmReais;
+    }
+
+    public void setPrecoEmReais(double precoEmReais) {
+        this.precoEmReais = precoEmReais;
+    }
+
+    public Date getDiaEmQueEstaDisponivel() {
+        return diaEmQueEstaDisponivel;
+    }
+
+    public void setDiaEmQueEstaDisponivel(Date diaEmQueEstaDisponivel) {
+        this.diaEmQueEstaDisponivel = diaEmQueEstaDisponivel;
+    }
+
+    public String getImagemId() {
+        return imagemId;
+    }
+
+    public void setImagemId(String imagemId) {
+        this.imagemId = imagemId;
+    }
+
+    public String getMimeTypeImage() {
+        return mimeTypeImage;
+    }
+
+    public void setMimeTypeImage(String mimeTypeImage) {
+        this.mimeTypeImage = mimeTypeImage;
     }
 }

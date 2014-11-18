@@ -49,17 +49,17 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Estabelecimento destinado ao preparo, comercialização ou distribuição
- * de refeições ou alimentos, localizado próximo aos campi da UFG.
+ * Estabelecimento destinado ao preparo, comercialização ou distribuição de
+ * refeições ou alimentos, localizado próximo aos campi da UFG.
  */
 public class Restaurante {
+
     private String id;
     private String campus;
     private String nome;
@@ -68,22 +68,70 @@ public class Restaurante {
     private Date fimHorario;
 
     /**
-     * Identifica se o presente restaurante é "semelhante"
-     * àquele fornecido.
-     * <p>Dois restaurantes são ditos semelhantes se há
-     * semelhanças entre seus membros. Por exemplo, para
-     * o membro {@code campus}, a semelhança é o mesmo que
-     * igualdade. Por outro lado, {@code formaPagamento} é
-     * semelhante se as formas de pagamento do presente restaurante
-     * incluem aquela(s) do restaurante fornecido.</p>
-     * <p>Semelhança para os demais membros deverão ser definidas
-     * após análise de "casos de interesse".</p>
-     * @param restaurante Restaurante com a qual a semelhança
-     *                    será verificada.
-     * @return {@code true} se o presente restaurante é
-     * semelhante àquele fornecido.
+     * Identifica se o presente restaurante é "semelhante" àquele fornecido.
+     * <p>
+     * Dois restaurantes são ditos semelhantes se há semelhanças entre seus
+     * membros. Por exemplo, para o membro {@code campus}, a semelhança é o
+     * mesmo que igualdade. Por outro lado, {@code formaPagamento} é semelhante
+     * se as formas de pagamento do presente restaurante incluem aquela(s) do
+     * restaurante fornecido.</p>
+     * <p>
+     * Semelhança para os demais membros deverão ser definidas após análise de
+     * "casos de interesse".</p>
+     *
+     * @param restaurante Restaurante com a qual a semelhança será verificada.
+     * @return {@code true} se o presente restaurante é semelhante àquele
+     * fornecido.
      */
     public boolean semelhante(Restaurante restaurante) {
         return true;
+    }
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<String> getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(List<String> formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
+    public Date getInicioHorario() {
+        return inicioHorario;
+    }
+
+    public void setInicioHorario(Date inicioHorario) {
+        this.inicioHorario = inicioHorario;
+    }
+
+    public Date getFimHorario() {
+        return fimHorario;
+    }
+
+    public void setFimHorario(Date fimHorario) {
+        this.fimHorario = fimHorario;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
