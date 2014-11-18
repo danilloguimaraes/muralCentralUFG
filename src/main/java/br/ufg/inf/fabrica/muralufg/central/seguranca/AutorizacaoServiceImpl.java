@@ -16,9 +16,10 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	 * 
 	 * Método para a autorização de açoes.
 	 * 
-	 * @param usuario Id do usuário que deseja realizar a ação
+	 * @param usuario Identificação do usuário que deseja realizar a ação
 	 * 
 	 * @param acao String que representa uma das opçoes do AcaoEnum
+	 * 
 	 * @param escopo Escopo da acao que deseja realizar 
 	 * (ids influenciados pela acao ou que atendem uma regra da ação por exemplo)
 	 * 
@@ -44,12 +45,17 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 
 	/**
 	 * 
+	 * Verifica se o usuario remetente possui permissao de envio para os
+	 * destinatários que deseja enviar.
+	 * 
 	 * @param idRemetente Id do usuário que pretende enviar a mensagem.
+	 * 
 	 * @param idsDestinatariosString
 	 *            String definindo os destinarios para quais a mensagem será
 	 *            enviada, podendo ser id de um curso, turma, aluno, instituto, etc.
 	 *            Os ids devem vir separados por virgula. (Ex.: "34,35,36").
-	 * @return
+	 * 
+	 * @return Booleano indicando se autoriza ou nao o envio. 
 	 * 
 	 */
 	private boolean autorizarEnvio(String idRemetenteString, String idsDestinatariosString){
@@ -106,7 +112,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	 * 
 	 * @param idRemetente Id do remetente da mensagem.
 	 * @param idsDestinatariosString Ids dos destinatarios da mensagem (String separada por virgulas).
-	 * @return
+	 * 
 	 */
 	private boolean verificarSeIdsForamInformados(String idRemetente,	String idsDestinatariosString) {
 		
@@ -172,7 +178,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	 * Verifica se o usuário com o id informado tem permissão para cancelar uma mensagem.
 	 * 
 	 * @param idUsuario Id do usuário que deseja cancelar uma mensagem.
-	 * @param idMensagem Identificador único da mensagem.
+	 * @param mensagem Objeto mensagem a ser cancelado.
 	 * 
 	 */
 	@Override
