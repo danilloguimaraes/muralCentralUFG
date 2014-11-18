@@ -60,36 +60,85 @@ import java.util.Set;
  * Representa um docente, lotado em um dado órgão.
  */
 public class Docente extends Usuario {
+    private String id;
     private String nome;
     private Set<Turma> turmas;
     private Orgao orgao;
 
-    public Docente(String nome, Set<Turma> turmas, Orgao orgao) {
+    /**
+     * Cria uma instância de Docente.
+     * @param id Identificador único do docente.
+     * @param nome Nome do docente.
+     * @param turmas Conjunto de turmas em que o docente é responsável.
+     * @param orgao Órgão em que o docente está lotado.
+     */
+    public Docente(String id, String nome, Set<Turma> turmas, Orgao orgao) {
+        this.id = id;
         this.nome = nome;
         this.turmas = turmas;
         this.orgao = orgao;
     }
 
+    /**
+     * Obtém o identificador único do docente.
+     * @return Sequência de caracteres que corresponde ao identificador do docente.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Define identificador único do docente.
+     * @param id Sequência de caracteres que corresponde ao identificador do docente.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtém o nome do docente.
+     * @return Sequência de caracteres que corresponde ao nome do docente.
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Define nome do docente.
+     * @param nome Sequência de caracteres que corresponde ao nome do docente.
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Obtém o conjunto de turmas em que o docente é responsável.
+     * @return Conjunto de turmas do docente.
+     */
     public Set<Turma> getTurmas() {
         return turmas;
     }
 
+    /**
+     * Define o conjunto de turmas em que o docente é responsável.
+     * @param turmas Conjunto de turmas do docente.
+     */
     public void setTurmas(Set<Turma> turmas) {
         this.turmas = turmas;
     }
 
+    /**
+     * Obtém o órgão em que o docente está lotado.
+     * @return Órgão em que o docente é integrante.
+     */
     public Orgao getOrgao() {
         return orgao;
     }
 
+    /**
+     * Define o órgão em que o docente está lotado.
+     * @param orgao Órgão em que o docente é integrante.
+     */
     public void setOrgao(Orgao orgao) {
         this.orgao = orgao;
     }
