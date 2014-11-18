@@ -53,6 +53,7 @@
 package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Identifica um usuário da Central.
@@ -60,6 +61,8 @@ import java.util.Set;
  * quanto quem envia informações para a Central.</p>
  */
 public class Usuario {
+	
+	private UUID id;
     private String nome;
     private Set<String> registrationIds;
 
@@ -86,4 +89,12 @@ public class Usuario {
     public void setRegistrationIds(Set<String> registrationIds) {
         this.registrationIds = registrationIds;
     }
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
 }

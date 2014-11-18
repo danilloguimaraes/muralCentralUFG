@@ -3,9 +3,26 @@ package br.ufg.inf.fabrica.muralufg.central.seguranca;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem;
+import br.ufg.inf.fabrica.muralufg.central.mensagem.MensagemRepository;
+
 public class AutorizacaoServiceImpl implements AutorizacaoService {
+	
+	
+	MensagemRepository mensagemRepository;
 
 	
+	/**
+	 * 
+	 * Método para a autorização de açoes.
+	 * 
+	 * @param usuario Id do usuário que deseja realizar a ação
+	 * 
+	 * @param acao String que representa uma das opçoes do AcaoEnum
+	 * @param escopo Escopo da acao que deseja realizar 
+	 * (ids influenciados pela acao ou que atendem uma regra da ação por exemplo)
+	 * 
+	 */
 	@Override
 	public boolean autoriza(String usuario, String acao, String escopo) {
 
@@ -14,7 +31,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		if (acao.equals(AcaoEnum.CANCELAR_MENSAGEM.toString())){
-			return autorizaCancelarMensagem(new Long(usuario));
+			return autorizaCancelarMensagem(new Long(usuario), escopo);
 		}
 		
 		if (acao.equals(AcaoEnum.GRAVA_REGISTRO.toString())){
@@ -97,7 +114,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 				&& idRemetente != null && !idRemetente.equals("");
 	}
 
-
+	
 	public boolean autorizaGravarMensagem(Long idUsuario) {
 		
 		boolean autorizado = false;
@@ -107,34 +124,80 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		return autorizado;
 	}
 
-
-	public boolean autorizaCancelarMensagem(Long idUsuario) {
+	/**
+	 * Verifica se um usuário possui permissão para cancelar uma mensagem.
+	 * 
+	 * @param idUsuario Identificador único do usuário que deseja cancelar a mensagem.
+	 * @param idMensagem Identificador único da mensagem que o usuário deseja cancelar.
+	 * 
+	 */
+	public boolean autorizaCancelarMensagem(Long idUsuario, String idMensagem) {
 		
 		boolean autorizado = false;
 		
-		autorizado = isUsuarioPodeCancelar(idUsuario);
+		autorizado = isUsuarioPodeCancelar(idUsuario, idMensagem);
+		
+		return autorizado;
+	}
+
+	/**
+	 * 
+	 * Busca os ids para os quais o remente possui permissão de envio,
+	 * seja esses ids de um curso, turma, órgão ou alunos em específico.
+	 * 
+	 * @param idRemetente Identificador único do usuário que deseja enviar uma mensagem.
+	 * 
+	 */
+	@Override
+	public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente) {
+		
+		// TODO Aguardar implementação da camada de persistência para ser implementado.
+		
+		return null;
+	}
+
+	
+	@Override
+	public boolean isUsuarioPodeGravar(Long idUsuario) {
+		
+		// TODO Auto-generated method stub
+		
+		return false;
+	}
+
+	
+	/**
+	 * 
+	 * Verifica se o usuário com o id informado tem permissão para cancelar uma mensagem.
+	 * 
+	 * @param idUsuario Id do usuário que deseja cancelar uma mensagem.
+	 * @param idMensagem Identificador único da mensagem.
+	 * 
+	 */
+	@Override
+	public boolean isUsuarioPodeCancelar(Long idUsuario, String idMensagem) {
+		
+		boolean autorizado = false;
+		
+		Mensagem mensagem = getMensagemRepository().getPorId(idMensagem);
+		
+		//Caso o usuário seja o remetente da mensagem, permite o cancelamento.
+		if(mensagem.getRemetente().getId().toString().equals(idUsuario)){
+			autorizado = true;
+		}
+		
+		// TODO Aguardar a definicão da persistência e domínio para fazer os demais casos das verificações.
 		
 		return autorizado;
 	}
 
 
-	@Override
-	public List<Long> getIdsPermitidosParaEnvioDeMensagem(Long idRemetente) {
-		// TODO Auto-generated method stub
-		return null;
+	public MensagemRepository getMensagemRepository() {
+		return mensagemRepository;
 	}
 
 
-	@Override
-	public boolean isUsuarioPodeGravar(Long idUsuario) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean isUsuarioPodeCancelar(Long idUsuario) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setMensagemRepository(MensagemRepository mensagemRepository) {
+		this.mensagemRepository = mensagemRepository;
 	}
 }

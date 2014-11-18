@@ -108,5 +108,5 @@ public interface AutorizacaoService {
      * @param idUsuario
      * @return true ou false
      */
-    public boolean isUsuarioPodeCancelar(Long idUsuario);
+    public boolean isUsuarioPodeCancelar(Long idUsuario, String idMensagem);
 }

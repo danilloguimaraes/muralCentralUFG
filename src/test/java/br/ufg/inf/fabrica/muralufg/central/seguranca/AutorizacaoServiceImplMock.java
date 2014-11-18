@@ -53,17 +53,4 @@ public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 		
 		return idsPermitidos;
 	}
-
-	@Override
-	public boolean isUsuarioPodeGravar(Long idUsuario) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isUsuarioPodeCancelar(Long idUsuario) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
