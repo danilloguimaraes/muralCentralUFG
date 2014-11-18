@@ -107,7 +107,7 @@ public abstract class Despertador {
      * instante corrente.
      * @see #remove(String)
      */
-    public abstract String desperteEm(String identificador, Date instante);
+    public abstract boolean desperteEm(String identificador, Date instante);
 
     /**
      * Remove um agendamento prévio.
