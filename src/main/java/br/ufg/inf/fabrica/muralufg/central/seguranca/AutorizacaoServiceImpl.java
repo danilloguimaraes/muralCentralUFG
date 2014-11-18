@@ -36,7 +36,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		if (acao.equals(AcaoEnum.GRAVA_REGISTRO.toString())){
-			return autorizaGravarMensagem(new Long(usuario));
+			return autorizaGravar(new Long(usuario));
 		}
 
 		return false;
@@ -121,7 +121,12 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	}
 
 	
-	public boolean autorizaGravarMensagem(Long idUsuario) {
+	/**
+	 * Verifica se o usuario tem permissão de gravar determinado registro
+	 * @param idUsuario Id do usuário
+	 * @return true ou false
+	 */
+	public boolean autorizaGravar(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
