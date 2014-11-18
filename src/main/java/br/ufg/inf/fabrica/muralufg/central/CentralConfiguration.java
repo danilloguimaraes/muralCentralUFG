@@ -1,7 +1,9 @@
 package br.ufg.inf.fabrica.muralufg.central;
 
 import io.dropwizard.Configuration;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -15,6 +17,10 @@ public class CentralConfiguration extends Configuration {
 
     @NotEmpty
     private String versao;
+    
+    private String url;
+
+    private String keyURL;
 
     @JsonProperty
     public String getNome() {
@@ -34,5 +40,25 @@ public class CentralConfiguration extends Configuration {
     @JsonProperty
     public void setVersao(String versao) {
         this.versao = versao;
+    }
+    
+    @JsonProperty
+    public String getURL() {
+        return url;
+    }
+
+    @JsonProperty
+    public void setURL(String url) {
+        this.url = url;
+    }
+
+    @JsonProperty
+    public String getKeyURL() {
+        return keyURL;
+    }
+
+    @JsonProperty
+    public void setKeyURL(String keyURL) {
+        this.keyURL = keyURL;
     }
 }
