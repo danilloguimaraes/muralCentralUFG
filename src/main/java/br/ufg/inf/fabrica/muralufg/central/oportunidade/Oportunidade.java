@@ -110,21 +110,21 @@ public class Oportunidade implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.dataInicio);
-        hash = 97 * hash + Objects.hashCode(this.dataFim);
-        hash = 97 * hash + Objects.hashCode(this.descricao);
-        return hash;
+        return (int) id;
     }
 
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
 
-        if (obj instanceof Oportunidade == false) {
+        if (!(obj instanceof Oportunidade)) {
             return false;
         }
 

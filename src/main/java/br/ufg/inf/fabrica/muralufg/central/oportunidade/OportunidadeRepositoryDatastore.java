@@ -51,7 +51,6 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
-import br.ufg.inf.fabrica.muralufg.central.oportunidade.dao.*;
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreException;
 import com.google.api.services.datastore.client.DatastoreFactory;
