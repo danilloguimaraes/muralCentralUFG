@@ -54,6 +54,8 @@ package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
 import java.util.List;
 
+import br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem;
+
 /**
  * Serviço de autorização para realizar determinada ação,
  * conforme o escopo definido, para um dado usuário.
@@ -105,8 +107,11 @@ public interface AutorizacaoService {
     
     
     /**	Verifica se o usuário passado tem permissão de excluir determinado item
-     * @param idUsuario
+     * 
+     * @param idUsuario Identificador único do usuário que deseja cancelar uma mensagem.
+     * @param mensagem Mensagem a ser cancelada.
+     * 
      * @return true ou false
      */
-    public boolean isUsuarioPodeCancelar(Long idUsuario, String idMensagem);
+    public boolean isUsuarioPodeCancelar(Long idUsuario, Mensagem mensagem);
 }

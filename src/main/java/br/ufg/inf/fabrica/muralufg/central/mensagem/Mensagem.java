@@ -111,6 +111,13 @@ public class Mensagem {
         setDataCriacao(dataCriacao);
         setImagens(imagens);
     }
+    
+    /**
+     * Construtor padrão.
+     */
+    public Mensagem(){
+    	
+    }
 
     /**
      * Obtém imagens associadas à mensagem.

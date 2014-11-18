@@ -100,4 +100,14 @@ public class AutorizacaoTest {
 
 		Assert.assertFalse(autorizacaoService.autoriza("", "ACAO_INVALIDA", ""));
 	}
+	
+	@Test
+	public void testAutorizaAutorizacaoCancelar() {
+		
+		AutorizacaoServiceImplMock autorizacaoService = new AutorizacaoServiceImplMock();
+		
+		Assert.assertTrue(autorizacaoService.isUsuarioPodeCancelar(1l, autorizacaoService.getMensagemCancelar()));
+		
+		
+	}
 }

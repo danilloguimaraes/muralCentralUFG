@@ -135,7 +135,8 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		
 		boolean autorizado = false;
 		
-		autorizado = isUsuarioPodeCancelar(idUsuario, idMensagem);
+		Mensagem mensagem = mensagemRepository.getPorId(idMensagem);
+		autorizado = isUsuarioPodeCancelar(idUsuario, mensagem);
 		
 		return autorizado;
 	}
@@ -175,14 +176,12 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	 * 
 	 */
 	@Override
-	public boolean isUsuarioPodeCancelar(Long idUsuario, String idMensagem) {
+	public boolean isUsuarioPodeCancelar(Long idUsuario, Mensagem mensagem) {
 		
 		boolean autorizado = false;
 		
-		Mensagem mensagem = getMensagemRepository().getPorId(idMensagem);
-		
 		//Caso o usuário seja o remetente da mensagem, permite o cancelamento.
-		if(mensagem.getRemetente().getId().toString().equals(idUsuario)){
+		if(mensagem.getRemetente().getId().toString().equals(idUsuario.toString())){
 			autorizado = true;
 		}
 		
