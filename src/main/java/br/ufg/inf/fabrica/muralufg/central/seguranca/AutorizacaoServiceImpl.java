@@ -169,10 +169,17 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	}
 
 	
+
+	/**
+	 * Verifica na camada de persistência se o id do usuário tem a permissão 
+	 * de gravar determinado item a partir do seu perfil de acesso.
+	 * 
+	 * @param idUsuario Id do usuário que está querendo alterar.
+	 */
 	@Override
 	public boolean isUsuarioPodeGravar(Long idUsuario) {
 		
-		// TODO Auto-generated method stub
+		// TODO Aguardar implementação da camada de persistência para ser implementado.
 		
 		return false;
 	}

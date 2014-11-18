@@ -22,6 +22,8 @@ public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 	//Mock utilizado no teste de autorização de cancelamento.
 	Mensagem mensagemCancelar;
 	
+	Usuario usuarioGravacao;
+	
 	/**
 	 * Cria dados para testes, que serão usados na classe AutorizacaoTest.
 	 */
@@ -43,15 +45,12 @@ public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 		idsInstitutos.add(32l);
 		idsInstitutos.add(33l);
 		
-		Usuario usuarioRemetenteMensagemCancelar = new Usuario(){
-			@Override
-			public Long getId() {
-				return 1l;
-			}
-		};
+		Usuario usuarioRemetenteMensagemCancelar = new Usuario(1L);
 		
 		mensagemCancelar = new Mensagem();
 		mensagemCancelar.setRemetente(usuarioRemetenteMensagemCancelar);
+		
+		usuarioGravacao = new Usuario(3L);
 	}
 	
 	
@@ -68,6 +67,17 @@ public class AutorizacaoServiceImplMock extends AutorizacaoServiceImpl{
 		idsPermitidos.addAll(idsTurmasPermitidos);
 		
 		return idsPermitidos;
+	}
+	
+	/**
+	 * Retorna true ou false a partir do id do usuário passado tem permissão de alteração ou gravação do item
+	 */
+	@Override
+	public boolean isUsuarioPodeGravar(Long idUsuario) {
+		if(usuarioGravacao.getId()!= null && usuarioGravacao.getId() == idUsuario){
+			return true;
+		}		
+		return false;
 	}
 
 
