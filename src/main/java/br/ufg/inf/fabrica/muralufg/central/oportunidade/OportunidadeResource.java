@@ -52,31 +52,30 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.util.Set;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/oportunidade")
 public class OportunidadeResource implements OportunidadeRepository {
 
     private Set<Oportunidade> vigentes;
-    private final OportunidadeRepositoryDatastore oportunidadeDAO;
+    private final OportunidadeRepositoryDatastore oportunidadeRepository;
 
     public OportunidadeResource() {
-        oportunidadeDAO = new OportunidadeRepositoryDatastore();
+        oportunidadeRepository = new OportunidadeRepositoryDatastore();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Set<Oportunidade> vigentes() {
-        vigentes = oportunidadeDAO.vigentes();
+        vigentes = oportunidadeRepository.vigentes();
         return vigentes;
     }
 
+    @POST
     @Override
     public void adicionar(Oportunidade oportunidade) {
-        oportunidadeDAO.adicionar(oportunidade);
+        oportunidadeRepository.adicionar(oportunidade);
     }
 }

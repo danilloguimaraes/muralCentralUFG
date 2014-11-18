@@ -52,8 +52,8 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
+import org.joda.time.DateTime;
 
 /**
  * Representa uma oportunidade de estágio, emprego ou pesquisa, por exemplo.
@@ -61,13 +61,19 @@ import java.util.Objects;
 public class Oportunidade implements Serializable {
 
     private long id;
-    private Date dataInicio;
-    private Date dataTermino;
+    private DateTime dataInicio;
+    private DateTime dataFim;
     private String descricao;
 
-    private static final long serialVersionUID = 6471090092659054860L;
+    private static final long serialVersionUID = 7845068940066519056L;
 
     public Oportunidade() {
+    }
+
+    public Oportunidade(String descricao, DateTime dataInicio, DateTime dataFim) {
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.descricao = descricao;
     }
 
     public long getId() {
@@ -78,20 +84,20 @@ public class Oportunidade implements Serializable {
         this.id = id;
     }
 
-    public Date getDataInicio() {
+    public DateTime getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(DateTime dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataTermino() {
-        return dataTermino;
+    public DateTime getDataFim() {
+        return dataFim;
     }
 
-    public void setDataTermino(Date dataTermino) {
-        this.dataTermino = dataTermino;
+    public void setDataFim(DateTime dataFim) {
+        this.dataFim = dataFim;
     }
 
     public String getDescricao() {
@@ -107,7 +113,7 @@ public class Oportunidade implements Serializable {
         int hash = 7;
         hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
         hash = 97 * hash + Objects.hashCode(this.dataInicio);
-        hash = 97 * hash + Objects.hashCode(this.dataTermino);
+        hash = 97 * hash + Objects.hashCode(this.dataFim);
         hash = 97 * hash + Objects.hashCode(this.descricao);
         return hash;
     }
@@ -132,13 +138,10 @@ public class Oportunidade implements Serializable {
             return false;
         }
 
-        if (!Objects.equals(this.dataTermino, other.dataTermino)) {
+        if (!Objects.equals(this.dataFim, other.dataFim)) {
             return false;
         }
 
-        if (!Objects.equals(this.descricao, other.descricao)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.descricao, other.descricao);
     }
 }

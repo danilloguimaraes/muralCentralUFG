@@ -52,132 +52,120 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.dao.*;
-import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;
-import br.ufg.inf.fabrica.muralufg.central.oportunidade.OportunidadeRepository;
-import com.google.api.services.datastore.DatastoreV1;
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreException;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
+import com.google.api.services.datastore.client.DatastoreFactory;
+import com.google.api.services.datastore.client.DatastoreHelper;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.*;
 import com.google.protobuf.ByteString;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import org.joda.time.DateTime;
+import com.google.api.services.datastore.DatastoreV1.*;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import static com.google.api.services.datastore.client.DatastoreHelper.*;
 
 /*
- * Para testar o DAO usando o Google Datastore localmente
- *
- * 1 - Baixar o arquivo http://storage.googleapis.com/gcd/tools/gcd-v1beta2-rev1-2.1.1.zip
- * 2 - Descompactar o arquivo em uma pasta
- * 3 - Executar na linha de comando:
- *       gcd-v1beta2-rev1-2.1.1/gcd.exe create my-dataset
- *       gcd-v1beta2-rev1-2.1.1/gcd.sh start my-dataset
- * 4 - Criar duas variáveis de ambiente:
- *       DATASTORE_HOST=http://localhost:8085
- *       DATASTORE_DATASET=my-dataset
-
- Dados utilizados localmente:
- nome do dataset = my-dataset
- dataset-id registrado = dataset-id
- * */
-/**
- *
- * Classe responsável pela persistência dos dados relativos a
- * Oportunidade, que deve ser feita no Google Datastore
+ Classe responsável pela persistência dos dados
+ * relativos a Oportunidade, que deve ser feita no Google Datastore
  */
-public class OportunidadeRepositoryDatastore implements OportunidadeRepository{
+public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    public final String DESCRICAO = "descricao";
+    public final String DATA_INICIO = "data_inicio";
+    public final String DATA_FIM = "data_fim";
+    private Datastore datastore;
 
-    @Override
-    public Set<Oportunidade> vigentes() {
-        Set<Oportunidade> oportunidades = new HashSet<>();
-        Query q = new Query("Oportunidade");
-        PreparedQuery pq = datastore.prepare(q);
-        for (Entity result : pq.asIterable()) {
-            Date dataInicio = (Date) result.getProperty("data_inicio");
-            Date dataFim = (Date) result.getProperty("data_fim");
-            String descricao = (String) result.getProperty("descricao");
-            int id = (int) result.getProperty("id");
-
-            Oportunidade oportunidade = new Oportunidade();
-            oportunidade.setDescricao(descricao);
-            oportunidade.setDataInicio(dataInicio);
-            oportunidade.setDataTermino(dataFim);
-            oportunidade.setId(id);
-
-            oportunidades.add(oportunidade);
+    public OportunidadeRepositoryDatastore() {
+        try {
+            String datasetId = "";
+            datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsfromEnv()
+                    .dataset(datasetId).build());
+        } catch (GeneralSecurityException exception) {
+            System.err.println("Erro de segurança ao fazer a conexão com o banco de dados: " + exception.getMessage());
+            System.exit(1);
+        } catch (IOException exception) {
+            System.err.println("Erro de E/S ao conectar com o banco de dados: " + exception.getMessage());
+            System.exit(1);
         }
-        return oportunidades;
     }
 
+    /**
+     * Insere uma nova Oportunidade ao banco de dados
+     *
+     * @param oportunidade - Oportunidade a ser inserida no banco de dados
+     */
     @Override
     public void adicionar(Oportunidade oportunidade) {
-        Datastore datastore = DaoHelper.getDataStore();
+        Entity.Builder entOportunidade = Entity.newBuilder();
+        entOportunidade.setKey(makeKey());
+        entOportunidade.addProperty(makeProperty(DESCRICAO, makeValue(oportunidade.getDescricao())));
+        entOportunidade.addProperty(makeProperty(DATA_INICIO, makeValue(String.valueOf(oportunidade.getDataInicio()))));
+        entOportunidade.addProperty(makeProperty(DATA_FIM, makeValue(String.valueOf(oportunidade.getDataFim()))));
 
-        // Cria uma requisição RPC para iniciar uma nova transação
-        DatastoreV1.BeginTransactionRequest.Builder treq = DatastoreV1.BeginTransactionRequest.newBuilder();
+        Mutation.Builder mutation = Mutation.newBuilder();
+        mutation.addInsertAutoId(entOportunidade);
+
+        CommitRequest request = CommitRequest.newBuilder()
+                .setMutation(mutation)
+                .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
+                .build();
+    }
+
+    /**
+     * Identifica, para o instante em que a chamada é realizada, o conjunto de
+     * oportunidades vigentes, ou seja, cuja execução está em andamento.
+     *
+     * @return O conjunto de oportunidades vigentes. Se nenhuma oportunidade
+     * estiver vigente, então o conjunto retornado não possui nenhuma
+     * oportunidade.
+     */
+    @Override
+    public Set<Oportunidade> vigentes() {
+        Set<Oportunidade> oportunidadesVigentes = new HashSet<>();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
         try {
+            //Filtro 1: recupera as oportunidades dentro do período de início
+            Filter filtroDataInicioAntesQueHoje = makeFilter(
+                    "data_inicio", PropertyFilter.Operator.LESS_THAN_OR_EQUAL, makeValue(new Date(System.currentTimeMillis()))).build();
 
-            //executa o RPC de forma síncrona
-            DatastoreV1.BeginTransactionResponse tres = datastore.beginTransaction(treq.build());
-            //obtem o identificador da transação através da resposta
-            ByteString tx = tres.getTransaction();
-            // Cria uma solicitação de RPC request para pegar entidades por chave.
-            DatastoreV1.LookupRequest.Builder lreq = DatastoreV1.LookupRequest.newBuilder();
-            // Defina a chave de entidade com apenas um ` path_element` : nenhum pai .
-            DatastoreV1.Key.Builder key = DatastoreV1.Key.newBuilder().addPathElement(
-                    DatastoreV1.Key.PathElement.newBuilder()
-                    .setKind("Oportunidade")
-                    .setId(oportunidade.getId()));
+            //Filtro 2: recupera as oportunidades que não foram finalizadas
+            Filter filtroDataFimDepoisQueHoje = makeFilter(
+                    "data_fim", PropertyFilter.Operator.GREATER_THAN_OR_EQUAL, makeValue(new Date(System.currentTimeMillis()))).build();
 
-            //Adicionar uma chave para a solicitação de pesquisa .
-            lreq.addKey(key);
-            // Definir a transação , por isso, ter uma cópia consistente da
-            // Entidade no momento que a operação começou .
-            lreq.getReadOptionsBuilder().setTransaction(tx);
+            // É usado o método makeCompositeFilter() para combinar os dois filtros
+            Filter filtroPeriodoVigente = makeFilter(filtroDataInicioAntesQueHoje, filtroDataFimDepoisQueHoje).build();
+            // É usado o Query.Builder para montar a query a query
+            Query.Builder query = Query.newBuilder();
+            query.addKindBuilder().setName("Oportunidade");
+            query.setFilter(filtroPeriodoVigente).build();
 
-            // Executa o RPC e obtem a resposta.
-            DatastoreV1.LookupResponse lresp = datastore.lookup(lreq.build());
-            //Criar uma solicitação de RPC para confirmar a transação .
-            DatastoreV1.CommitRequest.Builder creq = DatastoreV1.CommitRequest.newBuilder();
-            //confirma a transação
-            creq.setTransaction(tx);
+            // Montar um RunQueryRequest
+            RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
 
-            DatastoreV1.Entity entity;
-            if (lresp.getFoundCount() > 0) {
-                entity = lresp.getFound(0).getEntity();
-            } else {
-                // Se nenhuma entidade foi encontrada, cria uma nova.
-                DatastoreV1.Entity.Builder entityBuilder = DatastoreV1.Entity.newBuilder();
-                // Define a chave de entidade
-                entityBuilder.setKey(key);
-                // Cria as propriedades de entidades
-                entityBuilder.addProperty(DatastoreV1.Property.newBuilder()
-                        .setName("descricao")
-                        .setValue(DatastoreV1.Value.newBuilder().setStringValue(oportunidade.getDescricao())));
-                entityBuilder.addProperty(DatastoreV1.Property.newBuilder()
-                        .setName("data_inicio")
-                        .setValue(DatastoreV1.Value.newBuilder().setTimestampMicrosecondsValue(oportunidade.getDataInicio().getTime())));
-                entityBuilder.addProperty(DatastoreV1.Property.newBuilder()
-                        .setName("data_termino")
-                        .setValue(DatastoreV1.Value.newBuilder().setTimestampMicrosecondsValue(oportunidade.getDataTermino().getTime())));
-                // Cria a entidade
-                entity = entityBuilder.build();
-                // Insere a entidade na confirmação da mutação de requisição
-                creq.getMutationBuilder().addInsert(entity);
+            RunQueryResponse response = datastore.runQuery(request);
+
+            for (EntityResult result : response.getBatch().getEntityResultList()) {
+                Map<String, Value> props = getPropertyMap(result.getEntity());
+                String descricao = getString(props.get("descricao"));
+                String dataInicio = getString(props.get("data_inicio"));
+                String dataFim = getString(props.get("data_fim"));
+                DateTime dataInicioFormatted = formatter.parseDateTime(dataInicio);
+                DateTime dataFimFormatted = formatter.parseDateTime(dataFim);
+
+                oportunidadesVigentes.add(new Oportunidade(descricao, dataInicioFormatted, dataFimFormatted));
             }
 
-            // Execute o RPC Commit de forma síncrona e ignorar a resposta.
-            // Aplicar a mutação de inserção se a entidade não foi encontrado e fecha
-            // A transação.
-            datastore.commit(creq.build());
+            if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {
+                ByteString endCursor = response.getBatch().getEndCursor();
+                query.setStartCursor(endCursor);
+            }
         } catch (DatastoreException e) {
             e.printStackTrace();
         }
+
+        return oportunidadesVigentes;
     }
 }

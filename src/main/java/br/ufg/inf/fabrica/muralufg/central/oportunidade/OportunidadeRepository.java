@@ -66,6 +66,11 @@ public interface OportunidadeRepository {
      * estiver vigente, então o conjunto retornado não possui nenhuma entrada.
      */
     public Set<Oportunidade> vigentes();
-    
+
+    /**
+     * Acrescenta ao repositório a oportunidade.
+     *
+     * @param oportunidade Oportunidade a ser inserido no repositório.
+     */
     public void adicionar(Oportunidade oportunidade);
 }
