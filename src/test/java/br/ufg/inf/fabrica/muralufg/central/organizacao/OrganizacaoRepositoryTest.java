@@ -57,36 +57,53 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
-
-
-public class OrganizacaoRepositoryDispositivosTest {
+/**
+ * Representa o teste da implementação da estrutura organizacional da UFG.
+ */
+public class OrganizacaoRepositoryTest {
     static OrganizacaoRepository repository = null;
     private Turma turma;
     private Orgao orgao;
-    public OrganizacaoRepositoryDispositivosTest() {
+
+    /**
+     * Construtor padrão da instância de teste da estrutura
+     * organizacional da UFG.
+     */
+    public OrganizacaoRepositoryTest() {
     }
 
+    /**
+     * Configura a classe de teste instanciando a classe auxiliar
+     * de teste da implementação da estrutura organizacional da UFG.
+     */
     @BeforeClass
     public static void setUpClass() {
         repository = new OrganizacaoRepositoryImplTest();
     }
 
+    /**
+     * Finaliza os testes da implementação da estrutura
+     * organizacional da UFG.
+     */
     @AfterClass
     public static void tearDownClass() {
-        System.out.println("Finalizando os testes");
+        System.out.println("Finalizando os testes.");
     }
 
+    /**
+     * Configura os testes da implementação da estrutura organizacional
+     * da UFG, instanciando Turma e Orgao.
+     */
     @Before
     public void setUp() {
         turma = new Turma("1",null,null,null);
         orgao = new Orgao("INF",null,null);
     }
 
-    @After
-    public void tearDown() {
-
-    }
-
+    /**
+     * Testa os dispositivos (ids) dos usuários quando
+     * não há uma conexão com o repositório.
+     */
     @Test
     public void testDispositivosQuandoNaoHaConexaoComRepositorio(){
         Set<String> dispositivosEsperados = new HashSet<String>();
@@ -95,35 +112,41 @@ public class OrganizacaoRepositoryDispositivosTest {
         dispositivosEsperados.add("390248284320989");
         dispositivosEsperados.add("38832883823888");
         dispositivosEsperados.add("93093290239902");
-
-
-        Set<String> dispositivosResultado =   repository.dispositivos(turma);
-
+        Set<String> dispositivosResultado = repository.dispositivos(turma);
         assertEquals(dispositivosEsperados,dispositivosResultado);
-
     }
 
+    /**
+     * Testa os dispositivos (ids) dos alunos de uma dada turma em questão.
+     */
     @Test
     public void testDispositivosAlunos() {
         Set<String> dispositivosEsperados = new HashSet<String>();
         dispositivosEsperados.add("32893892392393");
         dispositivosEsperados.add("32929329392923");
         dispositivosEsperados.add("84884884388348");
-        Set<String> dispositivosResultado =   repository.dispositivosAlunos(turma);
+        Set<String> dispositivosResultado = repository.dispositivosAlunos(turma);
         assertEquals(dispositivosEsperados,dispositivosResultado);
     }
+
+    /**
+     * Testa os alunos de uma dada turma em questão.
+     */
     @Test
     public void testAlunos() {
-      Set<Aluno> alunosEsperados = new HashSet<>();
-      alunosEsperados.add(new Aluno("Pedro","92932"));
-      alunosEsperados.add(new Aluno("Felipe","39922"));
-      Set<Aluno> alunosRetornados = repository.alunos(turma);
-
-      assertEquals(alunosEsperados.size(),alunosRetornados.size());
-     // assertTrue(alunosEsperados.equals(alunosRetornados));
+        Set<Aluno> alunosEsperados = new HashSet<>();
+        alunosEsperados.add(new Aluno("Pedro","92932"));
+        alunosEsperados.add(new Aluno("Felipe","39922"));
+        Set<Aluno> alunosRetornados = repository.alunos(turma);
+        assertEquals(alunosEsperados.size(),alunosRetornados.size());
+        // assertTrue(alunosEsperados.equals(alunosRetornados));
     }
+
+    /**
+     * Testa os docentes de uma dada turma em questão.
+     */
     @Test
-    public void testDocentes_Turma() {
+    public void testDocentesTurma() {
         Set<Docente> docentesEsperados = new HashSet<>();
         Set<Turma> turmas = new HashSet<>();
         turmas.add(turma);
@@ -132,24 +155,28 @@ public class OrganizacaoRepositoryDispositivosTest {
         Docente docente2 = new Docente("Fabio",turmas,orgao);
         docentesEsperados.add(docente1);
         docentesEsperados.add(docente2);
-
         Set<Docente> docentesResultado = repository.docentes(turma);
         assertEquals(docentesEsperados.size(), docentesResultado.size());
     }
-    @Test
-    public void testDocentes_Curso() {
-        Set<String> docentesEsperados = new HashSet<>();
 
+    /**
+     * Testa os docentes de um dado curso em questão.
+     */
+    @Test
+    public void testDocentesCurso() {
+        Set<String> docentesEsperados = new HashSet<>();
         docentesEsperados.add("Marcelo");
         docentesEsperados.add("Fabio");
-
-       Curso curso = new Curso("Engenharia de Software",null,null);
-       Set<String> docentesResultado = repository.docentes(curso);
-       assertEquals(docentesEsperados, docentesResultado);
+        Curso curso = new Curso("Engenharia de Software",null,null);
+        Set<String> docentesResultado = repository.docentes(curso);
+        assertEquals(docentesEsperados, docentesResultado);
     }
 
+    /**
+     * Testa os docentes de um dado órgão em questão.
+     */
     @Test
-    public void testDocentes_Orgao() {
+    public void testDocentesOrgao() {
         Set<String> docentesEsperados = new HashSet<>();
         docentesEsperados.add("Marcelo");
         docentesEsperados.add("Fabio");
@@ -157,6 +184,10 @@ public class OrganizacaoRepositoryDispositivosTest {
         Set<String> docentesResultado = repository.docentes(orgao);
         assertEquals(docentesEsperados, docentesResultado);
     }
+
+    /**
+     * Testa os técnicos de um dado órgão em questão.
+     */
     @Test
     public void testTecnicos() {
         Set<String> tecnicosEsperados = new HashSet<>();
@@ -165,8 +196,11 @@ public class OrganizacaoRepositoryDispositivosTest {
         tecnicosEsperados.add("Joaquim");
         Set<String> tecnicosResultado = repository.tecnicos(orgao);
         assertEquals(tecnicosEsperados, tecnicosResultado);
-
     }
+
+    /**
+     * Testa as turmas de uma dada disciplina em questão.
+     */
     @Test
     public void testTurmas() {
         Set<Turma> turmasEsperadas = new HashSet<>();
@@ -175,6 +209,10 @@ public class OrganizacaoRepositoryDispositivosTest {
         Set<Turma> turmasResultado = repository.turmas(disciplina);
         assertEquals(turmasEsperadas.size(),turmasResultado.size());
     }
+
+    /**
+     * Testa as disciplinas de um dado curso em questão.
+     */
     @Test
     public void testDisciplinas() {
         Set<Disciplina> disciplinasEsperadas = new HashSet<>();
@@ -184,6 +222,10 @@ public class OrganizacaoRepositoryDispositivosTest {
         Set<Disciplina> disciplinasResultado = repository.disciplinas(curso);
         assertEquals(disciplinasEsperadas.size(),disciplinasResultado.size());
     }
+
+    /**
+     * Testa os cursos de um dado órgão em questão.
+     */
     @Test
     public void testCursos() {
         Set<Curso> cursosEsperados = new HashSet<>();
