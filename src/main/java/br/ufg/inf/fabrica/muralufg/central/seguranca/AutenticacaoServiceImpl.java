@@ -1,3 +1,7 @@
+/*
+ * Autor: Bruno Rodrigues Franco
+ * Data: 19/11/2014
+ */
 package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
 import java.io.DataOutputStream;
@@ -21,15 +25,31 @@ import javax.net.ssl.X509TrustManager;
 
 import sun.net.www.protocol.https.HttpsURLConnectionImpl;
 
+/**
+ * The Class AutenticacaoServiceImpl.
+ */
 public class AutenticacaoServiceImpl {
 
+	/** Endereco do servidor. */
 	private String ENDERECO_SERVIDOR;
 
+	/**
+	 * Instantiates a new autenticacao service impl.
+	 *
+	 * @param enderecoServidor, o endereco do servidor
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public AutenticacaoServiceImpl(String enderecoServidor) throws IOException {
 		verificaSsl();
 		ENDERECO_SERVIDOR = enderecoServidor;
 	}
 
+	/**
+	 * Carrega arquivo de propriedades para autenticacao
+	 * e verifica ssl.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private void verificaSsl() throws IOException {
 
 		Properties propriedades = new Properties();
@@ -57,21 +77,42 @@ public class AutenticacaoServiceImpl {
 				});
 	}
 
+	/**
+	 * Class DefaultTrustManager que verifica se o cliente
+	 * é confiável de acordo com o certificado X509 e também
+	 * verifica se o servidor é confiavel.
+	 */
 	private static class DefaultTrustManager implements X509TrustManager {
 
+		/* (non-Javadoc)
+		 * @see javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert.X509Certificate[], java.lang.String)
+		 */
 		public void checkClientTrusted(X509Certificate[] arg0, String arg1)
 				throws CertificateException {
 		}
 
+		/* (non-Javadoc)
+		 * @see javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert.X509Certificate[], java.lang.String)
+		 */
 		public void checkServerTrusted(X509Certificate[] arg0, String arg1)
 				throws CertificateException {
 		}
 
+		/* (non-Javadoc)
+		 * @see javax.net.ssl.X509TrustManager#getAcceptedIssuers()
+		 */
 		public X509Certificate[] getAcceptedIssuers() {
 			return null;
 		}
 	}
 
+	/**
+	 * Autentica usuario.
+	 *
+	 * @param usuario 
+	 * @param senha 
+	 * @return true, if successful
+	 */
 	public boolean autenticaUsuario(String usuario, String senha) {
 		int responseCode = 0;
 		try {
@@ -97,6 +138,14 @@ public class AutenticacaoServiceImpl {
 		return false;
 	}
 
+	/**
+	 * Abre conexao.
+	 *
+	 * @param url 
+	 * @return the https url connection impl
+	 * @throws MalformedURLException the malformed url exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static HttpsURLConnectionImpl abreConexao(String url)
 			throws MalformedURLException, IOException {
 		URL obj = new URL(url);
@@ -105,6 +154,13 @@ public class AutenticacaoServiceImpl {
 		return con;
 	}
 
+	/**
+	 * Envia requisicao post.
+	 *
+	 * @param con referente a Conexão
+	 * @param urlParameters, os parametros da URL
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static void enviaRequisicaoPost(HttpsURLConnectionImpl con,
 			String urlParameters) throws IOException {
 		con.setDoOutput(true);
@@ -114,6 +170,12 @@ public class AutenticacaoServiceImpl {
 		wr.close();
 	}
 
+	/**
+	 * Configura certificado na conexao.
+	 *
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
+	 * @throws KeyManagementException the key management exception
+	 */
 	private static void configuraCertificadoNaConexao()
 			throws NoSuchAlgorithmException, KeyManagementException {
 		SSLContext ctx = SSLContext.getInstance("TLS");
