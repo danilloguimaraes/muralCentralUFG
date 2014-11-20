@@ -96,6 +96,7 @@ public class OrganizacaoRepositoryTest {
      */
     @Before
     public void setUp() {
+
         turma = new Turma("1",null,null,null);
         orgao = new Orgao("INF",null,null);
     }

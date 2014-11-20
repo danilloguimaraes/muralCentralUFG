@@ -52,6 +52,7 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import br.ufg.inf.fabrica.muralufg.central.CentralConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
@@ -65,8 +66,6 @@ import java.util.Set;
  * estrutura organizacional da UFG.
  */
 public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
-    //  private static String URI = "http://testedatastore1000.appspot.com";
-    private static String URI = "http://localhost:8082";
 
     /**
      * Obtém o JSON via http REST da servidor
@@ -77,6 +76,10 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
         Client c = Client.create();
         WebResource webResource = c.resource(uri);
         return webResource.get(String.class);
+    }
+    public String getURIRecursos(){
+        CentralConfiguration centralConfiguration = new CentralConfiguration();
+        return centralConfiguration.getRecursos();
     }
 
     /**
@@ -89,7 +92,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<String> dispositivos(Turma turma) {
-        String json = getJsonFromURI(URI + "/resources/dispositivos/turmaid/" + turma.getTurmaId());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/dispositivos/turmaid/" + turma.getTurmaId());
         Set<String> dispositivos = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -109,7 +112,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<String> dispositivosAlunos(Turma turma) {
-        String json = getJsonFromURI(URI + "/resources/dispositivos_turma/turmaid/" + turma.getTurmaId());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/dispositivos_turma/turmaid/" + turma.getTurmaId());
         Set<String> dispositivos = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -127,7 +130,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<Aluno> alunos(Turma turma) {
-        String json = getJsonFromURI(URI + "/resources/alunos/turmaid/" + turma.getTurmaId());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/alunos/turmaid/" + turma.getTurmaId());
         Set<Aluno> alunos = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -147,7 +150,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<Docente> docentes(Turma turma) {
-        String json = getJsonFromURI(URI + "/resources/docentes/turmaid/" + turma.getTurmaId());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/docentes/turmaid/" + turma.getTurmaId());
         Set<Docente> docentes = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -166,7 +169,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<String> docentes(Curso curso) {
-        String json = getJsonFromURI(URI + "/resources/docentes/curso/" + curso.getNome());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/docentes/curso/" + curso.getNome());
         Set<String> docentes = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -185,7 +188,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<String> docentes(Orgao orgao) {
-        String json = getJsonFromURI(URI + "/resources/docentes/orgao/" + orgao.getNome());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/docentes/orgao/" + orgao.getNome());
         Set<String> docentes = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -204,7 +207,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<String> tecnicos(Orgao orgao) {
-        String json = getJsonFromURI(URI + "/resources/tecnicos/orgao/" + orgao.getNome());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/tecnicos/orgao/" + orgao.getNome());
         Set<String> tecnicos = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -222,7 +225,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<Turma> turmas(Disciplina disciplina) {
-        String json = getJsonFromURI(URI + "/resources/turmas/disciplina/" + disciplina.getNome());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/turmas/disciplina/" + disciplina.getNome());
         Set<Turma> turmas = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -240,7 +243,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<Disciplina> disciplinas(Curso curso) {
-        String json = getJsonFromURI(URI + "/resources/disciplinas/curso/" + curso.getNome());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/disciplinas/curso/" + curso.getNome());
         Set<Disciplina> disciplinas = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -258,7 +261,7 @@ public class OrganizacaoRepositoryImpl implements OrganizacaoRepository {
      */
     @Override
     public Set<Curso> cursos(Orgao orgao) {
-        String json = getJsonFromURI(URI + "/resources/cursos/orgao/" + orgao.getNome());
+        String json = getJsonFromURI(getURIRecursos() + "/resources/cursos/orgao/" + orgao.getNome());
         Set<Curso> cursos = new HashSet<>();
         ObjectMapper objectMapper = new ObjectMapper();
         try {

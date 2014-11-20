@@ -165,4 +165,12 @@ public class OrganizacaoRepositoryImplTest extends OrganizacaoRepositoryImpl {
         }
         return json;
     }
+
+
+
+    @Override
+    public String getURIRecursos() {
+     //   return super.getURIRecursos();
+        return  "http://localhost:8082";
+    }
 }
