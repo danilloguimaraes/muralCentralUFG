@@ -14,7 +14,7 @@ import io.dropwizard.setup.Environment;
  * outra classe {@link br.ufg.inf.fabrica.muralufg.central.CentralConfiguration}.
  * @see br.ufg.inf.fabrica.muralufg.central.CentralConfiguration
  */
-public class CentralApplication extends Application<CentralConfiguration> {
+    public class CentralApplication extends Application<CentralConfiguration> {
 
     /**
      * Ponto de entrada da aplicação.
@@ -41,7 +41,8 @@ public class CentralApplication extends Application<CentralConfiguration> {
 
         final IdentificacaoResource versaoResource = new IdentificacaoResource(
                 configuracao.getNome(),
-                configuracao.getVersao()
+                configuracao.getVersao(),
+                configuracao.getRecursos()
         );
 
         environment.jersey().register(versaoResource);
