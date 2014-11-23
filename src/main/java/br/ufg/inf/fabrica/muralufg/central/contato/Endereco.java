@@ -10,6 +10,9 @@ package br.ufg.inf.fabrica.muralufg.central.contato;
  *
  * @author GAOliveira
  */
+
+/*Esta é a classe de endereço, a qual possui vinculo com a classe Contato e Orgao realizado pelo idContato e idOrgao*/
+
 public class Endereco {
     
    private int idEndereco;
@@ -17,6 +20,25 @@ public class Endereco {
    private String cep;
    private String numero;
    private String rua;
+   private int idContato;
+   private int idOrgao;
+
+
+    public int getIdContato() {
+        return idContato;
+    }
+    public void setIdContato(int idContato) {
+        this.idContato = idContato;
+    }
+    
+    public int getIdOrgao() {
+        return idOrgao;
+    }
+
+    public void setIdOrgao(int idOrgao) {
+        this.idOrgao = idOrgao;
+    }
+   
 
     public int getIdEndereco() {
         return idEndereco;

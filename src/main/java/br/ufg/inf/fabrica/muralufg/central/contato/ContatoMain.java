@@ -52,13 +52,15 @@
 
 package br.ufg.inf.fabrica.muralufg.central.contato;
 
-import static br.ufg.inf.fabrica.muralufg.central.contato.ConexaoMysql.FecharConexao;
 import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -67,10 +69,6 @@ import java.util.Scanner;
  */
 public class ContatoMain {
     
-    public static java.sql.Connection ReiniciarConexao() { 
-    FecharConexao(); 
-    return ConexaoMysql.getConexaoMySQL(); 
-} 
 
     /**
      * O nome do contato, por exemplo, nome da pessoa física
@@ -81,17 +79,88 @@ public class ContatoMain {
      */
 
 
-    public static void main(String[] args) throws SQLException {
-      
-        Connection conn = ConexaoMysql.getConexaoMySQL();
+    public static void main(String[] args) throws SQLException{
+        
+        String orgao1 = null;
+        String servico1 = null;
+        String contato1 = null;
+        String endereco1 = null;
+        String curso1 = null;
+        int contatoid;
+        int orgaoid = 0;
+        int servicoid;
+        int cursoid = 0;
+        int enderecoid;
+        String concatena;   //Variável para armazenar os registros vinculados
+        int menu = 0;       //Variável do menu de opções.
+       
+        //Aqui é realizada as chamadas das classes necessárias para a construção da busca.
+        Contato contato =  new Contato();
+        Curso curso =  new Curso();
+        Endereco endereco =  new Endereco();
+        Orgao orgao =  new Orgao();
+        Servico servico =  new Servico();
+        ListaDeDados listaDeDados = new ListaDeDados();
+        
 
-        
-        System.out.println(ConexaoMysql.statusConection() + "\n \n ");
-        
-        
-        Statement stm = conn.createStatement();
-        
-       int menu = 0;   
+                    ListaDeDados.ListarContato();
+                    ListaDeDados.ListarCurso();
+                    ListaDeDados.ListarOrgao();
+                    ListaDeDados.ListarServico();
+                    ListaDeDados.ListarEndereco();
+                    
+                    List<String> listContatos = new ArrayList<String>();    //Cria lista para armazenar os registros vinculados em forma de string.
+                    
+              /*Neste bloco é realizada a logica para fazer o vinculo entre os os registros de cada classe.
+                Para cada contato é verificado qual é seu endereço, pelo idContato que é cadastrado na classe Endereco,
+                achando o encereço é verificado qual o curso vinculado ao contato, pelo idContato cadastrado na classe Curso,
+                e assim sucessivamente até o último vinculo.*/
+                    
+              for (Contato con : ListaDeDados.ListarContato()) { 
+                        contatoid = con.getIdContato();
+                        contato1 = con.getNomeContato() + " - " + con.getTelefone() + " - " + con.getFax() + " - " + con.getEmail() + " - " + con.getSkype();
+                        
+                        for (Endereco end : ListaDeDados.ListarEndereco()) {
+
+                            if(end.getIdContato() == contatoid){
+                                enderecoid = end.getIdEndereco();
+                                endereco1 = end.getRua() + " - " + end.getNumero() + " - " + end.getBairro() + " - " + end.getCep();
+
+                            }     
+                               for (Curso cur : ListaDeDados.ListarCurso()) { 
+                                   
+                                   if(cur.getIdContato() == contatoid){
+                                       cursoid = cur.getIdOrgao();
+                                       curso1 = cur.getNomeCurso();
+                                            }
+
+                                        for (Orgao org : ListaDeDados.ListarOrgao()) { 
+
+                                            if(org.getIdOrgao() == cursoid){
+                                                orgaoid = org.getIdOrgao();
+                                                orgao1 = org.getNome();
+                                            }
+
+                                            for (Servico ser : ListaDeDados.ListarServico()) { 
+
+                                                if(ser.getIdOrgao() == orgaoid){
+                                                    servico1 = ser.getDescricao();
+
+                                                }
+    
+                                            }   
+                                        }
+                                }
+                            
+                        }
+                        //Aqui é transformado todos os registros vinculados em uma única string.
+                        concatena = contato1 + " - " + endereco1 + " - " + curso1 + " - " + orgao1 + " - " + servico1;
+                        //Após criar a string, a mesma é adicionada a lista listContatos
+                        listContatos.add(concatena);
+                        
+                }
+        /*Aqui é criado um while para a escolha de uma opção no menu, 1 para digitar a palavra a ser consultada 
+          e 2 para sair do programa.*/
         while(menu != 2){
             
             System.out.println(" 1 - Consultar \n 2 - Sair \n -->");
@@ -104,27 +173,26 @@ public class ContatoMain {
              }
        
                 if(menu == 1){
+                    
                     System.out.println("Digite a palavra a ser consultada: \n");
                     Scanner sc = new Scanner(System.in);
-                    String valor = "%" + sc.nextLine() + "%";
-
-                    //Executa consulta pelo valor digitado
-                    ResultSet rs = stm.executeQuery("select curso.nomeCurso, orgao.nome, servico.descricao, contato.nomeContato, contato.telefone, contato.email, contato.fax, contato.skype, endereco.bairro, endereco.cep, endereco.numero, endereco.rua from curso inner join orgao on orgao.idorgao = curso.idorgao inner join servico on servico.idorgao = orgao.idorgao inner join contato on contato.idservico = servico.idservico inner join endereco on endereco.idcontato = contato.idcontato where curso.nomeCurso like '"+valor+"' or orgao.nome like '"+valor+"' or servico.descricao like '"+valor+"' or contato.nomeContato like '"+valor+"' or contato.telefone like '"+valor+"' or contato.email like '"+valor+"' or contato.fax like '"+valor+"' or contato.skype like '"+valor+"' or endereco.bairro like '"+valor+"' or endereco.cep like '"+valor+"' or endereco.numero like '"+valor+"' or endereco.rua like '"+valor+"'");
- 
-
-                    //enquanto tiver tuplas retornadas ele não sai do laço while  
-                    while(rs.next()){  
-                       System.out.println(rs.getString("curso.nomeCurso") +" - "+ rs.getString("orgao.nome") +" - "+ rs.getString("servico.descricao") +" - "+ rs.getString("contato.nomeContato") +" - "+ rs.getString("contato.telefone")  +" - "+ rs.getString("contato.email") +" - "+ rs.getString("contato.fax") +" - "+ rs.getString("contato.skype") +" - "+ rs.getString("endereco.bairro") +" - "+ rs.getString("endereco.cep") +" - "+ rs.getString("endereco.numero") +" - "+ rs.getString("endereco.rua"));
-                    } 
+                    String valor = sc.nextLine();
                     
-                 
+                     for(String str : listContatos) {  //Faz uma busca em toda a lista em busca da palavra digitada acima.
+ 
+                        if(str.contains(valor)){       //Se a palavra digitada for encontrada, o registro que a possui é retornado.
+                            System.out.println(str);
+                        }
+                         
+                     }
                 }
+                
                 else if(menu == 2){
                     out.close();
                 }
-        }
-
-        
+                                
+        }  
     }
-    
 }
+
+

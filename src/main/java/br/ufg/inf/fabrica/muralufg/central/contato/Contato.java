@@ -10,6 +10,9 @@ package br.ufg.inf.fabrica.muralufg.central.contato;
  *
  * @author GAOliveira
  */
+
+/*Esta é a classe de contato com todos seus atributos definidos.*/
+
 public class Contato {
     
    private int idContato;
@@ -18,6 +21,7 @@ public class Contato {
    private String fax;
    private String email;
    private String skype;
+   
 
     public int getIdContato() {
         return idContato;

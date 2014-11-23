@@ -10,10 +10,26 @@ package br.ufg.inf.fabrica.muralufg.central.contato;
  *
  * @author GAOliveira
  */
+
+/*Esta é a classe orgao, a qual possui vinculo com a classe Servico realizado pelo idServico*/
+
 public class Orgao {
     
    private int idOrgao;
    private String nome;
+   private int idServico;
+   
+   
+
+    public int getIdservico() {
+        return idServico;
+    }
+
+    public void setIdservico(int idservico) {
+        this.idServico = idservico;
+    }
+
+
 
     public int getIdOrgao() {
         return idOrgao;
