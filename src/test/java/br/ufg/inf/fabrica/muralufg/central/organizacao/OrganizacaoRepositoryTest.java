@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Representa o teste da implementação da estrutura organizacional da UFG.
@@ -114,6 +115,7 @@ public class OrganizacaoRepositoryTest {
         dispositivosEsperados.add("38832883823888");
         dispositivosEsperados.add("93093290239902");
         Set<String> dispositivosResultado = repository.dispositivos(turma);
+        assertNotNull(dispositivosResultado);
         assertEquals(dispositivosEsperados,dispositivosResultado);
     }
 
@@ -127,7 +129,9 @@ public class OrganizacaoRepositoryTest {
         dispositivosEsperados.add("32929329392923");
         dispositivosEsperados.add("84884884388348");
         Set<String> dispositivosResultado = repository.dispositivosAlunos(turma);
+        assertNotNull(dispositivosResultado);
         assertEquals(dispositivosEsperados,dispositivosResultado);
+
     }
 
     /**
@@ -139,8 +143,8 @@ public class OrganizacaoRepositoryTest {
         alunosEsperados.add(new Aluno("Pedro","92932"));
         alunosEsperados.add(new Aluno("Felipe","39922"));
         Set<Aluno> alunosRetornados = repository.alunos(turma);
+        assertNotNull(alunosRetornados);
         assertEquals(alunosEsperados.size(),alunosRetornados.size());
-        // assertTrue(alunosEsperados.equals(alunosRetornados));
     }
 
     /**
@@ -157,6 +161,7 @@ public class OrganizacaoRepositoryTest {
         docentesEsperados.add(docente1);
         docentesEsperados.add(docente2);
         Set<Docente> docentesResultado = repository.docentes(turma);
+        assertNotNull(docentesResultado);
         assertEquals(docentesEsperados.size(), docentesResultado.size());
     }
 
@@ -170,6 +175,7 @@ public class OrganizacaoRepositoryTest {
         docentesEsperados.add("Fabio");
         Curso curso = new Curso("Engenharia de Software",null,null);
         Set<String> docentesResultado = repository.docentes(curso);
+        assertNotNull(docentesResultado);
         assertEquals(docentesEsperados, docentesResultado);
     }
 
@@ -183,6 +189,7 @@ public class OrganizacaoRepositoryTest {
         docentesEsperados.add("Fabio");
         docentesEsperados.add("Juliano");
         Set<String> docentesResultado = repository.docentes(orgao);
+        assertNotNull(docentesResultado);
         assertEquals(docentesEsperados, docentesResultado);
     }
 
@@ -196,6 +203,7 @@ public class OrganizacaoRepositoryTest {
         tecnicosEsperados.add("Joana");
         tecnicosEsperados.add("Joaquim");
         Set<String> tecnicosResultado = repository.tecnicos(orgao);
+        assertNotNull(tecnicosResultado);
         assertEquals(tecnicosEsperados, tecnicosResultado);
     }
 
@@ -208,6 +216,7 @@ public class OrganizacaoRepositoryTest {
         turmasEsperadas.add(turma);
         Disciplina disciplina = new Disciplina("Pratica em ES",turma);
         Set<Turma> turmasResultado = repository.turmas(disciplina);
+        assertNotNull(turmasResultado);
         assertEquals(turmasEsperadas.size(),turmasResultado.size());
     }
 
@@ -221,6 +230,7 @@ public class OrganizacaoRepositoryTest {
         disciplinasEsperadas.add(new Disciplina("Construção de Software",null));
         Curso curso = new Curso("Engenharia de Software",null,null);
         Set<Disciplina> disciplinasResultado = repository.disciplinas(curso);
+        assertNotNull(disciplinasResultado);
         assertEquals(disciplinasEsperadas.size(),disciplinasResultado.size());
     }
 
@@ -234,6 +244,7 @@ public class OrganizacaoRepositoryTest {
         cursosEsperados.add(new Curso("Sistemas de Informação",null,null));
         cursosEsperados.add(new Curso("Ciencias da Computação",null,null));
         Set<Curso> cursosResultado = repository.cursos(orgao);
+        assertNotNull(cursosResultado);
         assertEquals(cursosEsperados.size(),cursosResultado.size());
     }
 }
