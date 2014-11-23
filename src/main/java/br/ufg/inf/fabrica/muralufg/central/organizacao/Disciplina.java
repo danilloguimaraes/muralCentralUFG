@@ -52,31 +52,73 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import java.util.Set;
+
 /**
  * Representa uma disciplina.
  */
 public class Disciplina {
+    private String id;
     private String nome;
-    private Turma turma;
+    private Set<Turma> turmas;
 
-    public Disciplina(String nome, Turma turma) {
+    /**
+     * Cria uma instância de Disciplina.
+     * @param id Identificador único da disciplina.
+     * @param nome Nome da disciplina.
+     * @param turmas Conjunto de turmas da disciplina.
+     */
+    public Disciplina(String id, String nome, Set<Turma> turmas) {
+        this.id = id;
         this.nome = nome;
-        this.turma = turma;
+        this.turmas = turmas;
     }
 
+    /**
+     * Obtém o identificador único da disciplina.
+     * @return Sequência de caracteres que corresponde ao identificador da disciplina.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Define identificador único da disciplina.
+     * @param id Sequência de caracteres que corresponde ao identificador da disciplina.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtém o nome da disciplina.
+     * @return Sequência de caracteres que corresponde ao nome da disciplina.
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Define o nome da disciplina.
+     * @param nome Sequência de caracteres que corresponde ao nome da disciplina.
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public Turma getTurma() {
-        return turma;
+    /**
+     * Obtém o conjunto de turmas da disciplina.
+     * @return Conjunto de turmas da disciplina.
+     */
+    public Set<Turma> getTurmas() {
+        return turmas;
     }
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
+    /**
+     * Define o conjunto de turmas da disciplina.
+     * @param turmas Conjunto de turmas da disciplina.
+     */
+    public void setTurmas(Set<Turma> turmas) {
+        this.turmas = turmas;
     }
 }
