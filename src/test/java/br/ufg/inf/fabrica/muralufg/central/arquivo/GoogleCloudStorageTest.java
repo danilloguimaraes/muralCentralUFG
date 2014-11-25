@@ -1,64 +1,66 @@
 package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
-import org.junit.Assert;
+import com.google.appengine.tools.cloudstorage.GcsFilename;
+import junit.framework.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.omg.CORBA.portable.OutputStream;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import javax.activation.MimeType;
-
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-
-import static org.junit.Assert.*;
-
-
+import static org.mockito.Mockito.*;
 
 public class GoogleCloudStorageTest {
 
-    private final Arquivo arquivo = new Arquivo("id-test","text/plain");
+    private ArquivoRepository arquivoRepository;
+    private String bucket = "ufg-tests";
+    private String projectId = "able-decorator-747";
+    private String applicationName = "mural-ufg-tests";
+    private String accountId = "";
+    private String keyPath = "";
+
+    @Mock
+    private ArquivoCloudManager cloudManager;
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        arquivoRepository = new ArquivoRepositoryCloudStorage(bucket, projectId, applicationName, accountId, keyPath, cloudManager);
+    }
 
     @Test
-    public void testPersiste() throws Exception {
+    public void testaSeEnviaArquivo() throws IOException {
 
-        String bucket = "ufg-tests";
-        String projectId = "able-decorator-747";
-        String applicationName = "mural-ufg-tests";
-        String accountId = "";
-        String keyPath = "";
+        Arquivo arquivo = new Arquivo("id-arquivo", "plain/text");
+        InputStream conteudo = criaArquivoParaTest();
+        GcsFilename filename = new GcsFilename(bucket,arquivo.getId());
+        arquivoRepository.persiste(arquivo, conteudo);
 
+        verify(cloudManager).sendFile(filename,arquivo.getMimeType(),conteudo);
+    }
 
-        GoogleCloudStorage googleCloudStorage = new GoogleCloudStorage(bucket,projectId,applicationName,accountId,keyPath);
+    private InputStream criaArquivoParaTest() throws IOException {
+        File file = new File("Arquivodetest.txt");
+        InputStream conteudo = null;
+        file.createNewFile();
+        conteudo = new FileInputStream(file);
 
-
-        googleCloudStorage.persiste(arquivo,new FileInputStream(""));
-
-        //TODO descobrir a melhor forma de usar o Assert aqui
-
+        return conteudo;
     }
 
     @Test
     public void testRecupera() throws Exception {
 
-        String bucket = "ufg-tests";
-        String projectId = "able-decorator-747";
-        String applicationName = "mural-ufg-tests";
-        String accountId = "";
-        String keyPath = "";
+        String idArquivo = "id-arquivo";
+        GcsFilename filename = new GcsFilename(bucket,idArquivo);
+        when(cloudManager.downloadFile(filename)).thenReturn(criaArquivoParaTest());
 
-        String id = "id-test";
-        String mimeType = "text/plain";
+        InputStream inputStream = arquivoRepository.recupera(idArquivo);
+        Assert.assertNotNull("O Arquivo retornado é nulo",inputStream);
 
-        GoogleCloudStorage googleCloudStorage = new GoogleCloudStorage(bucket,projectId,applicationName,accountId,keyPath);
-
-        InputStream inputStream = googleCloudStorage.recupera(arquivo.getId());
-
-        Assert.assertNotNull(inputStream);
-
-
-    }
-
-    @Test
-    public void testConteudo() throws Exception {
-
+        verify(cloudManager).downloadFile(filename);
     }
 }

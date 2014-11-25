@@ -52,53 +52,103 @@
 
 package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
-import org.omg.CORBA.portable.OutputStream;
-
+import com.google.api.client.util.ByteStreams;
+import com.google.api.services.storage.Storage;
+import com.google.appengine.tools.cloudstorage.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.OutputStream;
+import java.nio.channels.Channels;
+import java.util.Properties;
 import java.util.stream.Stream;
 
-/**
- * Serviços para manipulação de arquivos em meio persistente.
- * <p>Esta interface foi projetada para admitir implementação
- * que faz uso do sistema de arquivos de um sistema operacional
- * como o Windows, ou ainda por serviço remoto de armazenamento.</p>
- *
- * <p>Uma implementação desta interface deve admitir um fluxo
- * clássico onde arquivos são persistidos
- * ({@link #persiste(Arquivo, java.util.stream.Stream)}) e
- * recuperados. A recuperação é dividida em duas partes:
- * (a) recuperação de metainformações ({@link #recupera(String)}) e
- * (b) recuperação do conteúdo ({@link #conteudo(String)}).</p>
- *
- * <p>Observe que não há indicação de diretório, <i>bucket</i> ou
- * outro elemento, por exemplo, credencial exigida para acesso aos
- * serviços oferecidos pela interface. Tais itens são dependentes
- * de cada implementação.</p>
- */
-public interface ArquivoRepository {
+public class ArquivoRepositoryCloudStorage implements ArquivoRepository {
+
+    private String bucket;
+    private String projectId;
+    private String applicationName;
+    private String accountId;
+    private String keyPath;
+
+    ArquivoCloudManager cloudManager;
+
+    public ArquivoRepositoryCloudStorage(String bucket, String projectId, String applicationName, String accountId, String keyPath, ArquivoCloudManager cloudManager) {
+        this.bucket = bucket;
+        this.projectId = projectId;
+        this.applicationName = applicationName;
+        this.accountId = accountId;
+        this.keyPath = keyPath;
+        this.cloudManager = cloudManager;
+    }
 
     /**
-     * Persiste o conteúdo do arquivo.
-     * @param arquivo Detalhes do arquivo a ser persistido.
+     * Envia um arquivo ao Google Cloud Storage por meio da Java Client Library.
+     *
+     * @param arquivo  Detalhes do arquivo a ser persistido.
      * @param conteudo {@link Stream} do qual o conteúdo do
-     *                               arquivo poderá ser recuperado.
      */
-    public void persiste(Arquivo arquivo, InputStream conteudo) throws IOException;
+    @Override
+    public void persiste(Arquivo arquivo, InputStream conteudo) throws IOException {
+        //o nome do arquivo é baseado no bucket e no id
+        GcsFilename filename = new GcsFilename(bucket, arquivo.getId());
+        cloudManager.sendFile(filename,arquivo.getMimeType(),conteudo);
+    }
 
-    /**
-     * Recupera metainformações sobre o arquivo cujo identificador único é
-     * fornecido.
+    /***
+     * Recupera um arquivo do GCS, por meio de seu ID.
      * @param arquivoId String identificador do arquivo que se deseja obter.
-     * @return Instância de {@link Arquivo} correspondente ao identificador
-     * fornecido.
+     * @return InputStream
+     * @throws IOException Caso não seja possivel recuperar o arquivo.
      */
-    public InputStream recupera(String arquivoId) throws IOException;
+    @Override
+    public InputStream recupera(String arquivoId) throws IOException {
+        GcsFilename fileName = new GcsFilename(bucket,arquivoId);
+        return cloudManager.downloadFile(fileName);
+    }
 
-    /**
-     * Obtém {@link Stream} para conteúdo do arquivo.
-     * @param arquivoId O identificador único do arquivo.
-     * @return {@link Stream} para o conteúdo do arquivo.
-     */
-    public Stream conteudo(String arquivoId);
+    @Override
+    public Stream conteudo(String arquivoId) {
+        return null;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getKeyPath() {
+        return keyPath;
+    }
+
+    public void setKeyPath(String keyPath) {
+        this.keyPath = keyPath;
+    }
 }

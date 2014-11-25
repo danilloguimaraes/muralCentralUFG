@@ -88,6 +88,7 @@ import java.util.UUID;
 @Produces(MediaType.APPLICATION_JSON)
 public class UploadResource {
 
+    //TODO salvar os ids noutro serviço
     private Set<String> ids = new HashSet<String>();
 
     /**

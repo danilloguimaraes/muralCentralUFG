@@ -52,44 +52,35 @@
 
 package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
+import com.google.appengine.tools.cloudstorage.GcsFilename;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
- * Metainformações (<i>value object</i>) do conteúdo de um arquivo.
- * <p>Uma instância desta classe identifica unicamente um arquivo
- * Word (.doc), ou um arquivo de áudio (mp3) ou outro tipo de
- * conteúdo.</p>
+ * Gerenciamento de arquivos armazenados na nuvem do google.
+ * (Google Cloud Storage)
+ *
+ * Classe que deve fazer a manipulação direta dos arquivo,
+ * envio e recuperação dos mesmos.
+ * As classes que implementarem esta interface, devem
+ * encapsular as rotinas de envio e download de arquivo.
  */
-public class Arquivo {
-    private String id;
-    private String mimeType;
+public interface ArquivoCloudManager {
 
     /**
-     * Cria uma instância de {@link Arquivo}.
-     * @param id O identificador único por meio do qual é possível
-     *           recuperar o arquivo.
-     * @param mimeType Identificador único do tipo do conteúdo do
-     *                 arquivo. Uma lista de mime-types disponíveis
-     *                 pode ser encontrada
-     *                 <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">
-     *                 aqui</a>.
+     * Envia um arquivo para
+     * @param gcsFilename nome do arquivo seguindo os padrões do GCS.
+     * @param mimeType mime type do arquivo a ser enviado.
+     * @throws IOException caso ocorra algum erro na transação.
      */
-    public Arquivo(String id, String mimeType) {
-        this.id = id;
-        this.mimeType = mimeType;
-    }
-
-    /***
-     * Recupera o identificador do arquivo.
-     * @return String contendo o ID
-     */
-    public String getId() {
-        return id;
-    }
+    public void sendFile(GcsFilename gcsFilename, String mimeType, InputStream conteudo) throws IOException;
 
     /**
-     * Recupera o mimeType do arquivo
-     * @return String contendo o MimeType
+     * Executa dowload de um arquivo no GCS.
+     * @param gcsFilename Nome do arquivo a ser baixado.
+     * @return InputStream com o conteúdo do arquivo.
+     * @throws IOException Caso o arquivo não seja encontrado ou algum outro problema seja detectado.
      */
-    public String getMimeType() {
-        return mimeType;
-    }
+    public InputStream downloadFile(GcsFilename gcsFilename) throws IOException;
+
 }

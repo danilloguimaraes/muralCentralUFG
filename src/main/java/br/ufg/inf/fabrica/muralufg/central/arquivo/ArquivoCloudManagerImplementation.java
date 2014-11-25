@@ -52,44 +52,42 @@
 
 package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
-/**
- * Metainformações (<i>value object</i>) do conteúdo de um arquivo.
- * <p>Uma instância desta classe identifica unicamente um arquivo
- * Word (.doc), ou um arquivo de áudio (mp3) ou outro tipo de
- * conteúdo.</p>
- */
-public class Arquivo {
-    private String id;
-    private String mimeType;
+import com.google.api.client.util.ByteStreams;
+import com.google.appengine.tools.cloudstorage.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.OutputStream;
+import java.nio.channels.Channels;
 
-    /**
-     * Cria uma instância de {@link Arquivo}.
-     * @param id O identificador único por meio do qual é possível
-     *           recuperar o arquivo.
-     * @param mimeType Identificador único do tipo do conteúdo do
-     *                 arquivo. Uma lista de mime-types disponíveis
-     *                 pode ser encontrada
-     *                 <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">
-     *                 aqui</a>.
-     */
-    public Arquivo(String id, String mimeType) {
-        this.id = id;
-        this.mimeType = mimeType;
+public class ArquivoCloudManagerImplementation implements ArquivoCloudManager {
+
+    //provedor de serviços para o google cloud storage
+    private GcsService gcsService;
+
+    public ArquivoCloudManagerImplementation()
+    {
+        gcsService = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
     }
 
-    /***
-     * Recupera o identificador do arquivo.
-     * @return String contendo o ID
-     */
-    public String getId() {
-        return id;
+    @Override
+    public void sendFile(GcsFilename gcsFilename, String mimeType, InputStream conteudo) throws IOException {
+
+        GcsOutputChannel outputChannel = null;
+        OutputStream outputStream;
+
+        outputChannel = gcsService.createOrReplace(gcsFilename, new GcsFileOptions.Builder().mimeType(mimeType).build());
+        outputStream = Channels.newOutputStream(outputChannel);
+        //escreve os dados do inputStream no output
+        ByteStreams.copy(conteudo, outputStream);
     }
 
-    /**
-     * Recupera o mimeType do arquivo
-     * @return String contendo o MimeType
-     */
-    public String getMimeType() {
-        return mimeType;
+    @Override
+    public InputStream downloadFile(GcsFilename gcsFilename) throws IOException {
+
+        GcsInputChannel readChannel = gcsService.openPrefetchingReadChannel(gcsFilename, 0, 1024 * 1024);
+        ObjectInputStream objectInputStream = new ObjectInputStream(Channels.newInputStream(readChannel));
+
+        return objectInputStream;
     }
 }
