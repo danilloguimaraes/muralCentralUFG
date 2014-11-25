@@ -51,31 +51,19 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
-import java.util.Set;
-
 /**
- * Mantém oportunidades.
+ * Classe criada para ser a exceção lançada por repositórios implementados, caso
+ * o funcionamento normal apresente algum problema
  */
-public interface OportunidadeRepository {
+public class CentralException extends Exception {
 
     /**
-     * Identifica, para o instante em que a chamada é realizada, o conjunto de
-     * oportunidades vigentes, ou seja, cuja execução está em andamento.
+     * Construtor da exceção o qual contém a mensagem relativa à ela
      *
-     * @return Set<Oportunidade> - O conjunto de oportunidades vigentes. Se
-     * nenhuma oportunidade estiver vigente, então o conjunto retornado não
-     * possui nenhuma entrada.
-     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
-     * - Lança a exceção caso a operação não seja realizada com sucesso
+     * @param mensagem String - mensagem recebida no momento do lançamento da
+     * exceção, correspondente ao problema ocorrido
      */
-    public Set<Oportunidade> vigentes() throws CentralException;
-
-    /**
-     * Acrescenta ao repositório a oportunidade.
-     *
-     * @param oportunidade Oportunidade a ser inserido no repositório.
-     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
-     * - Lança a exceção caso a operação não seja realizada com sucesso
-     */
-    public void adicionar(Oportunidade oportunidade) throws CentralException;
+    public CentralException(String mensagem) {
+        super(mensagem);
+    }
 }

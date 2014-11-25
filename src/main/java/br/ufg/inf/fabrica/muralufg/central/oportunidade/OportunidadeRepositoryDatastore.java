@@ -79,18 +79,20 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
     /**
      * Contrutor da classe, o qual quando instanciado cria a conexão com o Banco
      * de Dados informado a partir do 'datasetId'
+     *
+     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
+     * - Lança a exceção caso a operação de conexão com o banco de dados não
+     * seja realizada com sucesso
      */
-    public OportunidadeRepositoryDatastore() {
+    public OportunidadeRepositoryDatastore() throws CentralException {
         try {
             String datasetId = "";
             datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsfromEnv()
                     .dataset(datasetId).build());
         } catch (GeneralSecurityException exception) {
-            System.err.println("Erro de segurança ao fazer a conexão com o banco de dados: " + exception.getMessage());
-            System.exit(1);
+            throw new CentralException("Erro de segurança ao fazer a conexão com o banco de dados: " + exception.getMessage());
         } catch (IOException exception) {
-            System.err.println("Erro de E/S ao conectar com o banco de dados: " + exception.getMessage());
-            System.exit(1);
+            throw new CentralException("Erro de E/S ao conectar com o banco de dados: " + exception.getMessage());
         }
     }
 
@@ -100,20 +102,24 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
      * @param oportunidade - Oportunidade a ser inserida no banco de dados
      */
     @Override
-    public void adicionar(Oportunidade oportunidade) {
-        Entity.Builder entOportunidade = Entity.newBuilder();
-        entOportunidade.setKey(makeKey());
-        entOportunidade.addProperty(makeProperty(DESCRICAO, makeValue(oportunidade.getDescricao())));
-        entOportunidade.addProperty(makeProperty(DATA_INICIO, makeValue(String.valueOf(oportunidade.getDataInicio()))));
-        entOportunidade.addProperty(makeProperty(DATA_FIM, makeValue(String.valueOf(oportunidade.getDataFim()))));
+    public void adicionar(Oportunidade oportunidade) throws CentralException {
+        try {
+            Entity.Builder entOportunidade = Entity.newBuilder();
+            entOportunidade.setKey(makeKey());
+            entOportunidade.addProperty(makeProperty(DESCRICAO, makeValue(oportunidade.getDescricao())));
+            entOportunidade.addProperty(makeProperty(DATA_INICIO, makeValue(String.valueOf(oportunidade.getDataInicio()))));
+            entOportunidade.addProperty(makeProperty(DATA_FIM, makeValue(String.valueOf(oportunidade.getDataFim()))));
 
-        Mutation.Builder mutation = Mutation.newBuilder();
-        mutation.addInsertAutoId(entOportunidade);
+            Mutation.Builder mutation = Mutation.newBuilder();
+            mutation.addInsertAutoId(entOportunidade);
 
-        CommitRequest request = CommitRequest.newBuilder()
-                .setMutation(mutation)
-                .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
-                .build();
+            CommitRequest request = CommitRequest.newBuilder()
+                    .setMutation(mutation)
+                    .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
+                    .build();
+        } catch (Exception e) {
+            throw new CentralException("Erro ao adicionar a oportunidade no banco de dados. Detalhes: "+ e.getMessage());
+        }
     }
 
     /**
@@ -125,7 +131,7 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
      * oportunidade.
      */
     @Override
-    public Set<Oportunidade> vigentes() {
+    public Set<Oportunidade> vigentes() throws CentralException {
         Set<Oportunidade> oportunidadesVigentes = new HashSet<>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -166,7 +172,7 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
                 query.setStartCursor(endCursor);
             }
         } catch (DatastoreException e) {
-            e.printStackTrace();
+            throw new CentralException("Erro ao buscar as oportunidades vigentes no banco de dados. Detalhes: " + e.getMessage());
         }
 
         return oportunidadesVigentes;
