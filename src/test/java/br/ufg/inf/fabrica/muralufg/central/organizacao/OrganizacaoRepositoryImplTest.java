@@ -71,8 +71,6 @@ public class OrganizacaoRepositoryImplTest extends OrganizacaoRepositoryImpl {
      */
     @Override
     public String getJsonFromURI(String uri) {
-        //  throw new NotImplementedException();
-
         if(uri.contains("/resources/dispositivos/turmaid/1")) {
             Set<String> dispositivos = new HashSet<String>();
             dispositivos.add("93093290239902");
@@ -100,51 +98,50 @@ public class OrganizacaoRepositoryImplTest extends OrganizacaoRepositoryImpl {
             Set<Docente> docentes = new HashSet<>();
             Set<Turma> turmas = new HashSet<>();
             turmas.add(turma);
-            Orgao orgao = new Orgao("INF",null,null);
-            Docente docente1 = new Docente("Marcelo",turmas,orgao);
-            Docente docente2 = new Docente("Fabio",turmas,orgao);
+            Orgao orgao = new Orgao("INF",null,null,null,null);
+            Docente docente1 = new Docente("1","Marcelo",turmas,orgao);
+            Docente docente2 = new Docente("2","Fabio",turmas,orgao);
             docentes.add(docente1);
             docentes.add(docente2);
             return getObjectToStrJson(docentes);
         }
         else if(uri.contains("/resources/docentes/curso/")){
-            Set<String> docentes = new HashSet<>();
-            docentes.add("Marcelo");
-            docentes.add("Fabio");
-            return getObjectToStrJson(docentes);
+            Set<String> dispositivosDocentes = new HashSet<>();
+            dispositivosDocentes.add("466647740");
+            dispositivosDocentes.add("585859859");
+            return getObjectToStrJson(dispositivosDocentes);
         }
         else if(uri.contains("/resources/docentes/orgao/")){
-            Set<String> docentes = new HashSet<>();
-            docentes.add("Marcelo");
-            docentes.add("Fabio");
-            docentes.add("Juliano");
-            return getObjectToStrJson(docentes);
+            Set<String> dispositivosDocentesOrgao = new HashSet<>();
+            dispositivosDocentesOrgao.add("1341324");
+            dispositivosDocentesOrgao.add("9984124");
+            dispositivosDocentesOrgao.add("8973240");
+            return getObjectToStrJson(dispositivosDocentesOrgao);
         }
         else if(uri.contains("/resources/tecnicos/orgao/")){
             Set<String> tecnicos = new HashSet<>();
-            tecnicos.add("Maria");
-            tecnicos.add("Joana");
-            tecnicos.add("Joaquim");
+            tecnicos.add("8347474");
+            tecnicos.add("3333344");
+            tecnicos.add("2343333");
             return getObjectToStrJson(tecnicos);
         }
         else if(uri.contains("/resources/turmas/disciplina/")){
             Set<Turma> turmas = new HashSet<>();
             Turma turma = new Turma("1",null,null,null);
-            Disciplina disciplina = new Disciplina("Pratica em ES",turma);
             turmas.add(turma);
             return getObjectToStrJson(turmas);
         }
         else if(uri.contains("/resources/disciplinas/curso/")){
             Set<Disciplina> disciplinas = new HashSet<>();
-            disciplinas.add(new Disciplina("Algoritmos em Grafos",null));
-            disciplinas.add(new Disciplina("Construção de Software",null));
+            disciplinas.add(new Disciplina("1","Algoritmos em Grafos",null));
+            disciplinas.add(new Disciplina("2","Construção de Software",null));
             return getObjectToStrJson(disciplinas);
         }
         else if(uri.contains("/resources/cursos/orgao/")){
             Set<Curso> cursos = new HashSet<>();
-            cursos.add(new Curso("Engenharia de Software",null,null));
-            cursos.add(new Curso("Sistemas de Informação",null,null));
-            cursos.add(new Curso("Ciencias da Computação",null,null));
+            cursos.add(new Curso("1","Engenharia de Software",null,null,null));
+            cursos.add(new Curso("2","Sistemas de Informação",null,null,null));
+            cursos.add(new Curso("3","Ciencias da Computação",null,null,null));
             return getObjectToStrJson(cursos);
         }
         else return null;
@@ -166,11 +163,13 @@ public class OrganizacaoRepositoryImplTest extends OrganizacaoRepositoryImpl {
         return json;
     }
 
-
-
+    /**
+     * Obtém a URI definida para teste
+     * @return sequência de caracteres correspondente ao URI dos recursos
+     */
     @Override
     public String getURIRecursos() {
-     //   return super.getURIRecursos();
+     // return super.getURIRecursos();
         return  "http://localhost:8082";
     }
 }
