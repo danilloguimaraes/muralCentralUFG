@@ -71,4 +71,20 @@ public class Pedido {
      * enviada à RMTC.
      */
     private String requisicao;
+
+	public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public String getRequisicao() {
+		return requisicao;
+	}
+
+	public void setRequisicao(String requisicao) {
+		this.requisicao = requisicao;
+	}
 }

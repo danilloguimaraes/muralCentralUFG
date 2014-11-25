@@ -141,7 +141,7 @@ public class Mensagem {
         }
 
         for (Imagem imagem : imagens) {
-            AdicionaImagem(imagem);
+            adicionaImagem(imagem);
         }
     }
 
@@ -153,7 +153,7 @@ public class Mensagem {
      * @param imagem Informações sobre a imagem a ser
      *               adicionada (associada) à mensagem.
      */
-    private void AdicionaImagem(Imagem imagem) {
+    private void adicionaImagem(Imagem imagem) {
         if (imagem == null) {
             throw new IllegalArgumentException("imagem é null");
         }
