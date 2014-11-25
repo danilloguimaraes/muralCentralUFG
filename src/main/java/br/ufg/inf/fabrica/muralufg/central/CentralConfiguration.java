@@ -34,8 +34,6 @@ public class CentralConfiguration extends Configuration {
     @NotEmpty
     private String senhaEmail;
    
-
-
     @NotEmpty
     private String recursos;
 
@@ -59,7 +57,6 @@ public class CentralConfiguration extends Configuration {
         this.versao = versao;
     }
 
-
     @JsonProperty
     public String getRecursos() {
         return recursos;
@@ -68,7 +65,6 @@ public class CentralConfiguration extends Configuration {
     public void setRecursos(String recursos) {
         this.recursos = recursos;
     }
-
     
     @JsonProperty
 	public String getSmtp() {
@@ -129,7 +125,4 @@ public class CentralConfiguration extends Configuration {
 	public void setSenhaEmail(String senhaEmail) {
 		this.senhaEmail = senhaEmail;
 	}
-    
-    
-
 }
