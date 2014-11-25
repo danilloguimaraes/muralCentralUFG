@@ -180,7 +180,10 @@ public class FraseDoDiaRepositoryDatastore implements FraseDoDiaRepository {
 		q.addKindBuilder().setName("FraseDoDia");
 		
 		if(data != null){
-			Filter idMensagem = makeFilter("data", PropertyFilter.Operator.EQUAL, makeValue(formataDataSemHora(data))).build();
+			Filter idMensagem = makeFilter("data", PropertyFilter.Operator.EQUAL, makeValue(formataDataSemHora(data).getTime())).build();
+			q.setFilter(idMensagem).build();
+		}else{
+			Filter idMensagem = makeFilter("data", PropertyFilter.Operator.EQUAL, makeValue(0)).build();
 			q.setFilter(idMensagem).build();
 		}
 		
