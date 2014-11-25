@@ -49,75 +49,88 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.ws.rs.FormParam;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.joda.time.DateTime;
 
 /**
  * Representa uma palestra, um curso, um simpósio, um congresso ou similar.
  */
-@XmlRootElement
 public class Evento {
 
-	private Long id;
+    private long id;
+    private DateTime dataInicio;
+    private DateTime dataFim;
+    private String descricao;
+    private String nomeEvento;
+    private String horaEvento;
+    private static final long serialVersionUID = 7375320096535047617L;
 
-	@FormParam("dataInicio")
-	private Date dataInicio;
-	
-	@FormParam("nome")
-	private String nomeEvento;
+    public Evento(){
+        
+    }
+    
+    /*
+    Implementação do construtor de evento, que será utilizado posteriormente no DAO para salvamento.
+    */
+    public Evento (String nomeEvento, String horaEvento, String descricao, DateTime dataInicio, DateTime dataFim){
+        this.nomeEvento = nomeEvento;
+        this.horaEvento = horaEvento;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+    }
 
-	@FormParam("dataFim")
-	private Date dataFim;
+    
+    /*
+    Métodos GET e SET para os eventos, que serão responsáveis pela "aquisição" de informações e definição de informações.
+    */
+    public long getId() {
+        return id;
+    }
 
-	@FormParam("horaEvento")
-	private String horaEvento;
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public Evento(){}
-	
-	public Long getId() {
-		return id;
-	}
+    public DateTime getDataInicio() {
+        return dataInicio;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getNome() {
-		return nomeEvento;
-	}
+    public void setDataInicio(DateTime dataInicio) {
+        this.dataInicio = dataInicio;
+    }
 
-	public void setNome(String nomeEvento) {
-		this.nomeEvento = nomeEvento;
-	}
+    public DateTime getDataFim() {
+        return dataFim;
+    }
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
+    public void setDataFim(DateTime dataFim) {
+        this.dataFim = dataFim;
+    }
 
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public Date getDataFim() {
-		return dataFim;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
+    public String getNomeEvento() {
+        return nomeEvento;
+    }
 
-	public String getHoraEvento() {
-		return horaEvento;
-	}
+    public void setNomeEvento(String nomeEvento) {
+        this.nomeEvento = nomeEvento;
+    }
 
-	public void setHoraEvento(String horaEvento) {
-		this.horaEvento = horaEvento;
-	}
+    public String getHoraEvento() {
+        return horaEvento;
+    }
+
+    public void setHoraEvento(String horaEvento) {
+        this.horaEvento = horaEvento;
+    }
 
 }
