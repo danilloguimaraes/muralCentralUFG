@@ -50,25 +50,75 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
 /**
- * Resposta produzida para um dado assunto submetido para a ouvidoria.
- * <p>
- * Ao contrário do assunto, onde o emissor não necessariamente se identifica,
- * uma resposta obrigatoriamente identifica o seu autor.
- * </p>
+ * Representa um técnico da UFG.
  */
-public class Resposta extends Assunto {
-	private Usuario autor;
+public class Tecnico extends Usuario {
+    private String id;
+    private String nome;
+    private Orgao orgao;
 
-	public Usuario getAutor() {
-		return autor;
-	}
+    /**
+     * Cria uma instância de Tecnico.
+     * @param id Identificador único do técnico.
+     * @param nome Nome do técnico.
+     * @param orgao Órgão em que o técnico está lotado.
+     */
+    public Tecnico(String id, String nome, Orgao orgao) {
+        this.id = id;
+        this.nome = nome;
+        this.orgao = orgao;
+    }
 
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
-	}
+    /**
+     * Obtém o identificador único do técnico.
+     * @return Sequência de caracteres que corresponde ao identificador do técnico.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Define identificador único do técnico.
+     * @param id Sequência de caracteres que corresponde ao identificador do técnico.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtém o nome do técnico.
+     * @return Sequência de caracteres que corresponde ao nome do técnico.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * Define nome do técnico.
+     * @param nome Sequência de caracteres que corresponde ao nome do técnico.
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Obtém o órgão em que o técnico está lotado.
+     * @return Órgão em que o técnico faz parte.
+     */
+    public Orgao getOrgao() {
+        return orgao;
+    }
+
+    /**
+     * Define o órgão em que o técnico está lotado.
+     * @param orgao Órgão em que o técnico faz parte.
+     */
+    public void setOrgao(Orgao orgao) {
+        this.orgao = orgao;
+    }
 }

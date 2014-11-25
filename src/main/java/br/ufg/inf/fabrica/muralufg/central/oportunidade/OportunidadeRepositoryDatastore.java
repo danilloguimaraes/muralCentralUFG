@@ -66,8 +66,8 @@ import org.joda.time.format.DateTimeFormatter;
 import static com.google.api.services.datastore.client.DatastoreHelper.*;
 
 /*
- Classe responsável pela persistência dos dados
- * relativos a Oportunidade, que deve ser feita no Google Datastore
+ * Classe responsável pela persistência dos dados
+ * relativos a Oportunidade, feita utilizando o Google Datastore
  */
 public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
 
@@ -154,7 +154,7 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
                 DateTime dataInicioFormatted = formatter.parseDateTime(dataInicio);
                 DateTime dataFimFormatted = formatter.parseDateTime(dataFim);
 
-                oportunidadesVigentes.add(new Oportunidade(descricao, dataInicioFormatted, dataFimFormatted));
+                oportunidadesVigentes.add(new Oportunidade(descricao, new Date(dataInicioFormatted.getMillis()), new Date(dataFimFormatted.getMillis())));
             }
 
             if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {

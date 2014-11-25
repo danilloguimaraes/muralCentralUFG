@@ -50,25 +50,17 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
-
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
 /**
- * Resposta produzida para um dado assunto submetido para a ouvidoria.
- * <p>
- * Ao contrário do assunto, onde o emissor não necessariamente se identifica,
- * uma resposta obrigatoriamente identifica o seu autor.
- * </p>
+ * Serviço que encapsula operações oferecidas pela RMTC.
  */
-public class Resposta extends Assunto {
-	private Usuario autor;
+public interface RMTCService {
 
-	public Usuario getAutor() {
-		return autor;
-	}
-
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
-	}
+    /**
+     * Obtém uma "linha". Este é uma operação "espúria",
+     * está aguardando definição precisa dos serviços.
+     * @return
+     */
+    String getLinha();
 }

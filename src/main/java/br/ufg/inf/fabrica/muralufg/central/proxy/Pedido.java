@@ -50,25 +50,41 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
-
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
 /**
- * Resposta produzida para um dado assunto submetido para a ouvidoria.
- * <p>
- * Ao contrário do assunto, onde o emissor não necessariamente se identifica,
- * uma resposta obrigatoriamente identifica o seu autor.
- * </p>
+ * Representa um pedido de informação submetido por
+ * cliente da Central, que é respondido pela
+ * RMTC.
+ *
+ * @see br.ufg.inf.fabrica.muralufg.central.proxy.RMTCService
  */
-public class Resposta extends Assunto {
-	private Usuario autor;
+public class Pedido {
 
-	public Usuario getAutor() {
-		return autor;
+    /**
+     * Chave única que identifica o pedido.
+     */
+    private String guid;
+
+    /**
+     * Requisição recebida pela Centra e que será
+     * enviada à RMTC.
+     */
+    private String requisicao;
+
+	public String getGuid() {
+		return guid;
 	}
 
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public String getRequisicao() {
+		return requisicao;
+	}
+
+	public void setRequisicao(String requisicao) {
+		this.requisicao = requisicao;
 	}
 }

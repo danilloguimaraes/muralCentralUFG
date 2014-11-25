@@ -52,8 +52,8 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
-import org.joda.time.DateTime;
 
 /**
  * Classe para criar objetos que representam uma oportunidade de estágio,
@@ -63,8 +63,8 @@ import org.joda.time.DateTime;
 public class Oportunidade implements Serializable {
 
     private long id;
-    private DateTime dataInicio;
-    private DateTime dataFim;
+    private Date dataInicio;
+    private Date dataFim;
     private String descricao;
 
     private static final long serialVersionUID = 7845068940066519056L;
@@ -80,10 +80,10 @@ public class Oportunidade implements Serializable {
      * Construtor da classe Oportunidade com todos os seus atributos
      *
      * @param descricao String - Descrição da oportunidade
-     * @param dataInicio DateTime - Data em que a oportunidade se inicia
-     * @param dataFim DateTime - Data em que a oportunidade se encerra
+     * @param dataInicio Date - Data em que a oportunidade se inicia
+     * @param dataFim Date - Data em que a oportunidade se encerra
      */
-    public Oportunidade(String descricao, DateTime dataInicio, DateTime dataFim) {
+    public Oportunidade(String descricao, Date dataInicio, Date dataFim) {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
@@ -110,36 +110,36 @@ public class Oportunidade implements Serializable {
     /**
      * Método para retorno da data que a oportunidade se inicia
      *
-     * @return DateTime - Data em que começa
+     * @return Date - Data em que começa
      */
-    public DateTime getDataInicio() {
+    public Date getDataInicio() {
         return dataInicio;
     }
 
     /**
      * Método para definir o valor da data em que a oportunidade entra em vigor
      *
-     * @param dataInicio DateTime - Data em que a oportunidade se inicia
+     * @param dataInicio Date - Data em que a oportunidade se inicia
      */
-    public void setDataInicio(DateTime dataInicio) {
+    public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
     }
 
     /**
      * Método para retorno da data que a oportunidade se encerra
      *
-     * @return DateTime - Data em que se encerra
+     * @return Date - Data em que se encerra
      */
-    public DateTime getDataFim() {
+    public Date getDataFim() {
         return dataFim;
     }
 
     /**
      * Método para definir o valor da data em que se encerra a oportunidade
      *
-     * @param dataFim DateTime - Data em que a oportunidade se encerra
+     * @param dataFim Date - Data em que a oportunidade se encerra
      */
-    public void setDataFim(DateTime dataFim) {
+    public void setDataFim(Date dataFim) {
         this.dataFim = dataFim;
     }
 

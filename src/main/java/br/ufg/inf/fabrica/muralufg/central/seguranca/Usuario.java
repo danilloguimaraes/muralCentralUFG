@@ -60,6 +60,55 @@ import java.util.Set;
  * quanto quem envia informações para a Central.</p>
  */
 public class Usuario {
-    private String nome;
+    private String username;
     private Set<String> registrationIds;
+
+    /**
+     * Construtor padrão de Usuario.
+     */
+    public Usuario() {
+    }
+
+    /**
+     * Cria uma instância de Usuario.
+     * @param username Identificador do usuário.
+     * @param registrationIds Conjunto de identificadores de registro dos
+     *                        dispositivos do usuário.
+     */
+    public Usuario(String username, Set<String> registrationIds) {
+        this.username = username;
+        this.registrationIds = registrationIds;
+    }
+
+    /**
+     * Obtém o identificador do usuário.
+     * @return Sequência de caracteres que corresponde ao identificador do usuário.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Define identificador do usuário.
+     * @param username Sequência de caracteres que corresponde ao identificador do usuário.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Obtém o conjunto de identificadores de registro dos dispositivos do usuário.
+     * @return Conjunto dos identificadores de registro dos dispositivos do usuário.
+     */
+    public Set<String> getRegistrationIds() {
+        return registrationIds;
+    }
+
+    /**
+     * Define o conjunto de identificadores de registro dos dispositivos do usuário.
+     * @param registrationIds Conjunto dos identificadores de registro dos dispositivos do usuário.
+     */
+    public void setRegistrationIds(Set<String> registrationIds) {
+        this.registrationIds = registrationIds;
+    }
 }

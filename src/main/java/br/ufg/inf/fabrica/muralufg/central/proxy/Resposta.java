@@ -50,25 +50,54 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+import java.util.Date;
 
 /**
- * Resposta produzida para um dado assunto submetido para a ouvidoria.
- * <p>
- * Ao contrário do assunto, onde o emissor não necessariamente se identifica,
- * uma resposta obrigatoriamente identifica o seu autor.
- * </p>
+ * Encapsula resposta fornecida pela RMTC e
+ * outras informações relevantes para a
+ * atuação da Central como "proxy".
  */
-public class Resposta extends Assunto {
-	private Usuario autor;
+public class Resposta {
 
-	public Usuario getAutor() {
-		return autor;
+    /**
+     * Identificação única da requisição submetida pelo
+     * cliente da Central.
+     */
+    private String guid;
+
+    /**
+     * Resposta produzida pela RMTC e "guardada"
+     * até que o Cliente da Central requisite-a
+     * pelo guid correspondente.
+     */
+    private String resposta;
+
+    /**
+     * Data em que a requisição foi submetida
+     * pelo Cliente.
+     */
+    private Date geradaEm;
+
+    public String getResposta() {
+        return resposta;
+    }
+
+	public String getGuid() {
+		return guid;
 	}
 
-	public void setAutor(Usuario autor) {
-		this.autor = autor;
+	public void setGuid(String guid) {
+		this.guid = guid;
 	}
+
+	public Date getGeradaEm() {
+		return geradaEm;
+	}
+
+	public void setGeradaEm(Date geradaEm) {
+		this.geradaEm = geradaEm;
+	}
+
 }
