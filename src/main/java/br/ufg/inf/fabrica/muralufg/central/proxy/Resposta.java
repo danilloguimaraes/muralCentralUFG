@@ -84,4 +84,20 @@ public class Resposta {
         return resposta;
     }
 
+	public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public Date getGeradaEm() {
+		return geradaEm;
+	}
+
+	public void setGeradaEm(Date geradaEm) {
+		this.geradaEm = geradaEm;
+	}
+
 }

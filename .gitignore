@@ -5,3 +5,6 @@ tasks.xml
 *.classpath
 *.project
 *.prefs
+=======
+.classpath
+.DS_Store
