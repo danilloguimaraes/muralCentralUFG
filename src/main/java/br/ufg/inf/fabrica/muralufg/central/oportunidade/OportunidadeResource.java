@@ -69,8 +69,9 @@ public class OportunidadeResource {
     /**
      * Construtor que ao ser instânciado, cria o objeto responsável pelas
      * operações no banco de dados.
+     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
      */
-    public OportunidadeResource() {
+    public OportunidadeResource() throws CentralException {
         oportunidadeRepository = new OportunidadeRepositoryDatastore();
     }
 
@@ -81,10 +82,12 @@ public class OportunidadeResource {
      * @return Set<Oportunidade> - O conjunto de oportunidades vigentes. Se
      * nenhuma oportunidade estiver vigente, então o conjunto retornado não
      * possui nenhuma entrada.
+     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
+     * - Lança a exceção caso a operação não seja realizada com sucesso
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Set<Oportunidade> vigentes() {
+    public Set<Oportunidade> vigentes() throws CentralException {
         vigentes = oportunidadeRepository.vigentes();
         return vigentes;
     }
@@ -95,9 +98,11 @@ public class OportunidadeResource {
      *
      * @param oportunidade Oportunidade - representa a oportunidade a ser
      * adicionada no banco de dados.
+     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
+     * - Lança a exceção caso a operação não seja realizada com sucesso
      */
     @POST
-    public void adicionar(Oportunidade oportunidade) {
+    public void adicionar(Oportunidade oportunidade) throws CentralException {
         oportunidadeRepository.adicionar(oportunidade);
     }
 }
