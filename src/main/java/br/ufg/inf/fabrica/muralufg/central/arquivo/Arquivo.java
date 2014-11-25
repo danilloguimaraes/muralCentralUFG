@@ -77,10 +77,18 @@ public class Arquivo {
         this.mimeType = mimeType;
     }
 
+    /***
+     * Recupera o identificador do arquivo.
+     * @return String contendo o ID
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Recupera o mimeType do arquivo
+     * @return String contendo o MimeType
+     */
     public String getMimeType() {
         return mimeType;
     }

@@ -59,7 +59,17 @@ import java.util.List;
  * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
  */
 public interface MensagemRepository {
-
+	
+	   /**
+     * Recupera a mensagem cujo identificador é fornecido.
+     * @param id O identificador da mensagem a ser recuperada.
+     * @return A {@link br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem}
+     * cujo identificador é aquele fornecido.
+     * @see #getPorPeriodo(java.util.Date, java.util.Date)
+     */
+	public void salvar(Mensagem mensagem);
+	
+	
     /**
      * Recupera a mensagem cujo identificador é fornecido.
      * @param id O identificador da mensagem a ser recuperada.
