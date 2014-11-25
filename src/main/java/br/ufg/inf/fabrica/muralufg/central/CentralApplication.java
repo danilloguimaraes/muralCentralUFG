@@ -7,6 +7,9 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 /**
  * Ponto de Entrada da Central. O processamento
  * executado pela Central (componente) inicia-se
@@ -22,6 +25,9 @@ public class CentralApplication extends Application<CentralConfiguration> {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
+        Logger logger = LoggerFactory.getLogger(CentralApplication.class);
+        logger.debug("Iniciando método main CentralApplication.");
+        
         new CentralApplication().run(args);
     }
 

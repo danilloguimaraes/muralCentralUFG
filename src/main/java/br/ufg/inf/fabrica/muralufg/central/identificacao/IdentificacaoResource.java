@@ -61,6 +61,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 /**
  * Identificação da Central. Simplesmente expõe
  * valores configurados em central-configuracao.yml.
@@ -70,10 +73,13 @@ import java.util.concurrent.atomic.AtomicLong;
 public class IdentificacaoResource {
     private final String nome;
     private final String versao;
+    Logger logger = LoggerFactory.getLogger(IdentificacaoResource.class);
 
     public IdentificacaoResource(String nome, String versao) {
         this.nome = nome;
         this.versao = versao;
+        
+        logger.debug("Método IdentificacaoResource. nome: " + nome + " versao: " + versao);
     }
 
     @GET

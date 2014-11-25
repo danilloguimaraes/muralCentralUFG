@@ -7,9 +7,15 @@ import com.google.api.services.datastore.client.DatastoreException;
 import com.google.protobuf.ByteString;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 public class AlunoDao {
 
     public void salvar(Aluno aluno) {
+        
+        Logger logger = LoggerFactory.getLogger(AlunoDao.class);
+        logger.debug("Classe AlunoDao. Método salvar");
         Datastore datastore = DaoHelper.getDataStore();
 
         // Cria uma requisição RPC para iniciar uma nova transação
@@ -21,6 +27,7 @@ public class AlunoDao {
             DatastoreV1.BeginTransactionResponse tres = datastore.beginTransaction(treq.build());
             //obtem o identificador da transação através da resposta
             ByteString tx = tres.getTransaction();
+            logger.debug("Método salvar. Transacao aberta.");
             // Cria uma solicitação de RPC request para pegar entidades por chave.
             DatastoreV1.LookupRequest.Builder lreq = DatastoreV1.LookupRequest.newBuilder();
             // Defina a chave de entidade com apenas um ` path_element` : nenhum pai .
@@ -65,8 +72,10 @@ public class AlunoDao {
             // Aplicar a mutação de inserção se a entidade não foi encontrado e fecha
             // A transação.
             datastore.commit(creq.build());
+            logger.debug("Método salvar. Commit realizado.");
 
         } catch (DatastoreException e) {
+            logger.debug("Erro ao salvar aluno.");
             e.printStackTrace();
         }
 

@@ -3,6 +3,9 @@ package br.ufg.inf.fabrica.muralufg.central.proxy;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 /**
  * Created by kyriosdata on 10/7/14.
  */
@@ -11,7 +14,10 @@ public class ProxyService {
     private RMTCService rmtc;
 
     private int antiguidadeEmSegundos;
-
+    
+    Logger logger = LoggerFactory.getLogger(ProxyService.class);
+    
+    
     /**
      *
      */

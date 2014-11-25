@@ -7,18 +7,28 @@ import com.google.api.services.datastore.client.DatastoreHelper;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 public class DaoHelper {
+    
     private static final String DATASET_ID = "my-dataset";
+    Logger logger = LoggerFactory.getLogger(DaoHelper.class);
+   
     public static Datastore getDataStore() {
         Datastore datastore = null;
+        
         try {
             //configuração da conexão com o google data store
             datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsfromEnv().dataset(DATASET_ID).build());
         } catch (GeneralSecurityException e) {
+            
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return datastore;
     }
+    
+    
 }

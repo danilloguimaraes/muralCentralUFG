@@ -54,6 +54,9 @@ package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
 import java.util.*;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 /**
  * Representa informação veiculada/divulgada pelo
  * Mural UFG.
@@ -64,6 +67,7 @@ public class Mensagem {
      * Identificador único da mensagem.
      */
     private UUID id;
+    Logger logger = LoggerFactory.getLogger(Mensagem.class);
 
     /**
      * Informação a ser veiculada pela mensagem.
@@ -119,6 +123,7 @@ public class Mensagem {
         this.imagens = new ArrayList<Imagem>();
 
         if (imagens == null) {
+            logger.debug("Método setImagens. imagens recebeu objeto nulo.");
             return;
         }
 
