@@ -63,16 +63,45 @@ public class Aluno extends Usuario {
     private String nome;
     private String matricula;
 
+    /**
+     * Cria uma instância de Aluno.
+     * @param nome O nome do aluno.
+     * @param matricula Identificador único do aluno.
+     */
+    public Aluno(String nome, String matricula) {
+        this.nome = nome;
+        this.matricula = matricula;
+    }
+
+    /**
+     * Obtém o nome do aluno.
+     * @return Sequência de caracteres que corresponde ao nome do aluno.
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Define o nome do aluno.
+     * @param nome SSequência de caracteres que corresponde ao nome do aluno.
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Obtém a matrícula do aluno.
+     * @return Sequência de caracteres que corresponde à matrícula do aluno.
+     */
     public String getMatricula() {
         return matricula;
     }
 
-    public Aluno(String nome, String matricula) {
-        this.nome = nome;
+    /**
+     * Define a matrícula do aluno.
+     * @param matricula Sequência de caracteres que corresponde à matrícula do aluno.
+     */
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 }

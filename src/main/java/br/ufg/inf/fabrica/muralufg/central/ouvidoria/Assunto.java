@@ -52,8 +52,9 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
 import org.joda.time.DateTime;
+
+import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
 
 import java.util.Set;
 
@@ -87,4 +88,36 @@ public class Assunto {
      * <b>ESTA INFORMAÇÃO NÃO É OBRIGATÓRIA.</b>
      */
     private String fonte;
+
+	public Set<Arquivo> getAnexos() {
+		return anexos;
+	}
+
+	public void setAnexos(Set<Arquivo> anexos) {
+		this.anexos = anexos;
+	}
+
+	public String getConteudo() {
+		return conteudo;
+	}
+
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
+	}
+
+	public DateTime getData() {
+		return data;
+	}
+
+	public void setData(DateTime data) {
+		this.data = data;
+	}
+
+	public String getFonte() {
+		return fonte;
+	}
+
+	public void setFonte(String fonte) {
+		this.fonte = fonte;
+	}
 }

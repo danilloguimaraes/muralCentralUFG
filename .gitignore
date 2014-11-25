@@ -2,6 +2,5 @@ out
 target
 workspace.xml
 tasks.xml
-.settings*
-*.classpath
-*.project
+.classpath
+.DS_Store
