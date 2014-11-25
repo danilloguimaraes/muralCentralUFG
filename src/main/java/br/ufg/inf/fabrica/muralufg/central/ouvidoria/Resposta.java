@@ -53,6 +53,7 @@
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
 import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+import org.joda.time.DateTime;
 
 /**
  * Resposta produzida para um dado assunto submetido para a ouvidoria.
@@ -61,4 +62,8 @@ import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
  */
 public class Resposta extends Assunto {
     private Usuario autor;
+
+    public Resposta(String conteudo, DateTime data, String fonte) {
+        super(conteudo, data, fonte);
+    }
 }

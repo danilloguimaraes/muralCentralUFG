@@ -67,10 +67,6 @@ import com.google.protobuf.ByteString;
 import org.joda.time.DateTime;
 
 
-/**
- * Created by Paulo on 14/10/2014.
- */
-
 import com.google.api.services.datastore.DatastoreV1.*;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -79,6 +75,7 @@ import static com.google.api.services.datastore.client.DatastoreHelper.makeKey;
 import static com.google.api.services.datastore.client.DatastoreHelper.makeProperty;
 import static com.google.api.services.datastore.client.DatastoreHelper.makeValue;
 import static com.google.api.services.datastore.client.DatastoreHelper.*;
+
 
 
 public class ImpOuvidoriaRepository implements OuvidoriaRepository{
@@ -107,7 +104,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
     }
 
 
-    public void insere(Assunto assunto){
+    public boolean insere(Assunto assunto){
         Entity.Builder entAssunto = Entity.newBuilder();
         entAssunto.setKey(makeKey());
         entAssunto.addProperty(makeProperty(CONTEUDO, makeValue(assunto.getConteudo())));
@@ -122,13 +119,15 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
                 .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
                 .build();
 
+        return true;
+
     }
 
 
-    public List<Assunto> buscaNaoRespondidos(Date desde) {
+    public List<Assunto> buscaNaoRespondidos(DateTime desde) {
 
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("ddMMyyyy HHmmss");
 
 
         try {
@@ -140,7 +139,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
 
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
-                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(desde)).build();
+                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
 
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
@@ -184,7 +183,9 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
     }
 
 
-    public List<Assunto> buscaNaoRespondidos(Date desde, int aPartirDe) {
+
+
+    public List<Assunto> buscaNaoRespondidos(DateTime desde, int aPartirDe) {
 
         List<Assunto> listaAssuntos = new ArrayList<Assunto>();
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
@@ -200,7 +201,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
 
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
-                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(desde)).build();
+                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
 
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
@@ -253,7 +254,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
     }
 
 
-    public List<Assunto> buscaRespondidos(Date desde) {
+    public List<Assunto> buscaRespondidos(DateTime desde) {
 
 
 
@@ -270,7 +271,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
 
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
-                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(desde)).build();
+                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
 
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
@@ -314,7 +315,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
     }
 
 
-    public List<Assunto> buscaRespondidos(Date desde, int aPartirDe) {
+    public List<Assunto> buscaRespondidos(DateTime desde, int aPartirDe) {
         List<Assunto> listaAssuntos = new ArrayList<Assunto>();
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
@@ -329,7 +330,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
 
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
-                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(desde)).build();
+                    "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
 
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
