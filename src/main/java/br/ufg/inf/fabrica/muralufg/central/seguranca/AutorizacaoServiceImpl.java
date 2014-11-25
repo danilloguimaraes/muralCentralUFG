@@ -36,7 +36,7 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 		}
 		
 		if (acao.equals(AcaoEnum.GRAVA_REGISTRO.toString())){
-			return autorizaGravarMensagem(new Long(usuario));
+			return autorizaGravar(new Long(usuario));
 		}
 
 		return false;
@@ -121,7 +121,12 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	}
 
 	
-	public boolean autorizaGravarMensagem(Long idUsuario) {
+	/**
+	 * Verifica se o usuario tem permissão de gravar determinado registro
+	 * @param idUsuario Id do usuário
+	 * @return true ou false
+	 */
+	public boolean autorizaGravar(Long idUsuario) {
 		
 		boolean autorizado = false;
 		
@@ -164,10 +169,17 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 	}
 
 	
+
+	/**
+	 * Verifica na camada de persistência se o id do usuário tem a permissão 
+	 * de gravar determinado item a partir do seu perfil de acesso.
+	 * 
+	 * @param idUsuario Id do usuário que está querendo alterar.
+	 */
 	@Override
 	public boolean isUsuarioPodeGravar(Long idUsuario) {
 		
-		// TODO Auto-generated method stub
+		// TODO Aguardar implementação da camada de persistência para ser implementado.
 		
 		return false;
 	}

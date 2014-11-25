@@ -110,4 +110,22 @@ public class AutorizacaoTest {
 		
 		
 	}
+	
+	@Test
+	public void testAutorizaGravar() {
+
+		AutorizacaoServiceImplMock autorizacaoService = new AutorizacaoServiceImplMock();
+
+		Assert.assertTrue(autorizacaoService.autorizaGravar(3l));
+	}
+	
+	@Test
+	public void testAutorizaGravarInvalida() {
+		
+		AutorizacaoServiceImplMock autorizacaoService = new AutorizacaoServiceImplMock();
+		
+		Assert.assertFalse(autorizacaoService.autorizaGravar(0l));
+		
+		
+	}
 }
