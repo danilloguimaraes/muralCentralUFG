@@ -52,68 +52,40 @@
 
 package br.ufg.inf.fabrica.muralufg.central.requisicao;
 
-import br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem;
-import java.util.List;
-import javax.ws.rs.FormParam;
+import java.util.Set;
 
 /**
- * Classe que representa uma requisição de divulgação/alerta.
+ * Interface de inserção e acesso de requisições de divulgação/alerta.
  */
-public class Requisicao {
-
+public interface RequisicaoRepository {
+    
     /**
-     * Identificação da requisição.
+     * Insere uma nova requisição de divulgação.
+     * 
+     * @param requisicao
+     * @return true para êxito, false para falha
      */
-    private Long id;
-
+    boolean adicionarRequisicao(Requisicao requisicao);
+    
     /**
-     * Mensagem da divulgação/alerta.
+     * Insere uma nova requisição de alerta.
+     * 
+     * @param alerta
+     * @return true para êxito, false para falha
      */
-    @FormParam("mensagem")
-    private Mensagem mensagem;
-
+    boolean adicionarAlerta(Alerta alerta);
+    
     /**
-     * Lista dos destinatários que deverão receber a divulgação/alerta.
+     * Lista todas as requisições de divulgação.
+     * 
+     * @return set de requisições
      */
-    @FormParam("listaDestinatarios")
-    private List<Destinatario> listaDestinatarios;
-
+    Set<Requisicao> listarTodasRequisicoes();
+    
     /**
-     * Construtor que cria uma instância de requisição de divulgação/alerta.
-     *
-     * @param mensagem A mensagem da requisição.
-     * @param listaDestinatarios A lista de destinatários da requisição.
+     * Lista todas as requisições de alerta.
+     * 
+     * @return set de alertas
      */
-    public Requisicao(Mensagem mensagem, List<Destinatario> listaDestinatarios) {
-        this.mensagem = mensagem;
-        this.listaDestinatarios = listaDestinatarios;
-    }
-
-    public Requisicao() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Mensagem getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(Mensagem mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    public List<Destinatario> getListaDestinatarios() {
-        return listaDestinatarios;
-    }
-
-    public void setListaDestinatarios(List<Destinatario> listaDestinatarios) { 
-        this.listaDestinatarios = listaDestinatarios;
-    }
+    Set<Alerta> listarTodosAlertas();
 }

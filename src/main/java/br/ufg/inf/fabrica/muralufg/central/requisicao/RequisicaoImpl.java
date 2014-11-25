@@ -52,68 +52,88 @@
 
 package br.ufg.inf.fabrica.muralufg.central.requisicao;
 
-import br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem;
-import java.util.List;
-import javax.ws.rs.FormParam;
+import com.google.api.services.datastore.client.DatastoreException;
+import java.text.ParseException;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
 
 /**
- * Classe que representa uma requisição de divulgação/alerta.
+ * Classe que implementa a interface RequisicaoRepository.
  */
-public class Requisicao {
+public class RequisicaoImpl implements RequisicaoRepository {
+
+    RequisicaoRepositoryDataStore repositoryDataStore = new RequisicaoRepositoryDataStore();
 
     /**
-     * Identificação da requisição.
+     * Método responsável por adicionar uma nova requisição de divulgação.
+     * 
+     * @param requisicao
+     * @return true para êxito, false para falha
      */
-    private Long id;
+    @POST
+    @Override
+    public boolean adicionarRequisicao(Requisicao requisicao) {
+        try {
+            repositoryDataStore.salvar(requisicao);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    /**
+     * Método responsável por adicionar uma nova requisição de alerta.
+     * 
+     * @param alerta 
+     * @return true para êxito, false para falha
+     */
+    @POST
+    @Override
+    public boolean adicionarAlerta(Alerta alerta) {
+        try {
+            repositoryDataStore.salvar(alerta);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
-     * Mensagem da divulgação/alerta.
+     * Método responsável por listar todas as requisições de divulgação.
+     * 
+     * @return set de requisicoes
      */
-    @FormParam("mensagem")
-    private Mensagem mensagem;
+    @GET
+    @Produces("application/json")
+    @Override
+    public Set<Requisicao> listarTodasRequisicoes() {
+        try {
+            return repositoryDataStore.listarTodasRequisicoes();
+        } catch (DatastoreException ex) {
+            Logger.getLogger(RequisicaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     /**
-     * Lista dos destinatários que deverão receber a divulgação/alerta.
+     * Método responsável por listar todas as requisições de alerta.
+     * 
+     * @return set de alerta
      */
-    @FormParam("listaDestinatarios")
-    private List<Destinatario> listaDestinatarios;
-
-    /**
-     * Construtor que cria uma instância de requisição de divulgação/alerta.
-     *
-     * @param mensagem A mensagem da requisição.
-     * @param listaDestinatarios A lista de destinatários da requisição.
-     */
-    public Requisicao(Mensagem mensagem, List<Destinatario> listaDestinatarios) {
-        this.mensagem = mensagem;
-        this.listaDestinatarios = listaDestinatarios;
+    @GET
+    @Produces("application/json")
+    @Override
+    public Set<Alerta> listarTodosAlertas() {
+        try {
+            return repositoryDataStore.listarTodosAlertas();
+        } catch (ParseException ex) {
+            Logger.getLogger(RequisicaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
-    public Requisicao() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Mensagem getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(Mensagem mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    public List<Destinatario> getListaDestinatarios() {
-        return listaDestinatarios;
-    }
-
-    public void setListaDestinatarios(List<Destinatario> listaDestinatarios) { 
-        this.listaDestinatarios = listaDestinatarios;
-    }
 }

@@ -52,68 +52,28 @@
 
 package br.ufg.inf.fabrica.muralufg.central.requisicao;
 
-import br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem;
-import java.util.List;
-import javax.ws.rs.FormParam;
+import com.google.api.services.datastore.client.Datastore;
+import com.google.api.services.datastore.client.DatastoreFactory;
+import com.google.api.services.datastore.client.DatastoreHelper;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
- * Classe que representa uma requisição de divulgação/alerta.
+ * Classe que auxilia a conexão de com o banco.
  */
-public class Requisicao {
+public class DaoHelper {
 
-    /**
-     * Identificação da requisição.
-     */
-    private Long id;
+    private static final String DATASET_ID = "banco-requisicao";
 
-    /**
-     * Mensagem da divulgação/alerta.
-     */
-    @FormParam("mensagem")
-    private Mensagem mensagem;
-
-    /**
-     * Lista dos destinatários que deverão receber a divulgação/alerta.
-     */
-    @FormParam("listaDestinatarios")
-    private List<Destinatario> listaDestinatarios;
-
-    /**
-     * Construtor que cria uma instância de requisição de divulgação/alerta.
-     *
-     * @param mensagem A mensagem da requisição.
-     * @param listaDestinatarios A lista de destinatários da requisição.
-     */
-    public Requisicao(Mensagem mensagem, List<Destinatario> listaDestinatarios) {
-        this.mensagem = mensagem;
-        this.listaDestinatarios = listaDestinatarios;
-    }
-
-    public Requisicao() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Mensagem getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(Mensagem mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    public List<Destinatario> getListaDestinatarios() {
-        return listaDestinatarios;
-    }
-
-    public void setListaDestinatarios(List<Destinatario> listaDestinatarios) { 
-        this.listaDestinatarios = listaDestinatarios;
+    public static Datastore getDataStore() {
+        Datastore datastore = null;
+        try {
+            datastore = DatastoreFactory.get().create(
+                    DatastoreHelper.getOptionsfromEnv().dataset(DATASET_ID)
+                    .build());
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+        }
+        return datastore;
     }
 }

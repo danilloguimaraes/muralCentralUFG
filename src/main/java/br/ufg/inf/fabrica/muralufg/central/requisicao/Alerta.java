@@ -53,67 +53,44 @@
 package br.ufg.inf.fabrica.muralufg.central.requisicao;
 
 import br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem;
+import java.util.Date;
 import java.util.List;
-import javax.ws.rs.FormParam;
 
 /**
- * Classe que representa uma requisição de divulgação/alerta.
+ * Classe que representa uma mensagem de alerta.
+ * É uma especialização de Requisicao.
  */
-public class Requisicao {
+public class Alerta extends Requisicao {
 
     /**
-     * Identificação da requisição.
+     * Data para qual o alerta é divulgado.
      */
-    private Long id;
+    Date dataAlerta;
 
     /**
-     * Mensagem da divulgação/alerta.
+     * Construtor vazio da classe.
      */
-    @FormParam("mensagem")
-    private Mensagem mensagem;
-
+    public Alerta() {
+        
+    }
+    
     /**
-     * Lista dos destinatários que deverão receber a divulgação/alerta.
+     * Construtor da classe que já cria o alerta completo.
+     * 
+     * @param dataAlerta
+     * @param msg
+     * @param listaDes 
      */
-    @FormParam("listaDestinatarios")
-    private List<Destinatario> listaDestinatarios;
-
-    /**
-     * Construtor que cria uma instância de requisição de divulgação/alerta.
-     *
-     * @param mensagem A mensagem da requisição.
-     * @param listaDestinatarios A lista de destinatários da requisição.
-     */
-    public Requisicao(Mensagem mensagem, List<Destinatario> listaDestinatarios) {
-        this.mensagem = mensagem;
-        this.listaDestinatarios = listaDestinatarios;
+    public Alerta(Date dataAlerta, Mensagem msg, List<Destinatario> listaDes) {
+        super(msg, listaDes);
+        this.dataAlerta = dataAlerta;
     }
 
-    public Requisicao() {
-
+    public Date getDataAlerta() {
+        return dataAlerta;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Mensagem getMensagem() {
-        return mensagem;
-    }
-
-    public void setMensagem(Mensagem mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    public List<Destinatario> getListaDestinatarios() {
-        return listaDestinatarios;
-    }
-
-    public void setListaDestinatarios(List<Destinatario> listaDestinatarios) { 
-        this.listaDestinatarios = listaDestinatarios;
+    public void setDataAlerta(Date dataAlerta) {
+        this.dataAlerta = dataAlerta;
     }
 }

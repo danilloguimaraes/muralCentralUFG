@@ -52,6 +52,34 @@
 
 package br.ufg.inf.fabrica.muralufg.central.requisicao;
 
+/**
+ * Classe que representa o destinatário das divulgações/alertas.
+ */
 public class Destinatario {
+    /**
+     * Identificador do destinatário.
+     */
+    private Long id;
+    
+    /**
+     * Nome do destinatário.
+     */
+    private String nome;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
 }
