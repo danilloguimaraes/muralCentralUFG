@@ -9,10 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CentralIdentificacao {
     private String nome;
     private String versao;
+    private String recursos;
 
-    public CentralIdentificacao(String nome, String versao) {
+    public CentralIdentificacao(String nome, String versao, String recursos) {
         this.nome = nome;
         this.versao = versao;
+        this.recursos = recursos;
     }
 
     @JsonProperty
@@ -33,5 +35,14 @@ public class CentralIdentificacao {
     @JsonProperty
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @JsonProperty
+    public String getRecursos() {
+        return recursos;
+    }
+    @JsonProperty
+    public void setRecursos(String recursos) {
+        this.recursos = recursos;
     }
 }
