@@ -50,35 +50,58 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Representa um aluno devidamente matriculado em determinada disciplina,
+ * ou seja, aluno de uma dada turma.
+ * <p>Trata-se de um <i>value object</i>.</p>
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Aluno extends Usuario {
+    private String nome;
+    private String matricula;
 
-    public IdentificacaoResource(String nome, String versao) {
+    /**
+     * Cria uma instância de Aluno.
+     * @param nome O nome do aluno.
+     * @param matricula Identificador único do aluno.
+     */
+    public Aluno(String nome, String matricula) {
         this.nome = nome;
-        this.versao = versao;
+        this.matricula = matricula;
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+    /**
+     * Obtém o nome do aluno.
+     * @return Sequência de caracteres que corresponde ao nome do aluno.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * Define o nome do aluno.
+     * @param nome SSequência de caracteres que corresponde ao nome do aluno.
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Obtém a matrícula do aluno.
+     * @return Sequência de caracteres que corresponde à matrícula do aluno.
+     */
+    public String getMatricula() {
+        return matricula;
+    }
+
+    /**
+     * Define a matrícula do aluno.
+     * @param matricula Sequência de caracteres que corresponde à matrícula do aluno.
+     */
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 }

@@ -50,35 +50,74 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
+import org.joda.time.DateTime;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
 
+import java.util.Set;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Detalhe de uma submissão dirigida à ouvidoria da UFG.
+ * <p>Uma instância desta classe é um <i>value object</i>.</p>
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Assunto {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Identifica anexos associados à submissão.
+     * Não é obrigatória a existência de anexo.
+     */
+    private Set<Arquivo> anexos;
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Conteúdo (mensagem) associada à submissão.
+     * Descreve a reclamação, denúncia, elogio ou, de forma
+     * ampla, a mensagem de interesse do emissor.
+     */
+    private String conteudo;
+
+    /**
+     * Data em que o assunto é criado.
+     */
+    private DateTime data;
+
+    /**
+     * Identificação da origem (autor) da mensagem, caso
+     * tenha sido fornecido pelo interessado.
+     * <b>ESTA INFORMAÇÃO NÃO É OBRIGATÓRIA.</b>
+     */
+    private String fonte;
+
+	public Set<Arquivo> getAnexos() {
+		return anexos;
+	}
+
+	public void setAnexos(Set<Arquivo> anexos) {
+		this.anexos = anexos;
+	}
+
+	public String getConteudo() {
+		return conteudo;
+	}
+
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
+	}
+
+	public DateTime getData() {
+		return data;
+	}
+
+	public void setData(DateTime data) {
+		this.data = data;
+	}
+
+	public String getFonte() {
+		return fonte;
+	}
+
+	public void setFonte(String fonte) {
+		this.fonte = fonte;
+	}
 }

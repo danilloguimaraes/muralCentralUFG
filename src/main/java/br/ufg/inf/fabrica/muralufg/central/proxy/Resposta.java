@@ -50,35 +50,54 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.Date;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Encapsula resposta fornecida pela RMTC e
+ * outras informações relevantes para a
+ * atuação da Central como "proxy".
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Resposta {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
+    /**
+     * Identificação única da requisição submetida pelo
+     * cliente da Central.
+     */
+    private String guid;
+
+    /**
+     * Resposta produzida pela RMTC e "guardada"
+     * até que o Cliente da Central requisite-a
+     * pelo guid correspondente.
+     */
+    private String resposta;
+
+    /**
+     * Data em que a requisição foi submetida
+     * pelo Cliente.
+     */
+    private Date geradaEm;
+
+    public String getResposta() {
+        return resposta;
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+	public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public Date getGeradaEm() {
+		return geradaEm;
+	}
+
+	public void setGeradaEm(Date geradaEm) {
+		this.geradaEm = geradaEm;
+	}
+
 }

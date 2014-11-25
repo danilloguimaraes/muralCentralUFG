@@ -50,35 +50,49 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.Date;
+import java.util.List;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Manutenção das informações de ouvidoria.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface OuvidoriaRepository {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Recupera os assuntos submetidos à ouvidoria, ainda
+     * sem resposta, a partir da data indicada.
+     * @param desde Data a partir da qual assuntos serão considerados.
+     *
+     * @return Lista, em ordem cronológica crescente, do mais antido
+     * para o mais recente dos assuntos submetidos à ouvidoria e para
+     * os quais não existe resposta. No máximo 100 assuntos são retornados.
+     *
+     */
+    List<Assunto> naoRespondidos(Date desde);
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Recupera os assuntos submetidos à ouvidoria, ainda
+     * sem resposta, a partir da data indicada.
+     * @param desde Data a partir da qual assuntos serão considerados.
+     * @param aPartirDe Ordem do assunto a partir da qual os resultados
+     *                  serão produzidos. Ou seja, no máximo, os 100
+     *                  assuntos seguintes, conforme esta ordem.
+     *
+     * @return Lista, em ordem cronológica crescente, do mais antido
+     * para o mais recente dos assuntos submetidos à ouvidoria e para
+     * os quais não existe resposta. No máximo 100 assuntos são retornados.
+     *
+     * @see #naoRespondidos(java.util.Date)
+     */
+    List<Assunto> naoRespondidos(Date desde, int aPartirDe);
+
+    /**
+     * Acrescenta ao repositório o assunto.
+     * @param assunto Assunto a ser inserido no repositório.
+     * @return {@code true} se e somente se o assunto foi
+     * inserido de forma satisfatória.
+     */
+    boolean insere(Assunto assunto);
 }

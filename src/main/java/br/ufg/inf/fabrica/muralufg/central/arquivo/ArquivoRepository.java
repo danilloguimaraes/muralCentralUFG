@@ -50,35 +50,51 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.stream.Stream;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Serviços para manipulação de arquivos em meio persistente.
+ * <p>Esta interface foi projetada para admitir implementação
+ * que faz uso do sistema de arquivos de um sistema operacional
+ * como o Windows, ou ainda por serviço remoto de armazenamento.</p>
+ *
+ * <p>Uma implementação desta interface deve admitir um fluxo
+ * clássico onde arquivos são persistidos
+ * ({@link #persiste(Arquivo, java.util.stream.Stream)}) e
+ * recuperados. A recuperação é dividida em duas partes:
+ * (a) recuperação de metainformações ({@link #recupera(String)}) e
+ * (b) recuperação do conteúdo ({@link #conteudo(String)}).</p>
+ *
+ * <p>Observe que não há indicação de diretório, <i>bucket</i> ou
+ * outro elemento, por exemplo, credencial exigida para acesso aos
+ * serviços oferecidos pela interface. Tais itens são dependentes
+ * de cada implementação.</p>
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface ArquivoRepository {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Persiste o conteúdo do arquivo.
+     * @param arquivo Detalhes do arquivo a ser persistido.
+     * @param conteudo {@link Stream} do qual o conteúdo do
+     *                               arquivo poderá ser recuperado.
+     */
+    public void persiste(Arquivo arquivo, Stream conteudo);
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Recupera metainformações sobre o arquivo cujo identificador único é
+     * fornecido.
+     * @param arquivoId String identificador do arquivo que se deseja obter.
+     * @return Instância de {@link Arquivo} correspondente ao identificador
+     * fornecido.
+     */
+    public Arquivo recupera(String arquivoId);
+
+    /**
+     * Obtém {@link Stream} para conteúdo do arquivo.
+     * @param arquivoId O identificador único do arquivo.
+     * @return {@link Stream} para o conteúdo do arquivo.
+     */
+    public Stream conteudo(String arquivoId);
 }

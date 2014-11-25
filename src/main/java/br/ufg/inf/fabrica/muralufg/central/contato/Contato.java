@@ -50,35 +50,28 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
-
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+package br.ufg.inf.fabrica.muralufg.central.contato;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Pessoa ou serviço que representa algum órgão da UFG e com o
+ * qual contato é desejado.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Contato {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * O nome do contato, por exemplo, nome da pessoa física
+     * que oferece/representa algum serviço oferecido pela UFG.
+     * Por exemplo, o nome de uma coordenadora de curso, ou o
+     * nome de um técnico responsável por um laboratório,
+     * ou diretor do CEGEF, dentre várias outras opções.
+     */
+    private String nome;
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 }

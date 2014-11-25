@@ -50,36 +50,33 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
-
-import java.util.Date;
-import java.util.List;
+package br.ufg.inf.fabrica.muralufg.central.configuracao;
 
 /**
- * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
+ * Acesso a informações de configuração utilizadas pela Central.
+ * <p>A configuração da Central, por meio deste repositório
+ * é vista como uma coleção de pares (chave, valor), ambas
+ * sequências de caracteres.</p>
  */
-public interface MensagemRepository {
+public interface ConfiguracaoRepository {
 
     /**
-     * Recupera a mensagem cujo identificador é fornecido.
-     * @param id O identificador da mensagem a ser recuperada.
-     * @return A {@link br.ufg.inf.fabrica.muralufg.central.dominio.Mensagem}
-     * cujo identificador é aquele fornecido.
-     * @see #getPorPeriodo(java.util.Date, java.util.Date)
+     * Define o valor para uma chave. Valor anterior,
+     * caso exista para a chave fornecida, é sobrescrito.
+     * @param chave Chave que unicamente identifica um item
+     *              de configuração.
+     * @param valor O valor da configuração da Central para
+     *              a chave (ou nome).
      */
-    public Mensagem getPorId(String id);
+    void define(String chave, String valor);
 
     /**
-     * Recupera, em ordem cronologógica, as mensagens recebidas
-     * pelo Mural UFG no período fornecido. Toda mensagem retornada
-     * tem data de criação contida no período indicado.
-     * @param aPartirDe Data a partir da qual, inclusive, mensagens
-     *                  serão consideradas.
-     * @param fim Data após a qual mensagens recebidas pelo Mural
-     *            não serão retornadas pelo presente método.
-     * @return Mensagens, em ordem cronológica, cujas datas de criação
-     * estão no período indicado.
-     * @see #getPorId(String)
+     * Recupera o valor para a chave de um item de configuração
+     * da Central. Retorna o valor {@code null} caso a chave
+     * não esteja definida.
+     * @param chave Chave cujo valor correspondente é desejado.
+     * @return O valor obtido da configuração para a chave
+     * indicada.
      */
-    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
+    String valor(String chave);
 }

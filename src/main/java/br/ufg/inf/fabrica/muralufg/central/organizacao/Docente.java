@@ -50,35 +50,96 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.Set;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Representa um docente, lotado em um dado órgão.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Docente extends Usuario {
+    private String id;
+    private String nome;
+    private Set<Turma> turmas;
+    private Orgao orgao;
 
-    public IdentificacaoResource(String nome, String versao) {
+    /**
+     * Cria uma instância de Docente.
+     * @param id Identificador único do docente.
+     * @param nome Nome do docente.
+     * @param turmas Conjunto de turmas em que o docente é responsável.
+     * @param orgao Órgão em que o docente está lotado.
+     */
+    public Docente(String id, String nome, Set<Turma> turmas, Orgao orgao) {
+        this.id = id;
         this.nome = nome;
-        this.versao = versao;
+        this.turmas = turmas;
+        this.orgao = orgao;
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+    /**
+     * Obtém o identificador único do docente.
+     * @return Sequência de caracteres que corresponde ao identificador do docente.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Define identificador único do docente.
+     * @param id Sequência de caracteres que corresponde ao identificador do docente.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtém o nome do docente.
+     * @return Sequência de caracteres que corresponde ao nome do docente.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * Define nome do docente.
+     * @param nome Sequência de caracteres que corresponde ao nome do docente.
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Obtém o conjunto de turmas em que o docente é responsável.
+     * @return Conjunto de turmas do docente.
+     */
+    public Set<Turma> getTurmas() {
+        return turmas;
+    }
+
+    /**
+     * Define o conjunto de turmas em que o docente é responsável.
+     * @param turmas Conjunto de turmas do docente.
+     */
+    public void setTurmas(Set<Turma> turmas) {
+        this.turmas = turmas;
+    }
+
+    /**
+     * Obtém o órgão em que o docente está lotado.
+     * @return Órgão em que o docente é integrante.
+     */
+    public Orgao getOrgao() {
+        return orgao;
+    }
+
+    /**
+     * Define o órgão em que o docente está lotado.
+     * @param orgao Órgão em que o docente é integrante.
+     */
+    public void setOrgao(Orgao orgao) {
+        this.orgao = orgao;
     }
 }

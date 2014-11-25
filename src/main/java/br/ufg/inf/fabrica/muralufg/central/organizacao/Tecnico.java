@@ -50,35 +50,75 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Representa um técnico da UFG.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Tecnico extends Usuario {
+    private String id;
+    private String nome;
+    private Orgao orgao;
 
-    public IdentificacaoResource(String nome, String versao) {
+    /**
+     * Cria uma instância de Tecnico.
+     * @param id Identificador único do técnico.
+     * @param nome Nome do técnico.
+     * @param orgao Órgão em que o técnico está lotado.
+     */
+    public Tecnico(String id, String nome, Orgao orgao) {
+        this.id = id;
         this.nome = nome;
-        this.versao = versao;
+        this.orgao = orgao;
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+    /**
+     * Obtém o identificador único do técnico.
+     * @return Sequência de caracteres que corresponde ao identificador do técnico.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Define identificador único do técnico.
+     * @param id Sequência de caracteres que corresponde ao identificador do técnico.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtém o nome do técnico.
+     * @return Sequência de caracteres que corresponde ao nome do técnico.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * Define nome do técnico.
+     * @param nome Sequência de caracteres que corresponde ao nome do técnico.
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Obtém o órgão em que o técnico está lotado.
+     * @return Órgão em que o técnico faz parte.
+     */
+    public Orgao getOrgao() {
+        return orgao;
+    }
+
+    /**
+     * Define o órgão em que o técnico está lotado.
+     * @param orgao Órgão em que o técnico faz parte.
+     */
+    public void setOrgao(Orgao orgao) {
+        this.orgao = orgao;
     }
 }

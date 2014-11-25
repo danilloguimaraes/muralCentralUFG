@@ -50,35 +50,38 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
-
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Metainformações (<i>value object</i>) do conteúdo de um arquivo.
+ * <p>Uma instância desta classe identifica unicamente um arquivo
+ * Word (.doc), ou um arquivo de áudio (mp3) ou outro tipo de
+ * conteúdo.</p>
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Arquivo {
+    private String id;
+    private String mimeType;
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
+    /**
+     * Cria uma instância de {@link Arquivo}.
+     * @param id O identificador único por meio do qual é possível
+     *           recuperar o arquivo.
+     * @param mimeType Identificador único do tipo do conteúdo do
+     *                 arquivo. Uma lista de mime-types disponíveis
+     *                 pode ser encontrada
+     *                 <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">
+     *                 aqui</a>.
+     */
+    public Arquivo(String id, String mimeType) {
+        this.id = id;
+        this.mimeType = mimeType;
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+    public String getId() {
+        return id;
+    }
+
+    public String getMimeType() {
+        return mimeType;
     }
 }

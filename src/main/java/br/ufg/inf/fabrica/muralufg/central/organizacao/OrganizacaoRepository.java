@@ -50,35 +50,90 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.Set;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Mantém informações sobre a estrutura organizacional da UFG.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface OrganizacaoRepository {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Obtém todos os dispositivos (ids) dos alunos e do
+     * docente responsável por uma dada turma.
+     * @param turma A turma da qual os ids dos dispositivos serão
+     *              obtidos.
+     * @return Conjunto de todos os ids disponíveis dos usuários,
+     * alunos e docente responsável, da turma em questão.
+     */
+    Set<String> dispositivos(Turma turma);
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Obtém os dispositivos cadastrados (ids) dos alunos da
+     * turma.
+     * @param turma
+     * @return
+     */
+    Set<String> dispositivosAlunos(Turma turma);
+
+    /**
+     * Obtém o conjunto de alunos de uma turma.
+     * @param turma
+     * @return
+     */
+    Set<Aluno> alunos(Turma turma);
+
+    /**
+     * Obtém os docentes
+     * responsáveis pela turma.
+     * @param turma
+     * @return
+     */
+    Set<Docente> docentes(Turma turma);
+
+    /**
+     * Obtém os dispositivos cadastrados (ids) dos
+     * docentes do curso.
+     * @param curso
+     * @return
+     */
+    Set<String> docentes(Curso curso);
+
+    /**
+     * Obtém os dispositivos cadastrados (ids) dos docentes
+     * lotados no órgão em questão.
+     * @param orgao
+     * @return
+     */
+    Set<String> docentes(Orgao orgao);
+
+    /**
+     * Obtém os dispositivos cadastrados (ids) dos técnicos
+     * do órgão.
+     * @param orgao
+     * @return
+     */
+    Set<String> tecnicos(Orgao orgao);
+
+    /**
+     * Obtém as turmas de uma dada disciplina.
+     * @param disciplina
+     * @return
+     */
+    Set<Turma> turmas(Disciplina disciplina);
+
+    /**
+     * Obtém o conjunto de disciplinas de um dado curso.
+     * @param curso
+     * @return
+     */
+    Set<Disciplina> disciplinas(Curso curso);
+
+    /**
+     * Obtém o conjunto de cursos oferecidos por um órgão.
+     * @param orgao
+     * @return
+     */
+    Set<Curso> cursos(Orgao orgao);
 }

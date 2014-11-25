@@ -50,35 +50,41 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
-
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Representa um pedido de informação submetido por
+ * cliente da Central, que é respondido pela
+ * RMTC.
+ *
+ * @see br.ufg.inf.fabrica.muralufg.central.proxy.RMTCService
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Pedido {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Chave única que identifica o pedido.
+     */
+    private String guid;
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Requisição recebida pela Centra e que será
+     * enviada à RMTC.
+     */
+    private String requisicao;
+
+	public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public String getRequisicao() {
+		return requisicao;
+	}
+
+	public void setRequisicao(String requisicao) {
+		this.requisicao = requisicao;
+	}
 }

@@ -50,35 +50,36 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.Date;
+import java.util.List;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Serviço de acesso a mensagens divulgadas/publicadas no Mural UFG.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface MensagemRepository {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
+    /**
+     * Recupera a mensagem cujo identificador é fornecido.
+     * @param id O identificador da mensagem a ser recuperada.
+     * @return A {@link br.ufg.inf.fabrica.muralufg.central.mensagem.Mensagem}
+     * cujo identificador é aquele fornecido.
+     * @see #getPorPeriodo(java.util.Date, java.util.Date)
+     */
+    public Mensagem getPorId(String id);
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Recupera, em ordem cronologógica, as mensagens recebidas
+     * pelo Mural UFG no período fornecido. Toda mensagem retornada
+     * tem data de criação contida no período indicado.
+     * @param aPartirDe Data a partir da qual, inclusive, mensagens
+     *                  serão consideradas.
+     * @param fim Data após a qual mensagens recebidas pelo Mural
+     *            não serão retornadas pelo presente método.
+     * @return Mensagens, em ordem cronológica, cujas datas de criação
+     * estão no período indicado.
+     * @see #getPorId(String)
+     */
+    public List<Mensagem> getPorPeriodo(Date aPartirDe, Date fim);
 }

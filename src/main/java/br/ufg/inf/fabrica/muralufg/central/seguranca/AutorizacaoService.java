@@ -50,35 +50,34 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
-
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Serviço de autorização para realizar determinada ação,
+ * conforme o escopo definido, para um dado usuário.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public interface AutorizacaoService {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
-    }
-
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
-    }
+    /**
+     * Verifica se o usuário possui autorização para realizar
+     * a ação para o escopo.
+     * <p>Vários serviços são oferecidos pela Central, alguns deles
+     * exigem autorização, outros não. Aqueles que exigem autorização
+     * incluem, por exemplo, (a) auteração de cardápio de restaurante,
+     * (b) requisição de envio de mensagem e outros. Cada um destes
+     * serviços distintos é definido por uma ação.</p>
+     * <p>Além da ação e do usuário, é necessário definir o escopo
+     * para que uma autorização possa ser concedida ou não. Por exemplo,
+     * um professor tem como escopo, os alunos para os quais ministra
+     * aula, no instante em questão. Ou seja, o professor pode enviar
+     * mensagens apenas para um subconjunto dos seus alunos. A tentativa
+     * de enviar mensagens para funcionários ou para professores ou mesmo
+     * outros alunos da UFG, deverá resultar em autorização negada.</p>
+     * @param usuario O usuário que requisita a ação.
+     * @param acao A ação requisitada por um usuário.
+     * @param escopo O escopo da ação.
+     * @return {@code true} se e somente se o usuário está
+     * autorizado a requisitar a ação para o escopo indicado.
+     */
+    boolean autoriza(String usuario, String acao, String escopo);
 }

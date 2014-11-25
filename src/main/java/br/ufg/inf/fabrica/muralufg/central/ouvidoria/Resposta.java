@@ -50,46 +50,25 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.dominio;
+package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import java.util.UUID;
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
 /**
- * Metadados de uma imagem, geralmente arquivo no formato
- * jpg ou png.
- *
- * Nenhuma suposição é feita acerca do mecanismo empregado para
- * persistir uma imagem, EXCETO que o identificador da imagem
- * deve ser suficiente para localizá-la.
+ * Resposta produzida para um dado assunto submetido para a ouvidoria.
+ * <p>
+ * Ao contrário do assunto, onde o emissor não necessariamente se identifica,
+ * uma resposta obrigatoriamente identifica o seu autor.
+ * </p>
  */
-public class Imagem {
+public class Resposta extends Assunto {
+	private Usuario autor;
 
-    /**
-     * Identificador único da imagem. Deve ser suficiente
-     * para recuperar a imagem propriamente dita (arquivo
-     * correspondente).
-     */
-    private UUID id;
+	public Usuario getAutor() {
+		return autor;
+	}
 
-    /**
-     * Cria instância de Imagem.
-     * @param id Identificador único da imagem
-     *           cuja instância contém metadados.
-     */
-    public Imagem(UUID id) {
-        this.id = id;
-    }
-
-    public Imagem(String id) {
-        this.id = UUID.fromString(id);
-    }
-
-    /**
-     * Obtém o identificador único da Imagem.
-     * @return A sequência de caracteres correspondente
-     * ao identificador único da imagem.
-     */
-    public String getId() {
-        return id.toString();
-    }
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
+	}
 }

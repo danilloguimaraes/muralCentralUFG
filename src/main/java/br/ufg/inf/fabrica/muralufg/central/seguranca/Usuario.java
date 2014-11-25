@@ -50,35 +50,65 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.Set;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Identifica um usuário da Central.
+ * <p>Um usuário pode ser tanto quem recebe informações da Central
+ * quanto quem envia informações para a Central.</p>
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Usuario {
+    private String username;
+    private Set<String> registrationIds;
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
+    /**
+     * Construtor padrão de Usuario.
+     */
+    public Usuario() {
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+    /**
+     * Cria uma instância de Usuario.
+     * @param username Identificador do usuário.
+     * @param registrationIds Conjunto de identificadores de registro dos
+     *                        dispositivos do usuário.
+     */
+    public Usuario(String username, Set<String> registrationIds) {
+        this.username = username;
+        this.registrationIds = registrationIds;
+    }
+
+    /**
+     * Obtém o identificador do usuário.
+     * @return Sequência de caracteres que corresponde ao identificador do usuário.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Define identificador do usuário.
+     * @param username Sequência de caracteres que corresponde ao identificador do usuário.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Obtém o conjunto de identificadores de registro dos dispositivos do usuário.
+     * @return Conjunto dos identificadores de registro dos dispositivos do usuário.
+     */
+    public Set<String> getRegistrationIds() {
+        return registrationIds;
+    }
+
+    /**
+     * Define o conjunto de identificadores de registro dos dispositivos do usuário.
+     * @param registrationIds Conjunto dos identificadores de registro dos dispositivos do usuário.
+     */
+    public void setRegistrationIds(Set<String> registrationIds) {
+        this.registrationIds = registrationIds;
     }
 }

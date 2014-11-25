@@ -50,35 +50,46 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.identificacao;
+package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
-import br.ufg.inf.fabrica.muralufg.central.api.CentralIdentificacao;
-import com.codahale.metrics.annotation.Timed;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import java.util.UUID;
 
 /**
- * Identificação da Central. Simplesmente expõe
- * valores configurados em central-configuracao.yml.
+ * Metadados de uma imagem, geralmente arquivo no formato
+ * jpg ou png.
+ *
+ * Nenhuma suposição é feita acerca do mecanismo empregado para
+ * persistir uma imagem, EXCETO que o identificador da imagem
+ * deve ser suficiente para localizá-la.
  */
-@Path("/identificacao")
-@Produces(MediaType.APPLICATION_JSON)
-public class IdentificacaoResource {
-    private final String nome;
-    private final String versao;
+public class Imagem {
 
-    public IdentificacaoResource(String nome, String versao) {
-        this.nome = nome;
-        this.versao = versao;
+    /**
+     * Identificador único da imagem. Deve ser suficiente
+     * para recuperar a imagem propriamente dita (arquivo
+     * correspondente).
+     */
+    private UUID id;
+
+    /**
+     * Cria instância de Imagem.
+     * @param id Identificador único da imagem
+     *           cuja instância contém metadados.
+     */
+    public Imagem(UUID id) {
+        this.id = id;
     }
 
-    @GET
-    @Timed
-    public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+    public Imagem(String id) {
+        this.id = UUID.fromString(id);
+    }
+
+    /**
+     * Obtém o identificador único da Imagem.
+     * @return A sequência de caracteres correspondente
+     * ao identificador único da imagem.
+     */
+    public String getId() {
+        return id.toString();
     }
 }
