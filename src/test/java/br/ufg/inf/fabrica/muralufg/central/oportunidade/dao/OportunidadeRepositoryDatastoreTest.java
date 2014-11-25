@@ -5,23 +5,32 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
 
+import br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException;
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.OportunidadeRepositoryDatastore;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- *
- * @author Luiz Henrique
+ * 
+ * Classe de teste da implementação do repositório OportunidadeRepository utilizando Google Datastore
  */
 public class OportunidadeRepositoryDatastoreTest {
+
+    private static OportunidadeRepositoryDatastore mockedOportunidadeRepository;
+    private static Oportunidade oportunidadeA;
+    private static Oportunidade oportunidadeB;
 
     public OportunidadeRepositoryDatastoreTest() {
     }
@@ -34,8 +43,29 @@ public class OportunidadeRepositoryDatastoreTest {
     public static void tearDownClass() {
     }
 
+    /**
+     * Método responsável pela configuração inicial do teste utilizando mocks
+     * @throws CentralException 
+     */
     @Before
-    public void setUp() {
+    public void setUp() throws CentralException {
+        //Criação do Mock da classe OportunidadeRepositoryDatasore
+        mockedOportunidadeRepository = mock(OportunidadeRepositoryDatastore.class);
+
+        //Criação de algumas instâncias de Oportunidade
+        oportunidadeA.setId(1);
+        oportunidadeA.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
+        oportunidadeA.setDataInicio(new Date(System.currentTimeMillis()));
+        oportunidadeA.setDataFim(new Date(System.currentTimeMillis()));
+
+        oportunidadeB.setId(2);
+        oportunidadeB.setDescricao("Oportunidade de Estagio no CIAR/UFG.");
+        oportunidadeB.setDataInicio(new Date(System.currentTimeMillis()));
+        oportunidadeB.setDataFim(new Date(System.currentTimeMillis()));
+
+        //Stubbing the methods of mocked BookDAL with mocked data.
+        when(mockedOportunidadeRepository.vigentes()).thenReturn(new HashSet(Arrays.asList(oportunidadeA, oportunidadeB)));
+        when(mockedOportunidadeRepository.adicionar(oportunidadeA)).thenReturn(oportunidadeA.getId());
     }
 
     @After
@@ -43,40 +73,25 @@ public class OportunidadeRepositoryDatastoreTest {
     }
 
     /**
-     * Test of buscarOportunidadesVigentes method, of class OportunidadeDAO.
+     * Teste do método buscarOportunidadesVigentes method, da classe
+     * OportunidadeRepositoryDatasore
+     * @throws java.lang.Exception
      */
-    //Ainda não implementado
     @Test
-    public void testBuscarOportunidadesVigentes() {
-        System.out.println("buscarOportunidadesVigentes");
-        Oportunidade oportunidade = new Oportunidade();
-        oportunidade.setId(36);
-        oportunidade.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
-        oportunidade.setDataInicio(new Date(System.currentTimeMillis()));
-        oportunidade.setDataFim(new Date(System.currentTimeMillis()));
-
-//        OportunidadeRepositoryDatastore instance = new OportunidadeRepositoryDatastore();
-//        instance.adicionar(oportunidade);
-//        Set<Oportunidade> oportunidadesVigentes = instance.vigentes();
-//        assertEquals(1, oportunidadesVigentes.size());
+    public void testBuscarOportunidadesVigentes() throws Exception {
+        Set<Oportunidade> oportunidadesVigentes = mockedOportunidadeRepository.vigentes();
+        assertEquals(2, oportunidadesVigentes.size());
     }
 
     /**
-     * Test of adicionar method, of class OportunidadeDAO.
+     * Teste do método adicionar, da classe OportunidadeRepositoryDatasore
+     * @throws java.lang.Exception
      */
     @Test
-    public void testAdicionar() {
-        System.out.println("inserir");
-        Oportunidade oportunidade = new Oportunidade();
-        oportunidade.setId(36);
-        oportunidade.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
-        oportunidade.setDataInicio(new Date(System.currentTimeMillis()));
-        oportunidade.setDataFim(new Date(System.currentTimeMillis()));
-
-//        OportunidadeRepositoryDatastore instance = new OportunidadeRepositoryDatastore();
-//        instance.adicionar(oportunidade);
-//        Set<Oportunidade> oportunidadesVigentes = instance.vigentes();
-//        assertEquals(1, oportunidadesVigentes.size());
+    public void testAdicionar() throws Exception {
+        long id = mockedOportunidadeRepository.adicionar(oportunidadeA);
+        assertNotNull(id);
+        assertEquals(oportunidadeA.getId(), id);
     }
 
 }

@@ -74,8 +74,9 @@ public interface OportunidadeRepository {
      * Acrescenta ao repositório a oportunidade.
      *
      * @param oportunidade Oportunidade a ser inserido no repositório.
+     * @return id long - Id da oportunidade recém adicionada
      * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
      * - Lança a exceção caso a operação não seja realizada com sucesso
      */
-    public void adicionar(Oportunidade oportunidade) throws CentralException;
+    public long adicionar(Oportunidade oportunidade) throws CentralException;
 }

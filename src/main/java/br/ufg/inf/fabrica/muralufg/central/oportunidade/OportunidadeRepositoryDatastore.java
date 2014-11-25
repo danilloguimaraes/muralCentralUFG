@@ -102,7 +102,7 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
      * @param oportunidade - Oportunidade a ser inserida no banco de dados
      */
     @Override
-    public void adicionar(Oportunidade oportunidade) throws CentralException {
+    public long adicionar(Oportunidade oportunidade) throws CentralException {
         try {
             Entity.Builder entOportunidade = Entity.newBuilder();
             entOportunidade.setKey(makeKey());
@@ -120,6 +120,7 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
         } catch (Exception e) {
             throw new CentralException("Erro ao adicionar a oportunidade no banco de dados. Detalhes: "+ e.getMessage());
         }
+        return oportunidade.getId();
     }
 
     /**
