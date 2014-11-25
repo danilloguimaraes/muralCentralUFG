@@ -89,11 +89,11 @@ public class CentralApplication extends Application<CentralConfiguration> {
 	public void run(CentralConfiguration configuracao, Environment environment) {
 
 		final IdentificacaoResource versaoResource = new IdentificacaoResource(
-<<<<<<< HEAD
+
 				configuracao.getNome(), configuracao.getVersao(),configuracao.getRecursos());
-=======
-				configuracao.getNome(), configuracao.getVersao());
->>>>>>> 188233083b7110b4c3dfb2754cda06c67b2db0bb
+
+
+
 
 		environment.jersey().register(versaoResource);
 
