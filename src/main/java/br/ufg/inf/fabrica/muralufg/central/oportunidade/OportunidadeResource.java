@@ -56,7 +56,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/oportunidade")
-public class OportunidadeResource implements OportunidadeRepository {
+public class OportunidadeResource {
 
     private Set<Oportunidade> vigentes;
     private final OportunidadeRepositoryDatastore oportunidadeRepository;
@@ -67,14 +67,12 @@ public class OportunidadeResource implements OportunidadeRepository {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Override
     public Set<Oportunidade> vigentes() {
         vigentes = oportunidadeRepository.vigentes();
         return vigentes;
     }
 
     @POST
-    @Override
     public void adicionar(Oportunidade oportunidade) {
         oportunidadeRepository.adicionar(oportunidade);
     }

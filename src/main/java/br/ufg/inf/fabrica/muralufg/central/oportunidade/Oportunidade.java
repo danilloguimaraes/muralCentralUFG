@@ -56,7 +56,9 @@ import java.util.Objects;
 import org.joda.time.DateTime;
 
 /**
- * Representa uma oportunidade de estágio, emprego ou pesquisa, por exemplo.
+ * Classe para criar objetos que representam uma oportunidade de estágio,
+ * emprego ou pesquisa, por exemplo. Onde serão contidos, valores e métodos para
+ * o mesmo.
  */
 public class Oportunidade implements Serializable {
 
@@ -67,56 +69,117 @@ public class Oportunidade implements Serializable {
 
     private static final long serialVersionUID = 7845068940066519056L;
 
+    /**
+     * Construtor vazio da classe Oportunidade, necessário para que as funções
+     * relativas a persistência funcionem normalmente
+     */
     public Oportunidade() {
     }
 
+    /**
+     * Construtor da classe Oportunidade com todos os seus atributos
+     *
+     * @param descricao String - Descrição da oportunidade
+     * @param dataInicio DateTime - Data em que a oportunidade se inicia
+     * @param dataFim DateTime - Data em que a oportunidade se encerra
+     */
     public Oportunidade(String descricao, DateTime dataInicio, DateTime dataFim) {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
     }
 
+    /**
+     * Método para retorno do identificador da oportunidade
+     *
+     * @return Long - identificador
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Método para definir o valor do identificador da oportunidade
+     *
+     * @param id Long - Identificador único da oportunidade
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Método para retorno da data que a oportunidade se inicia
+     *
+     * @return DateTime - Data em que começa
+     */
     public DateTime getDataInicio() {
         return dataInicio;
     }
 
+    /**
+     * Método para definir o valor da data em que a oportunidade entra em vigor
+     *
+     * @param dataInicio DateTime - Data em que a oportunidade se inicia
+     */
     public void setDataInicio(DateTime dataInicio) {
         this.dataInicio = dataInicio;
     }
 
+    /**
+     * Método para retorno da data que a oportunidade se encerra
+     *
+     * @return DateTime - Data em que se encerra
+     */
     public DateTime getDataFim() {
         return dataFim;
     }
 
+    /**
+     * Método para definir o valor da data em que se encerra a oportunidade
+     *
+     * @param dataFim DateTime - Data em que a oportunidade se encerra
+     */
     public void setDataFim(DateTime dataFim) {
         this.dataFim = dataFim;
     }
 
+    /**
+     * Método para retorno da descrição da oportunidade
+     *
+     * @return String - Descrição
+     */
     public String getDescricao() {
         return descricao;
     }
 
+    /**
+     * Método para definir o valor da descrição da oportunidade
+     *
+     * @param descricao String - Descrição da oportunidade
+     */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
+    /**
+     * Método responsável por retornar um identificador único para o objeto em
+     * questão. Para este fim retornamos o identificador do objeto que já possui
+     * esse propósito
+     *
+     * @return int - Identificador único da Oportunidade
+     */
     @Override
     public int hashCode() {
         return (int) id;
     }
 
     /**
-     * 
-     * @param obj
-     * @return 
+     * Método responsável por verificar a igualdade entre objetos do tipo
+     * Oportunidade
+     *
+     * @param obj Object - Objeto a ser comparado com o objeto atual
+     * @return boolean - true: Caso o objeto passado como parâmetro seja igual a
+     * esse objeto. false: Caso os objetos sejam diferentes.
      */
     @Override
     public boolean equals(Object obj) {
