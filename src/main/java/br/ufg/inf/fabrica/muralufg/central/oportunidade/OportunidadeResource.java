@@ -56,15 +56,32 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/oportunidade")
+/**
+ * Classe responsável por representar o 'recurso' Oportunidade produzindo JSON
+ * com as informações buscadas a partir da classe responsável pela persistência
+ * no Banco de Dados.
+ */
 public class OportunidadeResource {
 
     private Set<Oportunidade> vigentes;
-    private final OportunidadeRepositoryDatastore oportunidadeRepository;
+    private final OportunidadeRepository oportunidadeRepository;
 
+    /**
+     * Construtor que ao ser instânciado, cria o objeto responsável pelas
+     * operações no banco de dados.
+     */
     public OportunidadeResource() {
         oportunidadeRepository = new OportunidadeRepositoryDatastore();
     }
 
+    /**
+     * Método para retorno das Opotunidades viagentes, produzindo um JSON com as
+     * informações obtidas.
+     *
+     * @return Set<Oportunidade> - O conjunto de oportunidades vigentes. Se
+     * nenhuma oportunidade estiver vigente, então o conjunto retornado não
+     * possui nenhuma entrada.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Set<Oportunidade> vigentes() {
@@ -72,6 +89,13 @@ public class OportunidadeResource {
         return vigentes;
     }
 
+    /**
+     * Método responsável por enviar, a oportunidade recebida por parâmetro, para à
+     * entidade responsável por inserí-la no banco de dados
+     *
+     * @param oportunidade Oportunidade - representa a oportunidade a ser
+     * adicionada no banco de dados.
+     */
     @POST
     public void adicionar(Oportunidade oportunidade) {
         oportunidadeRepository.adicionar(oportunidade);

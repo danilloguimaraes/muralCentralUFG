@@ -62,7 +62,7 @@ public interface OportunidadeRepository {
      * Identifica, para o instante em que a chamada é realizada, o conjunto de
      * oportunidades vigentes, ou seja, cuja execução está em andamento.
      *
-     * @return O conjunto de oportunidades vigentes. Se nenhuma oportunidade
+     * @return Set<Oportunidade> - O conjunto de oportunidades vigentes. Se nenhuma oportunidade
      * estiver vigente, então o conjunto retornado não possui nenhuma entrada.
      */
     public Set<Oportunidade> vigentes();

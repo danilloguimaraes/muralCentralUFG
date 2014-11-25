@@ -21,9 +21,9 @@ import static org.junit.Assert.*;
  *
  * @author Luiz Henrique
  */
-public class OportunidadeDAOTest {
+public class OportunidadeRepositoryDatastoreTest {
 
-    public OportunidadeDAOTest() {
+    public OportunidadeRepositoryDatastoreTest() {
     }
 
     @BeforeClass
@@ -52,8 +52,8 @@ public class OportunidadeDAOTest {
         Oportunidade oportunidade = new Oportunidade();
         oportunidade.setId(36);
         oportunidade.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
-        oportunidade.setDataInicio(new DateTime(System.currentTimeMillis()));
-        oportunidade.setDataFim(new DateTime(System.currentTimeMillis()));
+        oportunidade.setDataInicio(new Date(System.currentTimeMillis()));
+        oportunidade.setDataFim(new Date(System.currentTimeMillis()));
 
         OportunidadeRepositoryDatastore instance = new OportunidadeRepositoryDatastore();
         instance.adicionar(oportunidade);
@@ -70,8 +70,8 @@ public class OportunidadeDAOTest {
         Oportunidade oportunidade = new Oportunidade();
         oportunidade.setId(36);
         oportunidade.setDescricao("Oportunidade de Estagio no CERCOMP/UFG.");
-        oportunidade.setDataInicio(new DateTime(System.currentTimeMillis()));
-        oportunidade.setDataFim(new DateTime(System.currentTimeMillis()));
+        oportunidade.setDataInicio(new Date(System.currentTimeMillis()));
+        oportunidade.setDataFim(new Date(System.currentTimeMillis()));
 
         OportunidadeRepositoryDatastore instance = new OportunidadeRepositoryDatastore();
         instance.adicionar(oportunidade);

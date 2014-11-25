@@ -66,7 +66,7 @@ import org.joda.time.format.DateTimeFormatter;
 import static com.google.api.services.datastore.client.DatastoreHelper.*;
 
 /*
- * Classe responsável pela persistência dos dados
+ * Classe responsável pela implementação da persistência dos dados
  * relativos a Oportunidade, feita utilizando o Google Datastore
  */
 public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
@@ -76,6 +76,10 @@ public class OportunidadeRepositoryDatastore implements OportunidadeRepository {
     public final String DATA_FIM = "data_fim";
     private Datastore datastore;
 
+    /**
+     * Contrutor da classe, o qual quando instanciado cria a conexão com o Banco
+     * de Dados informado a partir do 'datasetId'
+     */
     public OportunidadeRepositoryDatastore() {
         try {
             String datasetId = "";
