@@ -49,15 +49,21 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
+
 package br.ufg.inf.fabrica.muralufg.central.biblioteca;
 
-import java.nio.file.Path;
-import javax.ws.rs.GET;
+import com.google.api.client.json.Json;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.xml.ws.Response;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.OK;
+import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 /**
  * Envio de notificação para a Central.
@@ -71,32 +77,57 @@ import javax.xml.ws.Response;
 public class BibliotecaResource {
 
     /**
-     * @param Login Login do usuário.
-     * @param Password Hash da senha do usuário.
-     * @return Retorna em caso de erro o código 550 caso o usuário não seja 
-     * autenticado ou não seja a Biblioteca ou retorna 401 caso ele não tenha 
-     * autorização para realizar tal ação.
+     * @param jsonRecebido
+     * @return Retorna em caso de erro o código 400, caso a requisição não
+     * esteja no padrão definido, ou 503, caso ocorrer um erro ao persistir ou
+     * enviar a requisição.
      */
     @POST
-    @Path("/login")
-    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-    public Response logarUsuarioBiblioteca(@QueryParam("id1") String Login, @QueryParam("id2") String Password) {
-        Response.setnotificacao(new autenticaUsuarioController().autenticarBiblioteca(Login, Password));
-        return Response.status();
+    @Path("/persisteRequisicao")
+    public Response.ResponseBuilder persisteRequisicao(@QueryParam("json") JsonRequest jsonRecebido) {
+
+        //Verificador de autenticação do usuário
+        Integer autenticacao = autenticaUsuario(jsonRecebido.login, jsonRecebido.senha);
+
+        //Retorna os status http de falha
+        if (autenticacao == 550) {
+            return Response.status(550);
+        } else if (autenticacao == 401) {
+            return Response.status(UNAUTHORIZED);
+        }
+
+        //Valida se a requisição enviada
+        if (!(new RequisicaoBiblioteca().validaRequisicaoBiblioteca(jsonRecebido.requisicao))) {
+            return Response.status(BAD_REQUEST);
+        }
+
+        //Tenta persistir a requisção
+        if (new PersistidorRequisicao().persistirRequisicao(jsonRecebido.requisicao)) {
+            return Response.status(OK);
+        } else {
+            return Response.status(SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
-     * @param obj Dados da requisição.
-     * @return Retorna em caso de erro o código 400, caso a requisição não esteja
-     * no padrão definido, ou 503, caso ocorrer um erro ao persistir ou enviar a 
-     * requisição.
+     * @param login
+     * @param senha
+     * @return Retorna em caso de erro o código 550 caso o usuário não seja
+     * autenticado ou não seja a Biblioteca ou retorna 401 caso ele não tenha
+     * autorização para realizar tal ação.
      */
-    @POST
-    @Path("/requisicaoNotificacao")
-    @Consumes(MediaType.APPLICATION_JSON + "; charset=iso-8859-1")
-    @Produces(MediaType.APPLICATION_JSON + "; charset=iso-8859-1")
-    public Response persisteRequisicaoNotificacao(requisicao obj) {
-        Response.setnotificacao(new enviaRequisicaoController().persisteRequisicaoBiblioteca(obj));
-        return Response.status();
+    public Integer autenticaUsuario(String login, String senha) {
+
+        Usuario usuario = new Usuario(login, senha);
+
+        if (!(new autenticaUsuarioController().autenticarBiblioteca(usuario))) {
+            return 550;
+        }
+
+        if (!(new autenticaUsuarioController().verificaAutorizacaoUsuario(usuario))) {
+            return 401;
+        }
+
+        return 200;
     }
 }
