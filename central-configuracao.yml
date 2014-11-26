@@ -1,5 +1,11 @@
 nome: central
 versao: 1.0
+smtp: smtp.teste.com
+portaEmail: 760
+emailTo: administrador@central.com.br
+emailFrom: teste@central.com.br
+loginEmail: admin
+senhaEmail: 123456
 server:
   applicationConnectors:
   - type: http
@@ -7,3 +13,4 @@ server:
   adminConnectors:
   - type: http
     port: 8081
+recursos: http://www.inf.ufg.br/recursos

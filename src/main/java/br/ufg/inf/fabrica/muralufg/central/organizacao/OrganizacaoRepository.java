@@ -73,14 +73,15 @@ public interface OrganizacaoRepository {
      * Obtém os dispositivos cadastrados (ids) dos alunos da
      * turma.
      * @param turma
-     * @return
+     * @return Conjunto dos ids disponíveis dos alunos da turma
+     * em questão.
      */
     Set<String> dispositivosAlunos(Turma turma);
 
     /**
      * Obtém o conjunto de alunos de uma turma.
      * @param turma
-     * @return
+     * @return Conjunto dos alunos da turma em questão.
      */
     Set<Aluno> alunos(Turma turma);
 
@@ -88,7 +89,8 @@ public interface OrganizacaoRepository {
      * Obtém os docentes
      * responsáveis pela turma.
      * @param turma
-     * @return
+     * @return Conjunto de docentes responsáveis
+     * pela turma em questão.
      */
     Set<Docente> docentes(Turma turma);
 
@@ -96,7 +98,7 @@ public interface OrganizacaoRepository {
      * Obtém os dispositivos cadastrados (ids) dos
      * docentes do curso.
      * @param curso
-     * @return
+     * @return Conjunto dos ids dos docentes do curso em questão.
      */
     Set<String> docentes(Curso curso);
 
@@ -104,7 +106,7 @@ public interface OrganizacaoRepository {
      * Obtém os dispositivos cadastrados (ids) dos docentes
      * lotados no órgão em questão.
      * @param orgao
-     * @return
+     * @return Conjunto dos ids dos docentes do órgão em questão.
      */
     Set<String> docentes(Orgao orgao);
 
@@ -112,28 +114,28 @@ public interface OrganizacaoRepository {
      * Obtém os dispositivos cadastrados (ids) dos técnicos
      * do órgão.
      * @param orgao
-     * @return
+     * @return Conjunto dos ids dos técnicos do órgão em questão.
      */
     Set<String> tecnicos(Orgao orgao);
 
     /**
      * Obtém as turmas de uma dada disciplina.
      * @param disciplina
-     * @return
+     * @return Conjunto de turmas da disciplina em questão.
      */
     Set<Turma> turmas(Disciplina disciplina);
 
     /**
      * Obtém o conjunto de disciplinas de um dado curso.
      * @param curso
-     * @return
+     * @return Conjunto de disciplinas do curso em questão.
      */
     Set<Disciplina> disciplinas(Curso curso);
 
     /**
      * Obtém o conjunto de cursos oferecidos por um órgão.
      * @param orgao
-     * @return
+     * @return Conjunto de cursos oferecidos pelo órgão em questão.
      */
     Set<Curso> cursos(Orgao orgao);
 }
