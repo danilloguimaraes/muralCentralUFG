@@ -1,0 +1,634 @@
+FORMAT: 1A
+HOST: http://mural.ufg.br
+
+# Central UFG (REST API)
+Central UFG, ou simplesmente Central, é um dos principais componentes do Projeto Mural UFG. 
+A função é receber requisições de "divulgação de informações" e executá-las. Em alguns
+casos a execução não é executada imediatamente, mas agendada para o instante desejado.
+A interação com a Central ocorre exclusivamente via software, ou seja, 
+tanto quem faz requisição quanto quem recebe informação é software. 
+
+## Restaurante [/restaurante/{id}]
+Recupera restaurantes "próximos" aos campi da UFG.
+
++ Parameters
+    + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+
++ Model  (application/json)
+    + Body
+
+            {
+                "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "nome" : "Restaurante Universitário",
+                "endereco" : "Rua Peroba",
+                "horarios": [
+                    {"inicio": "07:00:00-03:00", "fim": "10:00:00-03:00"},
+                    {"inicio": "11:00:00-03:00", "fim": "15:00:00-03:00"},
+                    {"inicio": "17:00:00-03:00", "fim": "19:00:00-03:00"}
+                ],
+                "modalidades": [
+                    "Vegetariano", "Light", "Lanche"
+                ],
+                "formasPagamento": [
+                    "Cartão de Crédito", "Cartão de Débito", "Dinheiro"
+                ]
+            }
+
+### Obter um restaurante específico [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Restaurante][]
+
+### Atualizar um restaurante [PATCH]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "endereco" : "Rua Esperança"
+            }
+            
++ Response 200
+    [Restaurante][]
+
+### Remove um restaurante da lista de restaurantes [DELETE]
+Remove o restaurante associado ao identificador fornecido.
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 204
+
+## Restaurantes [/restaurantes]
+
++ Model  (application/json)
+    + Body
+
+            {
+                "restaurantes": [
+                    {
+                        "id" : "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "nome" : "Restaurante Universitário",
+                        "endereco" : "Rua Peroba",
+                        "horarios": [
+                            {"inicio": "07:00:00-03:00", "fim": "10:00:00-03:00"},
+                            {"inicio": "11:00:00-03:00", "fim": "15:00:00-03:00"},
+                            {"inicio": "17:00:00-03:00", "fim": "19:00:00-03:00"}
+                        ],
+                        "modalidades": [
+                            "Vegetariano", "Light", "Lanche"
+                        ],
+                        "formasPagamento": [
+                            "Cartão de Crédito", "Cartão de Débito", "Dinheiro"
+                        ]
+                    },
+                    
+                    {
+                        "id" : "af2d7407-12b9-a09f-42a9-4382018eb00e",
+                        "nome" : "Churrascaria do Boi",
+                        "endereco" : "Rua Esperança",
+                        "horarios": [
+                            {"inicio": "11:00:00-03:00", "fim": "17:00:00-03:00"},
+                            {"inicio": "19:00:00-03:00", "fim": "01:00:00-03:00"}
+                        ],
+                        "modalidades": [
+                            "Churrasco", "Rodízio"
+                        ],
+                        "formasPagamento": [
+                            "Cartão de Crédito", "Cartão de Débito", "Dinheiro", "Crediário", "Cheque"
+                        ]
+                    },
+                ]
+            }
+
+### Obter listagem com todos os restaurantes [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Restaurantes][]
+
+### Criar um novo restaurante [POST]
+Para criar um novo restaurante, forneça um *nome*, *endereco*, uma lista de *horarios* com *inicio* e *fim*, uma lista de *modalidades* e uma lista de *formas de pagamento*.
+
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "nome" : "Restaurante Universitário",
+                "endereco" : "Rua Peroba",
+                "horarios": [
+                    {"inicio": "07:00:00-03:00", "fim": "10:00:00-03:00"},
+                    {"inicio": "11:00:00-03:00", "fim": "15:00:00-03:00"},
+                    {"inicio": "17:00:00-03:00", "fim": "19:00:00-03:00"}
+                ],
+                "modalidades": [
+                    "Vegetariano", "Light", "Lanche"
+                ],
+                "formasPagamento": [
+                    "Cartão de Crédito", "Cartão de Débito", "Dinheiro"
+                ]
+            }
+            
++ Response 200
+    [Restaurante][]
+
+## Prato [/prato/{id}]
+Recupera um prato
+
++ Parameters
+    + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+
++ Model  (application/json)
+    + Body
+
+            {
+                "id" : "42f1c2d2-c587-4efc-973d-dbda970ffcec1",
+                "descricao" : "Prato Feito",
+                "preco" : 3.50,
+                "calorias": 500,
+                "imagens": [
+                    "32dd770b-8ae0-4872-ae82-ffcd2b875ade", 
+                    "6dc6c30a-7c92-410e-9d0a-5b1cb0703f71"
+                ]
+            }
+
+### Obter um prato específico [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Prato][]
+
+### Atualizar um prato [PATCH]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "calorias" : 600
+            }
+            
++ Response 200
+    [Prato][]
+
+### Remove um prato da lista de pratos [DELETE]
+Remove o prato associado ao identificador fornecido.
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 204
+
+## Pratos [/pratos]
+
++ Model  (application/json)
+    + Body
+
+            {
+                "pratos": [
+                    {
+                        "id" : "42f1c2d2-c587-4efc-973d-dbda970ffcec1",
+                        "descricao" : "Prato Feito",
+                        "preco" : 3.50,
+                        "calorias": 500,
+                        "imagens": [
+                            "32dd770b-8ae0-4872-ae82-ffcd2b875ade", 
+                            "6dc6c30a-7c92-410e-9d0a-5b1cb0703f71"
+                        ]
+                    },
+                    {
+                        "id" : "5c0262ad-934f-4163-8409-4df80203a860",
+                        "descricao" : "Prato Feito Duplo",
+                        "preco" : 6.50,
+                        "calorias": 1000,
+                        "imagens": [
+                            "fdcb4b39-e587-4db1-9aa0-331ea2c2ca40",
+                            "e04aba4a-c5d9-49b0-8711-3425406abbef"
+                        ]
+                    }
+                ]
+            }
+
+### Obter listagem com todos os pratos [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Pratos][]
+
+### Criar um novo prato [POST]
+Para criar um novo prato, forneça uma *descricao*, *preco*, *calorias* uma lista de *tokens* que representam as imagens associadas ao prato.
+
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+             {
+                "id" : "5c0262ad-934f-4163-8409-4df80203a860",
+                "descricao" : "Prato Feito Duplo",
+                "preco" : 6.50,
+                "calorias": 1000,
+                "imagens": [
+                    "964c9048-0e68-4c3a-91de-2fce68d3519c", 
+                    "3937e674-201b-4846-9f22-d5c7b3d9eceb", 
+                    "d02415ac-1db1-498d-a8b4-2a02778054ee"
+                ]
+            }
+            
++ Response 200
+    [Prato][]
+
+## Cardapio [/cardapio/{id}]
+Recupera um cardápio
+
++ Parameters
+    + id (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+
++ Model  (application/json)
+    + Body
+
+            {
+                "id" : "0304a4d3-d8c9-4549-ae71-350b54ca2e22",
+                "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "pratos": [
+                    "5c0262ad-934f-4163-8409-4df80203a860", 
+                    "cd6bca46-3390-4f8b-8c65-db08587f84cc", 
+                    "1a9bd6c3-ef5e-4fd2-84bc-737d67583482",
+                    "0e66d59f-46b8-4782-8f77-193d583bb7c9",
+                    "7be0b17f-277a-4b1f-9abb-b16edd24a8c0"
+                ]
+            }
+
+### Obter um cardápio específico [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Cardapio][]
+
+### Atualizar um cardápio [PATCH]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+            {
+                "restaurante" : "7ecc7007-42bd-4e9a-b819-4382018eb00f"
+            }
+            
++ Response 200
+    [Cardapio][]
+
+### Remove um cardápio da lista de cardápios [DELETE]
+Remove o cardápio associado ao identificador fornecido.
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 204
+
+## Cardapios [/cardapios]
+
++ Model  (application/json)
+    + Body
+
+            {
+                "cardapios": [
+                    {
+                        "id" : "0304a4d3-d8c9-4549-ae71-350b54ca2e22",
+                        "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                        "pratos": [
+                            "5c0262ad-934f-4163-8409-4df80203a860", 
+                            "cd6bca46-3390-4f8b-8c65-db08587f84cc", 
+                            "1a9bd6c3-ef5e-4fd2-84bc-737d67583482",
+                            "0e66d59f-46b8-4782-8f77-193d583bb7c9",
+                            "7be0b17f-277a-4b1f-9abb-b16edd24a8c0"
+                        ]
+                    },
+                    {
+                        "id" : "9cda836a-78cc-414e-adb7-9f5cedba43cc",
+                        "restaurante": "f09db349-c498-4cbc-85c0-5ef8aeb4e0ec",
+                        "pratos": [
+                            "0d332c37-5405-4fda-8b43-3f0787e3dbed", 
+                            "251908f8-e4d7-464a-bfcf-967e63bb3ac7", 
+                            "99181373-46ec-47d9-8c04-e597be956635",
+                            "9d97f378-a679-4b02-ac67-80100e122ae4",
+                            "df717c99-7c82-4255-87c5-8f38e2ff62ef"
+                        ]
+                    }
+                ]
+            }
+
+### Obter listagem com todos os cardápios [GET]
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
++ Response 200
+    [Cardapios][]
+
+### Criar um novo cardápio [POST]
+Para criar um novo cardápio, forneça um *restaurante* e uma lista de *tokens* que representam os pratos associados ao cardápio.
+
++ Request (application/json)
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+    + Body
+
+             {
+                "id" : "0304a4d3-d8c9-4549-ae71-350b54ca2e22",
+                "restaurante": "7ecc7007-42bd-4e9a-b819-4382018eb00e",
+                "pratos": [
+                    "5c0262ad-934f-4163-8409-4df80203a860", 
+                    "cd6bca46-3390-4f8b-8c65-db08587f84cc", 
+                    "1a9bd6c3-ef5e-4fd2-84bc-737d67583482",
+                    "0e66d59f-46b8-4782-8f77-193d583bb7c9",
+                    "7be0b17f-277a-4b1f-9abb-b16edd24a8c0"
+                ]
+            }
+            
++ Response 200
+    [Cardapio][]
+
+# Frase do dia [/frases]
+Adiciona, recupera, busca e remove a frase ou mensagem em um dado dia.
+
+## Obter frase do dia [GET]
+Recupera uma frase, possivelmente associada ao dia em questão, ou procura
+por frase.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "frase": "Sem autor, sem data."
+            }
+
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+
+    + Body
+    
+            {
+                "busca": "mais rara",
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            { 
+                "frases": [
+                    {
+                        "frase": "Viver é a coisa mais rara do mundo. A maioria das pessoas apenas existe.",
+                        "autor" : "Oscar Wilde"
+                        "id" : "f0ecfb49-3406-4d44-b294-c89896bd29aa"
+                    }
+                ]
+            }
+
+## Acrescentar frase a um dia [PUT]
+Insere uma frase possivelmente associada a um dado dia.
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "frase": "Viver é a coisa mais rara do mundo. A maioria das pessoas apenas existe.",
+                "autor" : "Oscar Wilde"
+            }
+
++ Response 200
+
+## Remove frase do dia [DELETE]
+Remove a frase associada ao identificador fornecido.
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "apagar": "f0ecfb49-3406-4d44-b294-c89896bd29aa"
+            }
+
++ Response 200
+
+# Token [/tokens]
+Obtém nova token e recupera listagem de hashes de uma dada token.
+
+## Obter uma nova token [GET]
+Obtém nova token única.
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Body
+
+            {
+                "token": "01234567-89ab-cdef-0123-456789abcdef"
+            }
+
+# Envio [/envios]
+Envia e recupera arquivos e hashes de arquivos associados à tokens
+
+## Enviar novo arquivo [POST]
+Envia um novo arquivo e o associa a uma token.
+
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "token": "01234567-89ab-cdef-0123-456789abcdef",
+                "envio" : "I9IiIgdmVuZG9yc3ViPSIiLz4KCQkJPHVzZXJhZ2VudCBkZXNjcmlwdGlv"
+            }
+
++ Response 200
+
+## Remover os envios de uma token [DELETE]
+Remove a lista de hashes SHA512 dos envios associados a uma token.
+
++ Request (application/json)
+
+    + Headers
+        
+            Accept: application/json
+            User: username
+            Password: password
+
+    + Body
+
+            {
+                "token": "01234567-89ab-cdef-0123-456789abcdef",
+                "hashes": {
+                    "4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a",
+                    "40b244112641dd78dd4f93b6c9190dd46e0099194d5a44257b7efad6ef9ff4683da1eda0244448cb343aa688f5d3efd7314dafe580ac0bcbf115aeca9e8dc114"
+                }
+            }
+            
++ Response 200 (application/json)
+
+## Envios [/envios/arquivos/{token}/{hash}]
+Recupera a lista de hashes SHA512 dos envios associados a uma token.
+
++ Parameters
+
+    + token (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+    + hash (optional, string) ... Uma hash especificando qual envio deverá ser baixado
+    
+### Obter os envios associados à esta token [GET]
+Opcionalmente, informa a hash de um dos envios para obter apenas o envio desejado.
+
++ Request (application/json)
+
+    + Headers
+        
+            Accept: application/json
+            User: username
+            Password: password
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "envios": {
+                    "I9IiIgdmVuZG9yc3ViPSIiLz4KCQkJPHVzZXJhZ2VudCBkZXNjcmlwdGlv"
+                }
+            }
+            
+## Envios [/envios/hashes/{token}]
+Recupera a lista de hashes SHA512 dos envios associados a uma token.
+
++ Parameters
+
+    + token (string) ... Um token único composto de hexadecimais agrupados em 8-4-4-4-12
+    
+### Obter as hashes dos envios associados à uma token [GET]
+
++ Request (application/json)
+
+    + Headers
+        
+            Accept: application/json
+            User: username
+            Password: password
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "hashes": {
+                    "4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a",
+                    "40b244112641dd78dd4f93b6c9190dd46e0099194d5a44257b7efad6ef9ff4683da1eda0244448cb343aa688f5d3efd7314dafe580ac0bcbf115aeca9e8dc114",
+                    "3bafbf08882a2d10133093a1b8433f50563b93c14acd05b79028eb1d12799027241450980651994501423a66c276ae26c43b739bc65c4e16b10c3af6c202aebb"
+                }
+            }
+
+# Registro de Alerta [/alertas]
+
+## Inserir novo alerta [POST]
+Insere um novo alerta na Central UFG. Os dados são específicos para cada ação.
+
++ Request (application/json)
+    
+    + Headers
+
+            Accept: application/json
+            User: username
+            Password: password
+            
+    + Body
+    
+            {
+                "acao": "Aviso de Devolucao",
+                "usuario": 1
+                "dados": {
+                    "codigo_obra": "abcd123",
+                    "data_limite": "2014-10-07T20:00:00-03:00"
+                },
+                "data": "2014-10-04T19:42:56-03:00"
+            }
+
++ Response 200
