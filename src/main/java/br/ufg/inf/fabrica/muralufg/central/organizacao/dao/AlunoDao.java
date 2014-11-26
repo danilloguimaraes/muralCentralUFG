@@ -16,6 +16,7 @@ public class AlunoDao {
         
         Logger logger = LoggerFactory.getLogger(AlunoDao.class);
         logger.debug("Classe AlunoDao. Método salvar");
+        
         Datastore datastore = DaoHelper.getDataStore();
 
         // Cria uma requisição RPC para iniciar uma nova transação
@@ -78,11 +79,7 @@ public class AlunoDao {
             logger.debug("Erro ao salvar aluno.");
             e.printStackTrace();
         }
-
-
     }
-
-
 
     public void alterar(Aluno aluno) {
 
@@ -91,6 +88,7 @@ public class AlunoDao {
     public void delete(Aluno aluno){
 
     }
+    
     public List<Aluno> lista(){
         return null;
     }

@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 public class DaoHelper {
     
     private static final String DATASET_ID = "my-dataset";
-    Logger logger = LoggerFactory.getLogger(DaoHelper.class);
-   
+    Logger logger = LoggerFactory.getLogger(DaoHelper.class);   
+    
     public static Datastore getDataStore() {
         Datastore datastore = null;
         
@@ -28,7 +28,5 @@ public class DaoHelper {
             e.printStackTrace();
         }
         return datastore;
-    }
-    
-    
+    }      
 }
