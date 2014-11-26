@@ -128,8 +128,38 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.11" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.15.0-rc" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.15.0-rc" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-all:1.9.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-core:1.9.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:1.0" level="project" />
+=======
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-all-deps-v1beta2-rev1-2.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-demos-all-deps-v1beta2-rev1-2.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/Downloads/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-all-deps-v1beta2-rev1-2.1.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-java-v1beta2-rev1-2.1.0/google-api-services-datastore-protobuf-demos-all-deps-v1beta2-rev1-2.1.0-sources.jar!/" />
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/test/java" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/mockito/mockito-all-1.9.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/mockito/mockito-all-1.9.5.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="org.mockito:mockito-all:1.9.5" level="project" />
+>>>>>>> 9edb9205ba3c99d1fb8abceb0e2046e2426fa3fe
   </component>
 </module>

@@ -127,6 +127,13 @@ public interface OuvidoriaRepository {
      * para o mais recente dos assuntos submetidos à ouvidoria e para
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      */
+<<<<<<< HEAD
     List<Assunto> buscaRespondidos(Date desde, int aPartirDe) throws OuvidoriaRepositoryException;
+=======
+    List<Assunto> buscaRespondidos(DateTime desde, int aPartirDe);
+
+
+
+>>>>>>> 9edb9205ba3c99d1fb8abceb0e2046e2426fa3fe
 
 }
