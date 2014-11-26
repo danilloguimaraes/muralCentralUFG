@@ -13,3 +13,4 @@ server:
   adminConnectors:
   - type: http
     port: 8081
+recursos: http://www.inf.ufg.br/recursos

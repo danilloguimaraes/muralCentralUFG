@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufg.inf.fabrica.muralufg.central.oportunidade.dao;
+package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException;
 import br.ufg.inf.fabrica.muralufg.central.oportunidade.Oportunidade;

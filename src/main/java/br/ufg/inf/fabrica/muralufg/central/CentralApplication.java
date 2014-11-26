@@ -18,6 +18,7 @@ import io.dropwizard.setup.Environment;
  * 
  * @see br.ufg.inf.fabrica.muralufg.central.CentralConfiguration
  */
+
 public class CentralApplication extends Application<CentralConfiguration> {
 
 	/**
@@ -88,7 +89,11 @@ public class CentralApplication extends Application<CentralConfiguration> {
 	public void run(CentralConfiguration configuracao, Environment environment) {
 
 		final IdentificacaoResource versaoResource = new IdentificacaoResource(
-				configuracao.getNome(), configuracao.getVersao());
+
+				configuracao.getNome(), configuracao.getVersao(),configuracao.getRecursos());
+
+
+
 
 		environment.jersey().register(versaoResource);
 
