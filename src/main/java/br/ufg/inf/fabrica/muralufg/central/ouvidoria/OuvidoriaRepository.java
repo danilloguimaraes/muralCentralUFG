@@ -52,7 +52,6 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import com.google.api.services.datastore.client.Datastore;
 import org.joda.time.DateTime;
 
 import java.util.Date;
@@ -74,7 +73,7 @@ public interface OuvidoriaRepository {
      * @return {@code true} se e somente se o assunto foi
      * inserido de forma satisfatória.
      */
-    boolean insere(Assunto assunto);
+    boolean insere(Assunto assunto) throws OuvidoriaRepositoryException;
 
 
     /**
@@ -87,7 +86,7 @@ public interface OuvidoriaRepository {
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      *
      */
-    List<Assunto> buscaNaoRespondidos(DateTime desde);
+    List<Assunto> buscaNaoRespondidos(Date desde) throws OuvidoriaRepositoryException;
 
     /**
      * Recupera os assuntos submetidos à ouvidoria, ainda
@@ -102,7 +101,7 @@ public interface OuvidoriaRepository {
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      *
      */
-    List<Assunto> buscaNaoRespondidos(DateTime desde, int aPartirDe);
+    List<Assunto> buscaNaoRespondidos(Date desde, int aPartirDe) throws OuvidoriaRepositoryException;
 
     /**
      * Recupera os assuntos submetidos à ouvidoria, que já foram respondidos,
@@ -113,7 +112,7 @@ public interface OuvidoriaRepository {
      * para o mais recente dos assuntos submetidos à ouvidoria e para
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      */
-    List<Assunto> buscaRespondidos(DateTime desde);
+    List<Assunto> buscaRespondidos(Date desde) throws OuvidoriaRepositoryException;
 
 
     /**
@@ -128,12 +127,6 @@ public interface OuvidoriaRepository {
      * para o mais recente dos assuntos submetidos à ouvidoria e para
      * os quais não existe resposta. No máximo 100 assuntos são retornados.
      */
-    List<Assunto> buscaRespondidos(DateTime desde, int aPartirDe);
-
-
-
-
-
-
+    List<Assunto> buscaRespondidos(Date desde, int aPartirDe) throws OuvidoriaRepositoryException;
 
 }

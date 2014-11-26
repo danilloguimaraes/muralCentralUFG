@@ -62,6 +62,7 @@ import com.google.api.services.datastore.client.DatastoreHelper;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import com.google.protobuf.ByteString;
 import org.joda.time.DateTime;
@@ -77,16 +78,14 @@ import static com.google.api.services.datastore.client.DatastoreHelper.makeValue
 import static com.google.api.services.datastore.client.DatastoreHelper.*;
 
 
-
-public class ImpOuvidoriaRepository implements OuvidoriaRepository{
+public class GoogleOuvidoriaRepository implements OuvidoriaRepository {
 
     public final String CONTEUDO = "Conteudo";
     public final String DATA = "Data";
     public final String FONTE = "Fonte";
     private Datastore datastore;
 
-    public ImpOuvidoriaRepository(){
-
+    public GoogleOuvidoriaRepository() {
 
         try {
             String datasetId = "";
@@ -96,6 +95,7 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
         } catch (GeneralSecurityException exception) {
             System.err.println("Erro de segurança ao fazer a conexão com o banco de dados: " + exception.getMessage());
             System.exit(1);
+
         } catch (IOException exception) {
             System.err.println("Erro de E/S ao conectar com o banco de dados: " + exception.getMessage());
             System.exit(1);
@@ -104,13 +104,15 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
     }
 
 
-    public boolean insere(Assunto assunto){
+    public boolean insere(Assunto assunto) throws OuvidoriaRepositoryException{
+        try {
+
+
         Entity.Builder entAssunto = Entity.newBuilder();
         entAssunto.setKey(makeKey());
         entAssunto.addProperty(makeProperty(CONTEUDO, makeValue(assunto.getConteudo())));
-        entAssunto.addProperty(makeProperty(DATA, makeValue(String.valueOf(assunto.getData()))));
+        entAssunto.addProperty(makeProperty(DATA, makeValue((assunto.getData().getTime()))));
         entAssunto.addProperty(makeProperty(FONTE, makeValue(assunto.getFonte())));
-
         Mutation.Builder mutation = Mutation.newBuilder();
         mutation.addInsertAutoId(entAssunto);
 
@@ -118,53 +120,42 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
                 .setMutation(mutation)
                 .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
                 .build();
-
+        }catch (Exception e){
+            throw new OuvidoriaRepositoryException("Erro ao inserir assunto no banco.");
+        }
         return true;
-
     }
 
 
-    public List<Assunto> buscaNaoRespondidos(DateTime desde) {
+    public List<Assunto> buscaNaoRespondidos(Date desde) throws OuvidoriaRepositoryException {
 
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("ddMMyyyy HHmmss");
 
-
         try {
-
-
             //Filtro 1: pega mensagens que nao foram respondidas
             Filter filtroNaoRespondido = makeFilter(
                     "respondido", PropertyFilter.Operator.EQUAL, makeValue(false)).build();
-
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
                     "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
-
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
-
             // É usado o Query.Builder para montar a query a query
             Query.Builder query = Query.newBuilder();
             query.addKindBuilder().setName("Assunto");
             query.setFilter(filtroNaoRespondidoDepoisDe).build();
-
             // Montar um RunQueryRequest
             RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
-
             RunQueryResponse response = datastore.runQuery(request);
-
 
             for (EntityResult result : response.getBatch().getEntityResultList()) {
                 Map<String, Value> props = getPropertyMap(result.getEntity());
                 String fonte = getString(props.get("fonte"));
                 String conteudo = getString(props.get("conteudo"));
-                String data = getString(props.get("data"));
-                DateTime dt = formatter.parseDateTime(data);
-
-
+                long tempoData = getLong(props.get("data"));
+                Date dt = new Date(tempoData);
                 listaRetorno.add(new Assunto(conteudo, dt, fonte));
-
             }
 
             if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {
@@ -173,62 +164,47 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
             }
 
             Collections.sort(listaRetorno);
-            return listaRetorno;
 
         } catch (DatastoreException e) {
-            e.printStackTrace();
+            throw new OuvidoriaRepositoryException("Erro ao buscar assuntos respondidos apartir da data informada.");
         }
 
         return listaRetorno;
     }
 
 
-
-
-    public List<Assunto> buscaNaoRespondidos(DateTime desde, int aPartirDe) {
+    public List<Assunto> buscaNaoRespondidos(Date desde, int aPartirDe) throws OuvidoriaRepositoryException {
 
         List<Assunto> listaAssuntos = new ArrayList<Assunto>();
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
-
         try {
-
-
             //Filtro 1: pega mensagens que nao foram respondidas
             Filter filtroNaoRespondido = makeFilter(
                     "respondido", PropertyFilter.Operator.EQUAL, makeValue(false)).build();
-
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
                     "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
-
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
-
             // É usado o Query.Builder para montar a query a query
             Query.Builder query = Query.newBuilder();
             query.addKindBuilder().setName("Assunto");
             query.setFilter(filtroNaoRespondidoDepoisDe).build();
-
             // Montar um RunQueryRequest
             RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
-
             RunQueryResponse response = datastore.runQuery(request);
-
 
             for (EntityResult result : response.getBatch().getEntityResultList()) {
                 Map<String, Value> props = getPropertyMap(result.getEntity());
                 String fonte = getString(props.get("fonte"));
                 String conteudo = getString(props.get("conteudo"));
-                String data = getString(props.get("data"));
-                DateTime dt = formatter.parseDateTime(data);
-
-
+                long tempodata = getLong(props.get("data"));
+                Date dt = new Date(tempodata);
                 listaAssuntos.add(new Assunto(conteudo, dt, fonte));
 
             }
-
             if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {
                 ByteString endCursor = response.getBatch().getEndCursor();
                 query.setStartCursor(endCursor);
@@ -236,67 +212,47 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
 
             Collections.sort(listaAssuntos);
 
-
-            for(int i=aPartirDe; i<listaAssuntos.size(); i++){
+            for (int i = aPartirDe; i < listaAssuntos.size(); i++) {
                 listaRetorno.add(listaAssuntos.get(i));
             }
 
-
-
         } catch (DatastoreException e) {
-            e.printStackTrace();
+            throw new OuvidoriaRepositoryException("Erro ao buscar assuntos não respondidos apartir da data informada e do indice especificado");
         }
 
-
         return listaRetorno;
-
-
     }
 
 
-    public List<Assunto> buscaRespondidos(DateTime desde) {
-
-
+    public List<Assunto> buscaRespondidos(Date desde) throws OuvidoriaRepositoryException {
 
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
-
         try {
-
-
             //Filtro 1: pega mensagens que nao foram respondidas
             Filter filtroNaoRespondido = makeFilter(
                     "respondido", PropertyFilter.Operator.EQUAL, makeValue(true)).build();
-
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
                     "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
-
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
-
             // É usado o Query.Builder para montar a query a query
             Query.Builder query = Query.newBuilder();
             query.addKindBuilder().setName("Assunto");
             query.setFilter(filtroNaoRespondidoDepoisDe).build();
-
             // Montar um RunQueryRequest
             RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
-
             RunQueryResponse response = datastore.runQuery(request);
-
 
             for (EntityResult result : response.getBatch().getEntityResultList()) {
                 Map<String, Value> props = getPropertyMap(result.getEntity());
                 String fonte = getString(props.get("fonte"));
                 String conteudo = getString(props.get("conteudo"));
-                String data = getString(props.get("data"));
-                DateTime dt = formatter.parseDateTime(data);
-
-
+                long tempodata = getLong(props.get("data"));
+                Date dt = new Date(tempodata);
                 listaRetorno.add(new Assunto(conteudo, dt, fonte));
-
             }
 
             if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {
@@ -305,82 +261,66 @@ public class ImpOuvidoriaRepository implements OuvidoriaRepository{
             }
 
             Collections.sort(listaRetorno);
-            return listaRetorno;
 
         } catch (DatastoreException e) {
             e.printStackTrace();
+            throw new OuvidoriaRepositoryException("Erro ao buscar assuntos respondidos apartir da data informada.");
+
         }
 
         return listaRetorno;
     }
 
 
-    public List<Assunto> buscaRespondidos(DateTime desde, int aPartirDe) {
+    public List<Assunto> buscaRespondidos(Date desde, int aPartirDe) throws OuvidoriaRepositoryException {
+
         List<Assunto> listaAssuntos = new ArrayList<Assunto>();
         List<Assunto> listaRetorno = new ArrayList<Assunto>();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
-
         try {
-
-
             //Filtro 1: pega mensagens que nao foram respondidas
             Filter filtroNaoRespondido = makeFilter(
                     "respondido", PropertyFilter.Operator.EQUAL, makeValue(false)).build();
-
             //filtro 2: pega mensagens que possuem a data maior que a data que foi passada
             Filter filtroDepoisDe = makeFilter(
                     "data", PropertyFilter.Operator.GREATER_THAN, makeValue(String.valueOf(desde))).build();
-
             // É usado o método makeCompositeFilter() para combinar os dois filtros
             Filter filtroNaoRespondidoDepoisDe = makeFilter(filtroNaoRespondido, filtroDepoisDe).build();
-
             // É usado o Query.Builder para montar a query a query
             Query.Builder query = Query.newBuilder();
             query.addKindBuilder().setName("Assunto");
             query.setFilter(filtroNaoRespondidoDepoisDe).build();
-
             // Montar um RunQueryRequest
             RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
-
             RunQueryResponse response = datastore.runQuery(request);
-
 
             for (EntityResult result : response.getBatch().getEntityResultList()) {
                 Map<String, Value> props = getPropertyMap(result.getEntity());
                 String fonte = getString(props.get("fonte"));
                 String conteudo = getString(props.get("conteudo"));
-                String data = getString(props.get("data"));
-                DateTime dt = formatter.parseDateTime(data);
-
-
+                long tempodata = getLong(props.get("data"));
+                Date dt = new Date(tempodata);
                 listaAssuntos.add(new Assunto(conteudo, dt, fonte));
-
             }
 
             if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {
                 ByteString endCursor = response.getBatch().getEndCursor();
                 query.setStartCursor(endCursor);
             }
-
             Collections.sort(listaAssuntos);
 
-
-            for(int i=aPartirDe; i<listaAssuntos.size(); i++){
+            for (int i = aPartirDe; i < listaAssuntos.size(); i++) {
                 listaRetorno.add(listaAssuntos.get(i));
             }
 
-
-
         } catch (DatastoreException e) {
             e.printStackTrace();
+            throw new OuvidoriaRepositoryException("Erro ao buscar assuntos respondidos apartir da data informada e do indice especificado.");
         }
-
 
         return listaRetorno;
     }
-
-
 
 
 }
