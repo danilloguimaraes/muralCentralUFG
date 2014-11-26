@@ -50,71 +50,23 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.configuracao.dao;
+package br.ufg.inf.fabrica.muralufg.central.configuracao;
 
-import java.util.Scanner;
-import br.ufg.inf.fabrica.muralufg.central.api.ConfiguracaoRepresentationUrlBiblioteca;
+import io.dropwizard.Configuration;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
-/*
-* Para testar o DAO usando o Google Datastore localmente
-*
-* 1 - Baixar o arquivo http://storage.googleapis.com/gcd/tools/gcd-v1beta2-rev1-2.1.1.zip
-* 2 - Descompactar o arquivo em uma pasta
-* 3 - Executar na linha de comando:
-*       gcd-v1beta2-rev1-2.1.1/gcd.exe create my-dataset
-*       gcd-v1beta2-rev1-2.1.1/gcd.sh start my-dataset
-* 4 - Criar duas variáveis de ambiente:
-*       DATASTORE_HOST=http://localhost:8080
-*       DATASTORE_DATASET=my-dataset
-* */
+public class ConfiguracaoRepresentationUrlBiblioteca extends Configuration {
+	@NotEmpty
+	private String url;
 
-public class UrlBibliotecaMainTeste {
-	public static void main(String[] args) {
-		
-		int opcao;
-		String chave = "0";
-		String valor = "www.ufg.br";
-		do{
-			Scanner sc = new Scanner(System.in);
-			System.out.println("opcao:\n"
-					+ "1-Salvar\n"
-					+ "2-Recuperar\n"
-					+ "0-Sair\n");
-			opcao = sc.nextInt();
-			
-			switch(opcao){
-			case 1:
-				salvarDado(chave, valor);
-				break;
-			case 2:
-				recuperarDado(chave);
-				break;
-			case 0:
-				break;
-			default:
-				System.out.println("digite certo");
-			}
-		}while(opcao!=0);
-		
-
-    }
-
-	/**
-	 * Recupera a URL
-	 * @param chave
-	 */
-	public static void recuperarDado(String chave) {
-		// TODO Auto-generated method stub
-		
+	@JsonProperty
+	public String getUrl() {
+		return url;
 	}
 
-	/**
-	 * Salva os dados da URL (chave, valor)
-	 * @param chave
-	 * @param valor
-	 */
-	public static void salvarDado(String chave, String valor) {
-		ConfiguracaoRepresentationUrlBiblioteca configRepresURL = new ConfiguracaoRepresentationUrlBiblioteca(chave, valor);
-		configRepresURL.defineValor(chave, valor);
+	@JsonProperty
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

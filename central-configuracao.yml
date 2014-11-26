@@ -1,5 +1,6 @@
 nome: central
 versao: 1.0
+url: www.bc.ufg.br
 server:
   applicationConnectors:
   - type: http

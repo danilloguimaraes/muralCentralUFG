@@ -52,43 +52,26 @@
 
 package br.ufg.inf.fabrica.muralufg.central.api;
 
-import br.ufg.inf.fabrica.muralufg.central.configuracao.ConfiguracaoResourceUrlBiblioteca;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ConfiguracaoRepresentationUrlBiblioteca {
-	private String chave;
-	private String valor;
+/**
+ * Fornece a identificação da Central UFG
+ * (inclui a URL da Biblioteca).
+ */
+public class CentralIdentificacaoUrlBiblioteca {
+    private String url;
 
-	public ConfiguracaoRepresentationUrlBiblioteca(String chave, String valor) {
-		this.chave = chave;
-		this.valor = valor;
-	}
+    public CentralIdentificacaoUrlBiblioteca(String url) {
+        this.url = url;
+    }
 
-	/**
-	 * Recupera a URL
-	 * @param chave
-	 * @return
-	 */
-	public String recuperarValor(String chave) {
-		// Verifica se a chave é a mesma e se não é nula, se sim, recupera a que
-		// já está na memória
-		if (chave.equals(this.chave) && chave != null) {
-			return valor;
-		} else {
-			// Recupera do banco de dados
-			return null;
-		}
-	}
+    @JsonProperty
+    public String getUrl() {
+        return url;
+    }
 
-	/**
-	 * Envia os dados para a classe que ira realizar persistencia dos dados
-	 * @param chave
-	 * @param valor
-	 */
-	public void defineValor(String chave, String valor) {
-		this.chave = chave;
-		this.valor = valor;
-		ConfiguracaoResourceUrlBiblioteca configResourceURL = new ConfiguracaoResourceUrlBiblioteca();
-		configResourceURL.define(chave, valor);
-	}
-
+    @JsonProperty
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
