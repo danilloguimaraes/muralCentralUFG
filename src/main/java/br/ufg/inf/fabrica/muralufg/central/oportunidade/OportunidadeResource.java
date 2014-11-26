@@ -52,15 +52,32 @@
 package br.ufg.inf.fabrica.muralufg.central.oportunidade;
 
 import java.util.Set;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
+@Path("/oportunidade")
 /**
- * Mantém oportunidades.
+ * Classe responsável por representar o 'recurso' Oportunidade produzindo JSON
+ * com as informações buscadas a partir da classe responsável pela persistência
+ * no Banco de Dados.
  */
-public interface OportunidadeRepository {
+public class OportunidadeResource {
+
+    private Set<Oportunidade> vigentes;
+    private final OportunidadeRepository oportunidadeRepository;
 
     /**
-     * Identifica, para o instante em que a chamada é realizada, o conjunto de
-     * oportunidades vigentes, ou seja, cuja execução está em andamento.
+     * Construtor que ao ser instânciado, cria o objeto responsável pelas
+     * operações no banco de dados.
+     * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
+     */
+    public OportunidadeResource() throws CentralException {
+        oportunidadeRepository = new OportunidadeRepositoryDatastore();
+    }
+
+    /**
+     * Método para retorno das Opotunidades viagentes, produzindo um JSON com as
+     * informações obtidas.
      *
      * @return Set<Oportunidade> - O conjunto de oportunidades vigentes. Se
      * nenhuma oportunidade estiver vigente, então o conjunto retornado não
@@ -68,15 +85,24 @@ public interface OportunidadeRepository {
      * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
      * - Lança a exceção caso a operação não seja realizada com sucesso
      */
-    public Set<Oportunidade> vigentes() throws CentralException;
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<Oportunidade> vigentes() throws CentralException {
+        vigentes = oportunidadeRepository.vigentes();
+        return vigentes;
+    }
 
     /**
-     * Acrescenta ao repositório a oportunidade.
+     * Método responsável por enviar, a oportunidade recebida por parâmetro, para à
+     * entidade responsável por inserí-la no banco de dados
      *
-     * @param oportunidade Oportunidade a ser inserido no repositório.
-     * @return id long - Id da oportunidade recém adicionada
+     * @param oportunidade Oportunidade - representa a oportunidade a ser
+     * adicionada no banco de dados.
      * @throws br.ufg.inf.fabrica.muralufg.central.oportunidade.CentralException
      * - Lança a exceção caso a operação não seja realizada com sucesso
      */
-    public long adicionar(Oportunidade oportunidade) throws CentralException;
+    @POST
+    public void adicionar(Oportunidade oportunidade) throws CentralException {
+        oportunidadeRepository.adicionar(oportunidade);
+    }
 }
