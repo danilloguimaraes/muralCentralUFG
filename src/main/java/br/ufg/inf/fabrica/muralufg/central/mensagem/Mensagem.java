@@ -131,9 +131,6 @@ public class Mensagem {
             return;
         }
 
-        for (Arquivo arquivo : arquivos) {
-            AdicionaArquivo(arquivo);
-        }
     }
 
     /**
@@ -144,6 +141,7 @@ public class Mensagem {
      * @param arquivo Informações sobre a arquivo a ser
      *               adicionada (associada) ao arquivos.
      */
+
     private void AdicionaArquivo(Arquivo arquivo) {
         if (arquivo == null) {
             throw new IllegalArgumentException("arquivo é null");
