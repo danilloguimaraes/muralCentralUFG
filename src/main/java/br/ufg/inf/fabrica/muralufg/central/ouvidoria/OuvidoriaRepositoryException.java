@@ -52,18 +52,12 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
-import java.util.Date;
-
 /**
- * Resposta produzida para um dado assunto submetido para a ouvidoria.
- * <p>Ao contrário do assunto, onde o emissor não necessariamente se
- * identifica, uma resposta obrigatoriamente identifica o seu autor.</p>
+ * Classe criada para ser a excessão lançada por repositorios implementados.
  */
-public class Resposta extends Assunto {
-    private Usuario autor;
+public class OuvidoriaRepositoryException extends Exception {
 
-    public Resposta(String conteudo, Date data, String fonte) {
-        super(conteudo, data, fonte);
+    public OuvidoriaRepositoryException(String message) {
+        super(message);
     }
 }
