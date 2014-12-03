@@ -55,8 +55,6 @@ import java.util.Date;
 
 /**
  * Refeição (<i>value object</i>).
- * 
- * @author Fabrica de Software - INF/UFG
  */
 public class Prato {
 
@@ -95,10 +93,6 @@ public class Prato {
         return true;
     }
 
-    /**
-     * Obtém o hascode do objeto Prato.
-     * @return Inteiro que representa o hascode da descrição do objeto Prato.
-     */
     @Override
     public int hashCode() {
         int result = descricao.hashCode();
@@ -106,82 +100,42 @@ public class Prato {
         return result;
     }
 
-    /**
-     * Obtém a descrição.
-     * @return Valor da propriedade descrição.
-     */
     public String getDescricao() {
         return descricao;
     }
 
-    /**
-     * Define a descrição.
-     * @param descricao Valor para que seja definida a propriedade descrição.
-     */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    /**
-     * Obtém o precoEmReais.
-     * @return Valor da propriedade precoEmReais.
-     */
     public double getPrecoEmReais() {
         return precoEmReais;
     }
 
-    /**
-     * Define o precoEmReais.
-     * @param precoEmReais Valor para que seja definida a propriedade precoEmReais.
-     */
     public void setPrecoEmReais(double precoEmReais) {
         this.precoEmReais = precoEmReais;
     }
 
-    /**
-     * Obtém o diaEmQueEstaDisponivel.
-     * @return Valor da propriedade diaEmQueEstaDisponivel.
-     */
     public Date getDiaEmQueEstaDisponivel() {
         return diaEmQueEstaDisponivel;
     }
 
-    /**
-     * Define o diaEmQueEstaDisponivel.
-     * @param diaEmQueEstaDisponivel Valor para que seja definida a propriedade diaEmQueEstaDisponivel.
-     */
     public void setDiaEmQueEstaDisponivel(Date diaEmQueEstaDisponivel) {
         this.diaEmQueEstaDisponivel = diaEmQueEstaDisponivel;
     }
 
-    /**
-     * Obtém o imagemId.
-     * @return Valor da propriedade imagemId.
-     */
     public String getImagemId() {
         return imagemId;
     }
 
-    /**
-     * Define o imagemId.
-     * @param imagemId Valor para que seja definida a propriedade imagemId.
-     */
     public void setImagemId(String imagemId) {
         this.imagemId = imagemId;
     }
 
-    /**
-     * Obtém o mimeTypeImage.
-     * @return Valor da propriedade mimeTypeImage.
-     */
     public String getMimeTypeImage() {
         return mimeTypeImage;
     }
 
-    /**
-     * Define o mimeTypeImage.
-     * @param mimeTypeImage Valor para que seja definida a propriedade mimeTypeImage.
-     */
     public void setMimeTypeImage(String mimeTypeImage) {
         this.mimeTypeImage = mimeTypeImage;
     }

@@ -23,7 +23,6 @@ public class MainTeste {
         AlunoDao dao = new AlunoDao();
         dao.salvar(aluno1);
         dao.salvar(aluno2);
-        
+
     }
-    
 }
