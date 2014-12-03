@@ -13,7 +13,11 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao.dao;
 
+import br.ufg.inf.fabrica.muralufg.central.alimentacao.Restaurante;
+import br.ufg.inf.fabrica.muralufg.central.alimentacao.RestauranteRepositoryImpl;
 import br.ufg.inf.fabrica.muralufg.central.organizacao.Aluno;
+import java.util.Date;
+import java.util.List;
 
 public class MainTeste {
     public static void main(String[] args) {
@@ -23,6 +27,23 @@ public class MainTeste {
         AlunoDao dao = new AlunoDao();
         dao.salvar(aluno1);
         dao.salvar(aluno2);
-
+        
+        Restaurante r = new Restaurante("1", "campi", "teste", new Date(), new Date());
+        
+        teste.t(r);
     }
+    
+    public static class teste{
+        public static void t(Restaurante r){
+            RestauranteRepositoryImpl rpl = new RestauranteRepositoryImpl();
+            
+            rpl.adiciona(r);
+            List<Restaurante> r2 = rpl.obtem(r);
+            r2.size();
+            rpl.remover(r);
+            List<Restaurante> r3 = rpl.obtem(r);
+            r2.size();
+        }
+    }
+    
 }

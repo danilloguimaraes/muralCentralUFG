@@ -51,14 +51,19 @@
  */
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * Estabelecimento destinado ao preparo, comercialização ou distribuição de
  * refeições ou alimentos, localizado próximo aos campi da UFG.
+ * 
+ * @author Fabrica de Software - INF/UFG
  */
-public class Restaurante {
+public class Restaurante extends ConfiguracaoBase {
 
     private String id;
     private String campus;
@@ -66,6 +71,34 @@ public class Restaurante {
     private List<String> formaPagamento;
     private Date inicioHorario;
     private Date fimHorario;
+    private List<Prato> listaPratos;
+
+    public Restaurante() {
+
+    }
+
+    /**
+     * Construtor da classe Restaurante.
+     *
+     * @param id
+     * @param campus
+     * @param nome
+     * @param inicioHorario
+     * @param fimHorario
+     */
+    public Restaurante(String id, String campus, String nome, Date inicioHorario, Date fimHorario) {
+        this.formaPagamento = obtenhaFormasDePagamento();
+        this.listaPratos = obtenhaListaDePratos();
+        this.id = id;
+        this.campus = campus;
+        this.nome = nome;
+        this.inicioHorario = inicioHorario;
+        this.fimHorario = fimHorario;
+    }
+    
+    public Restaurante(String id){
+        this.id = id;
+    }
 
     /**
      * Identifica se o presente restaurante é "semelhante" àquele fornecido.
@@ -87,51 +120,179 @@ public class Restaurante {
         return true;
     }
 
+    /**
+     * Obtém o campus.
+     *
+     * @return Valor da propriedade campus.
+     */
     public String getCampus() {
         return campus;
     }
 
+    /**
+     * Obtém o nome.
+     *
+     * @return Valor da propriedade nome.
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Define o nome.
+     *
+     * @param nome Valor para que seja definida a propriedade nome.
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Obtém o formaPagamento.
+     *
+     * @return Valor da propriedade formaPagamento.
+     */
     public List<String> getFormaPagamento() {
         return formaPagamento;
     }
 
+    /**
+     * Define a formaPagamento.
+     *
+     * @param formaPagamento Valor para que seja definida a propriedade
+     * formaPagamento.
+     */
     public void setFormaPagamento(List<String> formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
 
+    /**
+     * Obtém o inicioHorario.
+     *
+     * @return Valor da propriedade inicioHorario.
+     */
     public Date getInicioHorario() {
         return inicioHorario;
     }
 
+    /**
+     * Define o inicioHorario.
+     *
+     * @param inicioHorario Valor para que seja definida a propriedade
+     * inicioHorario.
+     */
     public void setInicioHorario(Date inicioHorario) {
         this.inicioHorario = inicioHorario;
     }
 
+    /**
+     * Obtém o fimHorario.
+     *
+     * @return Valor da propriedade fimHorario.
+     */
     public Date getFimHorario() {
         return fimHorario;
     }
 
+    /**
+     * Define o fimHorario.
+     *
+     * @param fimHorario Valor para que seja definida a propriedade fimHorario.
+     */
     public void setFimHorario(Date fimHorario) {
         this.fimHorario = fimHorario;
     }
 
+    /**
+     * Define o campus.
+     *
+     * @param campus Valor para que seja definida a propriedade campus.
+     */
     public void setCampus(String campus) {
         this.campus = campus;
     }
 
+    /**
+     * Obtém o id.
+     *
+     * @return Valor da propriedade id.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Define o id.
+     *
+     * @param id Valor para que seja definida a propriedade id.
+     */
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Prato> getListaPratos() {
+        return listaPratos;
+    }
+
+    public void setListaPratos(List<Prato> listaPratos) {
+        this.listaPratos = listaPratos;
+    }
+
+    /**
+     * Obtém as formas de pagamento disponíveis para o restaurante.
+     *
+     * @return
+     */
+    private List<String> obtenhaFormasDePagamento() {
+        List<String> retorno = new ArrayList<>();
+
+        retorno.add("CATÃO DE CRÉDITO");
+        retorno.add("CARTÃO DE DEBITO");
+        retorno.add("CHEQUE");
+        retorno.add("DINHEIRO");
+
+        return retorno;
+    }
+
+    /**
+     * Obtém uma lista randômica de pratos.
+     *
+     * @return {@link ArrayList<Prato>}.
+     */
+    private ArrayList<Prato> obtenhaListaDePratos() {
+        ArrayList<Prato> lista = new ArrayList<>();
+
+        int indice = new Random().nextInt(20);
+
+        for (int i = 0; i < indice; i++) {
+            lista.add(ObtenhaPratoAleatorio());
+        }
+
+        return lista;
+    }
+
+    /**
+     * Obtém um único prato.
+     *
+     * @return {@link Prato}.
+     */
+    protected Prato ObtenhaPratoAleatorio() {
+        List<String> listaMimeType = new ArrayList<>();
+        UUID imagemId;
+
+        listaMimeType.add("image/bmp");
+        listaMimeType.add("image/x-windows-bmp");
+        listaMimeType.add("image/gif");
+        listaMimeType.add("image/jpeg");
+
+        Prato p = new Prato();
+        p.setDescricao("Prato " + new Random().nextInt(999));
+        p.setDiaEmQueEstaDisponivel(obtenhaDataAleatoria(DIAS));
+        p.setMimeTypeImage(listaMimeType.get(new Random().nextInt(listaMimeType.size())));
+        p.setPrecoEmReais(new Random().nextDouble());
+        imagemId = UUID.randomUUID();
+        p.setImagemId(imagemId.toString());
+
+        return p;
     }
 }
