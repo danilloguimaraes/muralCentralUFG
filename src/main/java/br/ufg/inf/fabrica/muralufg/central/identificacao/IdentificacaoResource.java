@@ -59,7 +59,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+
 
 /**
  * Identificação da Central. Simplesmente expõe
@@ -70,15 +70,17 @@ import java.util.concurrent.atomic.AtomicLong;
 public class IdentificacaoResource {
     private final String nome;
     private final String versao;
+    private final String recursos;
 
-    public IdentificacaoResource(String nome, String versao) {
+    public IdentificacaoResource(String nome, String versao, String recursos) {
         this.nome = nome;
         this.versao = versao;
+        this.recursos = recursos;
     }
 
     @GET
     @Timed
     public CentralIdentificacao fornecaIdentificacao() {
-        return new CentralIdentificacao(nome, versao);
+        return new CentralIdentificacao(nome, versao, recursos);
     }
 }

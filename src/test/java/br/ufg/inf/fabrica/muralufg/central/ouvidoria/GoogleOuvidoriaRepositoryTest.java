@@ -39,7 +39,7 @@ public class GoogleOuvidoriaRepositoryTest {
             e.printStackTrace();
         }
 
-        List<Assunto> listaRetornoMock = new ArrayList<>();
+        List<Assunto> listaRetornoMock = new ArrayList<Assunto>();
         listaRetornoMock.add(new Assunto("conteudo", data1, "fonte"));
         listaRetornoMock.add(new Assunto("conteudo", data2, "fonte"));
         listaRetornoMock.add(new Assunto("conteudo", data3, "fonte"));
@@ -73,7 +73,7 @@ public class GoogleOuvidoriaRepositoryTest {
             e.printStackTrace();
         }
 
-        List<Assunto> listaRetornoMock = new ArrayList<>();
+        List<Assunto> listaRetornoMock = new ArrayList<Assunto>();
         listaRetornoMock.add(new Assunto("conteudo", data1, "fonte"));
         listaRetornoMock.add(new Assunto("conteudo", data2, "fonte"));
         List<Assunto> listaRetorno = null;
@@ -117,7 +117,7 @@ public class GoogleOuvidoriaRepositoryTest {
         assunto2.foiRespondido();
         assunto3.foiRespondido();
 
-        List<Assunto> listaRetornoMock = new ArrayList<>();
+        List<Assunto> listaRetornoMock = new ArrayList<Assunto>();
         listaRetornoMock.add(assunto1);
         listaRetornoMock.add(assunto2);
         listaRetornoMock.add(assunto2);
@@ -157,7 +157,7 @@ public class GoogleOuvidoriaRepositoryTest {
         assunto1.foiRespondido();
         assunto2.foiRespondido();
 
-        List<Assunto> listaRetornoMock = new ArrayList<>();
+        List<Assunto> listaRetornoMock = new ArrayList<Assunto>();
         listaRetornoMock.add(new Assunto("conteudo", data1, "fonte"));
         listaRetornoMock.add(new Assunto("conteudo", data2, "fonte"));
         List<Assunto> listaRetorno = null;

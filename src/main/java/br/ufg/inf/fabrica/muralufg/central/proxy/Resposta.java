@@ -50,96 +50,54 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.organizacao;
+package br.ufg.inf.fabrica.muralufg.central.proxy;
 
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
-
-import java.util.Set;
+import java.util.Date;
 
 /**
- * Representa um docente, lotado em um dado órgão.
+ * Encapsula resposta fornecida pela RMTC e
+ * outras informações relevantes para a
+ * atuação da Central como "proxy".
  */
-public class Docente extends Usuario {
-    private String id;
-    private String nome;
-    private Set<Turma> turmas;
-    private Orgao orgao;
+public class Resposta {
 
     /**
-     * Cria uma instância de Docente.
-     * @param id Identificador único do docente.
-     * @param nome Nome do docente.
-     * @param turmas Conjunto de turmas em que o docente é responsável.
-     * @param orgao Órgão em que o docente está lotado.
+     * Identificação única da requisição submetida pelo
+     * cliente da Central.
      */
-    public Docente(String id, String nome, Set<Turma> turmas, Orgao orgao) {
-        this.id = id;
-        this.nome = nome;
-        this.turmas = turmas;
-        this.orgao = orgao;
-    }
+    private String guid;
 
     /**
-     * Obtém o identificador único do docente.
-     * @return Sequência de caracteres que corresponde ao identificador do docente.
+     * Resposta produzida pela RMTC e "guardada"
+     * até que o Cliente da Central requisite-a
+     * pelo guid correspondente.
      */
-    public String getId() {
-        return id;
-    }
+    private String resposta;
 
     /**
-     * Define identificador único do docente.
-     * @param id Sequência de caracteres que corresponde ao identificador do docente.
+     * Data em que a requisição foi submetida
+     * pelo Cliente.
      */
-    public void setId(String id) {
-        this.id = id;
+    private Date geradaEm;
+
+    public String getResposta() {
+        return resposta;
     }
 
-    /**
-     * Obtém o nome do docente.
-     * @return Sequência de caracteres que corresponde ao nome do docente.
-     */
-    public String getNome() {
-        return nome;
-    }
+	public String getGuid() {
+		return guid;
+	}
 
-    /**
-     * Define nome do docente.
-     * @param nome Sequência de caracteres que corresponde ao nome do docente.
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
 
-    /**
-     * Obtém o conjunto de turmas em que o docente é responsável.
-     * @return Conjunto de turmas do docente.
-     */
-    public Set<Turma> getTurmas() {
-        return turmas;
-    }
+	public Date getGeradaEm() {
+		return geradaEm;
+	}
 
-    /**
-     * Define o conjunto de turmas em que o docente é responsável.
-     * @param turmas Conjunto de turmas do docente.
-     */
-    public void setTurmas(Set<Turma> turmas) {
-        this.turmas = turmas;
-    }
+	public void setGeradaEm(Date geradaEm) {
+		this.geradaEm = geradaEm;
+	}
 
-    /**
-     * Obtém o órgão em que o docente está lotado.
-     * @return Órgão em que o docente é integrante.
-     */
-    public Orgao getOrgao() {
-        return orgao;
-    }
-
-    /**
-     * Define o órgão em que o docente está lotado.
-     * @param orgao Órgão em que o docente é integrante.
-     */
-    public void setOrgao(Orgao orgao) {
-        this.orgao = orgao;
-    }
 }

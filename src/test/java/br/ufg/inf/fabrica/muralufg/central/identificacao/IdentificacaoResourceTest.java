@@ -10,7 +10,7 @@ public class IdentificacaoResourceTest {
 
     @Test
     public void testFornecidaCoincideComCriada() throws Exception {
-        IdentificacaoResource ir = new IdentificacaoResource("a", "v");
+        IdentificacaoResource ir = new IdentificacaoResource("a", "v","http://www.inf.ufg.br/recursos");
         assertEquals("a", ir.fornecaIdentificacao().getNome());
         assertEquals("v", ir.fornecaIdentificacao().getVersao());
     }

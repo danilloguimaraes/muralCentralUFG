@@ -50,96 +50,51 @@
  * para detalhes.
  */
 
-package br.ufg.inf.fabrica.muralufg.central.organizacao;
+package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
-import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
-
-import java.util.Set;
+import java.util.stream.Stream;
 
 /**
- * Representa um docente, lotado em um dado órgão.
+ * Serviços para manipulação de arquivos em meio persistente.
+ * <p>Esta interface foi projetada para admitir implementação
+ * que faz uso do sistema de arquivos de um sistema operacional
+ * como o Windows, ou ainda por serviço remoto de armazenamento.</p>
+ *
+ * <p>Uma implementação desta interface deve admitir um fluxo
+ * clássico onde arquivos são persistidos
+ * ({@link #persiste(Arquivo, java.util.stream.Stream)}) e
+ * recuperados. A recuperação é dividida em duas partes:
+ * (a) recuperação de metainformações ({@link #recupera(String)}) e
+ * (b) recuperação do conteúdo ({@link #conteudo(String)}).</p>
+ *
+ * <p>Observe que não há indicação de diretório, <i>bucket</i> ou
+ * outro elemento, por exemplo, credencial exigida para acesso aos
+ * serviços oferecidos pela interface. Tais itens são dependentes
+ * de cada implementação.</p>
  */
-public class Docente extends Usuario {
-    private String id;
-    private String nome;
-    private Set<Turma> turmas;
-    private Orgao orgao;
+public interface ArquivoRepository {
 
     /**
-     * Cria uma instância de Docente.
-     * @param id Identificador único do docente.
-     * @param nome Nome do docente.
-     * @param turmas Conjunto de turmas em que o docente é responsável.
-     * @param orgao Órgão em que o docente está lotado.
+     * Persiste o conteúdo do arquivo.
+     * @param arquivo Detalhes do arquivo a ser persistido.
+     * @param conteudo {@link Stream} do qual o conteúdo do
+     *                               arquivo poderá ser recuperado.
      */
-    public Docente(String id, String nome, Set<Turma> turmas, Orgao orgao) {
-        this.id = id;
-        this.nome = nome;
-        this.turmas = turmas;
-        this.orgao = orgao;
-    }
+    public void persiste(Arquivo arquivo, Stream conteudo);
 
     /**
-     * Obtém o identificador único do docente.
-     * @return Sequência de caracteres que corresponde ao identificador do docente.
+     * Recupera metainformações sobre o arquivo cujo identificador único é
+     * fornecido.
+     * @param arquivoId String identificador do arquivo que se deseja obter.
+     * @return Instância de {@link Arquivo} correspondente ao identificador
+     * fornecido.
      */
-    public String getId() {
-        return id;
-    }
+    public Arquivo recupera(String arquivoId);
 
     /**
-     * Define identificador único do docente.
-     * @param id Sequência de caracteres que corresponde ao identificador do docente.
+     * Obtém {@link Stream} para conteúdo do arquivo.
+     * @param arquivoId O identificador único do arquivo.
+     * @return {@link Stream} para o conteúdo do arquivo.
      */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * Obtém o nome do docente.
-     * @return Sequência de caracteres que corresponde ao nome do docente.
-     */
-    public String getNome() {
-        return nome;
-    }
-
-    /**
-     * Define nome do docente.
-     * @param nome Sequência de caracteres que corresponde ao nome do docente.
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * Obtém o conjunto de turmas em que o docente é responsável.
-     * @return Conjunto de turmas do docente.
-     */
-    public Set<Turma> getTurmas() {
-        return turmas;
-    }
-
-    /**
-     * Define o conjunto de turmas em que o docente é responsável.
-     * @param turmas Conjunto de turmas do docente.
-     */
-    public void setTurmas(Set<Turma> turmas) {
-        this.turmas = turmas;
-    }
-
-    /**
-     * Obtém o órgão em que o docente está lotado.
-     * @return Órgão em que o docente é integrante.
-     */
-    public Orgao getOrgao() {
-        return orgao;
-    }
-
-    /**
-     * Define o órgão em que o docente está lotado.
-     * @param orgao Órgão em que o docente é integrante.
-     */
-    public void setOrgao(Orgao orgao) {
-        this.orgao = orgao;
-    }
+    public Stream conteudo(String arquivoId);
 }

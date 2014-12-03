@@ -52,10 +52,56 @@
 
 package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
+
 /**
  * Representa um aluno devidamente matriculado em determinada disciplina,
  * ou seja, aluno de uma dada turma.
+ * <p>Trata-se de um <i>value object</i>.</p>
  */
-public class Aluno {
+public class Aluno extends Usuario {
     private String nome;
+    private String matricula;
+
+    /**
+     * Cria uma instância de Aluno.
+     * @param nome O nome do aluno.
+     * @param matricula Identificador único do aluno.
+     */
+    public Aluno(String nome, String matricula) {
+        this.nome = nome;
+        this.matricula = matricula;
+    }
+
+    /**
+     * Obtém o nome do aluno.
+     * @return Sequência de caracteres que corresponde ao nome do aluno.
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * Define o nome do aluno.
+     * @param nome SSequência de caracteres que corresponde ao nome do aluno.
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * Obtém a matrícula do aluno.
+     * @return Sequência de caracteres que corresponde à matrícula do aluno.
+     */
+    public String getMatricula() {
+        return matricula;
+    }
+
+    /**
+     * Define a matrícula do aluno.
+     * @param matricula Sequência de caracteres que corresponde à matrícula do aluno.
+     */
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 }

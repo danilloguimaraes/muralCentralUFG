@@ -54,90 +54,69 @@ package br.ufg.inf.fabrica.muralufg.central.organizacao;
 
 import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
-import java.util.Set;
-
 /**
- * Representa um docente, lotado em um dado órgão.
+ * Representa um técnico da UFG.
  */
-public class Docente extends Usuario {
+public class Tecnico extends Usuario {
     private String id;
     private String nome;
-    private Set<Turma> turmas;
     private Orgao orgao;
 
     /**
-     * Cria uma instância de Docente.
-     * @param id Identificador único do docente.
-     * @param nome Nome do docente.
-     * @param turmas Conjunto de turmas em que o docente é responsável.
-     * @param orgao Órgão em que o docente está lotado.
+     * Cria uma instância de Tecnico.
+     * @param id Identificador único do técnico.
+     * @param nome Nome do técnico.
+     * @param orgao Órgão em que o técnico está lotado.
      */
-    public Docente(String id, String nome, Set<Turma> turmas, Orgao orgao) {
+    public Tecnico(String id, String nome, Orgao orgao) {
         this.id = id;
         this.nome = nome;
-        this.turmas = turmas;
         this.orgao = orgao;
     }
 
     /**
-     * Obtém o identificador único do docente.
-     * @return Sequência de caracteres que corresponde ao identificador do docente.
+     * Obtém o identificador único do técnico.
+     * @return Sequência de caracteres que corresponde ao identificador do técnico.
      */
     public String getId() {
         return id;
     }
 
     /**
-     * Define identificador único do docente.
-     * @param id Sequência de caracteres que corresponde ao identificador do docente.
+     * Define identificador único do técnico.
+     * @param id Sequência de caracteres que corresponde ao identificador do técnico.
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     * Obtém o nome do docente.
-     * @return Sequência de caracteres que corresponde ao nome do docente.
+     * Obtém o nome do técnico.
+     * @return Sequência de caracteres que corresponde ao nome do técnico.
      */
     public String getNome() {
         return nome;
     }
 
     /**
-     * Define nome do docente.
-     * @param nome Sequência de caracteres que corresponde ao nome do docente.
+     * Define nome do técnico.
+     * @param nome Sequência de caracteres que corresponde ao nome do técnico.
      */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
     /**
-     * Obtém o conjunto de turmas em que o docente é responsável.
-     * @return Conjunto de turmas do docente.
-     */
-    public Set<Turma> getTurmas() {
-        return turmas;
-    }
-
-    /**
-     * Define o conjunto de turmas em que o docente é responsável.
-     * @param turmas Conjunto de turmas do docente.
-     */
-    public void setTurmas(Set<Turma> turmas) {
-        this.turmas = turmas;
-    }
-
-    /**
-     * Obtém o órgão em que o docente está lotado.
-     * @return Órgão em que o docente é integrante.
+     * Obtém o órgão em que o técnico está lotado.
+     * @return Órgão em que o técnico faz parte.
      */
     public Orgao getOrgao() {
         return orgao;
     }
 
     /**
-     * Define o órgão em que o docente está lotado.
-     * @param orgao Órgão em que o docente é integrante.
+     * Define o órgão em que o técnico está lotado.
+     * @param orgao Órgão em que o técnico faz parte.
      */
     public void setOrgao(Orgao orgao) {
         this.orgao = orgao;

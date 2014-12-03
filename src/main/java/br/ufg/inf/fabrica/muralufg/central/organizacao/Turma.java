@@ -59,7 +59,86 @@ import java.util.Set;
  * Representa uma turma.
  */
 public class Turma {
+    private String id;
     private Date semestre;
-    private Docente responsavel;
+    private Set<Docente> docentes;
     private Set<Aluno> matriculados;
+
+    /**
+     * Cria uma instância de Turma.
+     * @param id Identificador único da turma.
+     * @param semestre Semestre da turma.
+     * @param docentes Conjunto de docentes que são responsáveis da turma.
+     * @param matriculados Conjunto de alunos que estão matriculados na turma.
+     */
+    public Turma(String id, Date semestre, Set<Docente> docentes, Set<Aluno> matriculados) {
+        this.id = id;
+        this.semestre = semestre;
+        this.docentes = docentes;
+        this.matriculados = matriculados;
+    }
+
+    /**
+     * Obtém o identificador único da turma.
+     * @return Sequência de caracteres que corresponde ao identificador da turma.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Define identificador único da turma.
+     * @param id Sequência de caracteres que corresponde ao identificador da turma.
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Obtém o semestre da disciplina.
+     * @return Data que indica o semestre da disciplina.
+     */
+    public Date getSemestre() {
+        return semestre;
+    }
+
+    /**
+     * Define o semestre da disciplina.
+     * @param semestre Data que indica o semestre da disciplina.
+     */
+    public void setSemestre(Date semestre) {
+        this.semestre = semestre;
+    }
+
+    /**
+     * Obtém o conjunto de docentes responsáveis da turma.
+     * @return Conjunto de docentes da turma.
+     */
+    public Set<Docente> getDocentes() {
+        return docentes;
+    }
+
+    /**
+     * Define o conjunto de docentes responsáveis da turma.
+     * @param docentes Conjunto de docentes da turma.
+     */
+    public void setDocentes(Set<Docente> docentes) {
+        this.docentes = docentes;
+    }
+
+    /**
+     * Obtém o conjunto de alunos matriculados na turma.
+     * @return Conjunto de alunos matriculados na turma.
+     */
+    public Set<Aluno> getMatriculados() {
+        return matriculados;
+    }
+
+    /**
+     * Define o conjunto de alunos matriculados na turma.
+     * @param matriculados Conjunto de alunos matriculados na turma.
+     */
+    public void setMatriculados(Set<Aluno> matriculados) {
+        this.matriculados = matriculados;
+    }
 }
