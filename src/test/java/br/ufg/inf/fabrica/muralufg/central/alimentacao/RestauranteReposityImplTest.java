@@ -1,13 +1,9 @@
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,23 +18,11 @@ import static org.junit.Assert.*;
  */
 public class RestauranteReposityImplTest extends ConfiguracaoBase {
     
-    Restaurante rest;
-    
     // <editor-fold defaultstate="collapsed" desc="CONFIGURAÇÕES DOS TESTES">
     /**
      * Construtor da classe de testes.
      */
     public RestauranteReposityImplTest() {
-        rest = new Restaurante(
-                       String.valueOf(new Random().nextInt(355)), 
-                       "Campus teste", 
-                       "Teste",
-                       new Date(), 
-                       new Date());
-        if(rest.getListaPratos().get(0) != null){
-            imagemId = rest.getListaPratos().get(0).getImagemId(); 
-        }
-        super.restIpml = new RestauranteRepositoryImpl();
     }
 
     @BeforeClass
@@ -73,17 +57,14 @@ public class RestauranteReposityImplTest extends ConfiguracaoBase {
 
     @Test
     public void testAdicionaRestuarante() {
-        try{
-            rest.setNome("Test");
+        Restaurante r = new Restaurante();
+        r.setNome("Test");
 
-            int tListaAntesInsercao = 0;
-            restIpml.adiciona(rest);
-            int tListaDepoisInsercao = restIpml.obtem(rest).size();
+        int tListaAntesInsercao = 0;
+        restIpml.adiciona(r);
+        int tListaDepoisInsercao = 0;
 
-            assertTrue(tListaAntesInsercao <= tListaDepoisInsercao);
-        }catch (Exception ex){
-           Logger.getLogger(RestauranteReposityImplTest.class.getName()).log(Level.SEVERE, null, ex); 
-        }
+        assertTrue(tListaAntesInsercao < tListaDepoisInsercao);
     }
 
     @Test
@@ -95,9 +76,7 @@ public class RestauranteReposityImplTest extends ConfiguracaoBase {
 
     @Test
     public void testRemocaoRestauranteSucesso() {
-        List<Restaurante> lista = restIpml.obtem(rest);
-        
-        Restaurante itemRemocao = restIpml.obtem(rest).get(new Random().nextInt(lista.size()));
+        Restaurante itemRemocao = restIpml.getRepoRestaurantes().get(new Random().nextInt(5));
 
         Boolean resultado = restIpml.remover(itemRemocao);
 
@@ -106,41 +85,40 @@ public class RestauranteReposityImplTest extends ConfiguracaoBase {
 
     @Test
     public void testAtualizacaoRestaurante() {
-        List<Restaurante> lista = restIpml.obtem(rest);
-        int indice = new Random().nextInt(lista.size());
-        Restaurante itemAtualizacao = lista.get(indice);
+        int indice = new Random().nextInt(50);
+        Restaurante itemAtualizacao = restIpml.getRepoRestaurantes().get(indice);
 
         itemAtualizacao.setCampus("TestFixture");
         itemAtualizacao.setNome("TestFixture@");
 
         restIpml.atualizar(itemAtualizacao);
 
-        assertTrue(!restIpml.obtem(rest).get(indice).equals(itemAtualizacao));
+        assertTrue(restIpml.getRepoRestaurantes().get(indice).equals(itemAtualizacao));
     }
 
     @Test
     public void testAdicionaPrato() {
-        List<Restaurante> lista = restIpml.obtem(rest);
-        
-        int indice = new Random().nextInt(lista.size());
-        Restaurante itemAtualizacao = lista.get(indice);
-        int quantidadePratos = itemAtualizacao.getListaPratos().size();
+        int indice = new Random().nextInt(50);
+        Restaurante itemAtualizacao = restIpml.getRepoRestaurantes().get(indice);
+        int quantidadePratos = restIpml.getListaPratos(itemAtualizacao).size();
 
         restIpml.adicionaPrato(ObtenhaPratoAleatorio(), itemAtualizacao);
 
-        assertTrue(quantidadePratos == itemAtualizacao.getListaPratos().size());
+        assertTrue(quantidadePratos != restIpml.getListaPratos(itemAtualizacao).size());
     }
 
     @Test
     public void testObtemPrato() {
-        List<Restaurante> lista = restIpml.obtem(rest);
-        
-        int indice = new Random().nextInt(lista.size());
-        Restaurante itemBusca = lista.get(indice);
+        int indice = new Random().nextInt(50);
+        Restaurante itemBusca = restIpml.getRepoRestaurantes().get(indice);
 
-        for (Prato elemento : itemBusca.getListaPratos()) {
-            dataDisponivel = elemento.getDiaEmQueEstaDisponivel();
-            break;
+        for (Map.Entry<Restaurante, ArrayList<Prato>> elemento : restIpml.getRepoCardapio().entrySet()) {
+            if (elemento.getKey().equals(itemBusca)) {
+                for (Prato prato : elemento.getValue()) {
+                    dataDisponivel = prato.getDiaEmQueEstaDisponivel();
+                    break;
+                }
+            }
         }
 
         List<Prato> listaDePratos = restIpml.obtemPrato(itemBusca, dataDisponivel);
@@ -150,10 +128,9 @@ public class RestauranteReposityImplTest extends ConfiguracaoBase {
 
     @Test
     public void testGetImagem() {
-        restIpml.adiciona(rest);
-        byte[] resultado = restIpml.getImagem(imagemId);
+        byte[] resultado = restIpml.getImagem(imagemId.toString());
 
-        assertTrue(resultado == null);
+        assertTrue(resultado != null);
     }
 
     @Test
@@ -165,13 +142,9 @@ public class RestauranteReposityImplTest extends ConfiguracaoBase {
 
     @Test
     public void testGetMymeTypeSucesso() {
-        final Integer ZERO = 0;
-        
-        imagemId = restIpml.obtem(new Restaurante("1")).get(ZERO).getListaPratos().get(ZERO).getImagemId();
-        
-        String resultado = restIpml.getMimeType(imagemId);
+        String resultado = restIpml.getMimeType(imagemId.toString());
 
-        assertTrue(resultado.equals(""));
+        assertTrue(!resultado.equals(""));
     }
 
     // </editor-fold>

@@ -2,13 +2,14 @@ package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.services.datastore.DatastoreV1.CommitRequest;
-import com.google.api.services.datastore.DatastoreV1.CommitResponse;
 import com.google.api.services.datastore.DatastoreV1.Entity;
 import com.google.api.services.datastore.DatastoreV1.EntityResult;
 import com.google.api.services.datastore.DatastoreV1.Filter;
+import com.google.api.services.datastore.DatastoreV1.Key;
 import com.google.api.services.datastore.DatastoreV1.Mutation;
 import com.google.api.services.datastore.DatastoreV1.PropertyFilter;
 import com.google.api.services.datastore.DatastoreV1.Query;
+import com.google.api.services.datastore.DatastoreV1.QueryResultBatch;
 import com.google.api.services.datastore.DatastoreV1.RunQueryRequest;
 import com.google.api.services.datastore.DatastoreV1.RunQueryResponse;
 import com.google.api.services.datastore.DatastoreV1.Value;
@@ -18,13 +19,15 @@ import com.google.api.services.datastore.client.DatastoreFactory;
 import com.google.api.services.datastore.client.DatastoreHelper;
 import static com.google.api.services.datastore.client.DatastoreHelper.getPropertyMap;
 import static com.google.api.services.datastore.client.DatastoreHelper.getString;
-import static com.google.api.services.datastore.client.DatastoreHelper.getTimestamp;
 import static com.google.api.services.datastore.client.DatastoreHelper.makeFilter;
 import static com.google.api.services.datastore.client.DatastoreHelper.makeProperty;
 import static com.google.api.services.datastore.client.DatastoreHelper.makeKey;
 import static com.google.api.services.datastore.client.DatastoreHelper.makeValue;
+import com.google.protobuf.ByteString;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +71,6 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
     final String INICIO_HORARIO = "inicioHorario";
     final String FIM_HORARIO = "fimHorario";
     final String DATA_SET_NAME = "my-dataset";
-    final String KEY = "Restaurante";
 
     // <editor-fold defaultstate="collapsed" desc="CONSTRUTOR">
     /**
@@ -77,10 +79,12 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
      */
     public RestauranteRepositoryImpl() {
         inicializeDataset();
+        if (obtem() == null) {
+            inicializeRestaurantes();
+        }
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="MÉTODOS PÚBLICOS">
     /**
      * Recupera lista de restaurantes que satisfazem os valores do filtro
@@ -92,19 +96,33 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
      * @return Lista de restaurantes que satisfazem o filtro.
      */
     @Override
-      public List<Restaurante> obtem(final Restaurante filtro) {
+    public List<Restaurante> obtem(final Restaurante filtro) {
         List<Restaurante> listaRetorno = new ArrayList<>();
         List<Filter> filtros = new ArrayList<>();
 
         try {
             filtros.add(makeFilter(
-                    ID, PropertyFilter.Operator.GREATER_THAN_OR_EQUAL, makeValue(filtro.getId())).build());
+                    ID, PropertyFilter.Operator.EQUAL, makeValue(filtro.getId())).build());
+
+            filtros.add(makeFilter(
+                    CAMPUS, PropertyFilter.Operator.EQUAL, makeValue(filtro.getCampus())).build());
+
+            filtros.add(makeFilter(
+                    NOME, PropertyFilter.Operator.EQUAL, makeValue(filtro.getNome())).build());
+
+            filtros.add(makeFilter(
+                    FIM_HORARIO, PropertyFilter.Operator.EQUAL, makeValue(filtro.getFimHorario())).build());
+
+            filtros.add(makeFilter(
+                    INICIO_HORARIO, PropertyFilter.Operator.EQUAL, makeValue(filtro.getInicioHorario())).build());
 
             Filter enconteIgual = makeFilter(filtros).build();
 
             Query.Builder query = Query.newBuilder();
-            query.addKindBuilder().setName(KEY);
-            query.setFilter(enconteIgual).build();
+            query.addKindBuilder().setName(DATA_SET_NAME);
+            query.setFilter(enconteIgual)
+                    .setLimit(1)
+                    .build();
 
             RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
             RunQueryResponse response = datastore.runQuery(request);
@@ -114,8 +132,8 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
                 String id = getString(props.get(ID));
                 String campus = getString(props.get(CAMPUS));
                 String nome = getString(props.get(NOME));
-                Date inicioHorario = new Date(getTimestamp(props.get(INICIO_HORARIO)));
-                Date fimHorario = new Date(getTimestamp(props.get(FIM_HORARIO)));
+                Date inicioHorario = obtenhaData(getString(props.get(INICIO_HORARIO)));
+                Date fimHorario = obtenhaData(getString(props.get(FIM_HORARIO)));
 
                 listaRetorno.add(new Restaurante(
                         id,
@@ -125,16 +143,18 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
                         fimHorario));
             }
 
+            if (response.getBatch().getMoreResults() == QueryResultBatch.MoreResultsType.NOT_FINISHED) {
+                ByteString endCursor = response.getBatch().getEndCursor();
+                query.setStartCursor(endCursor);
+            }
+
             return listaRetorno;
 
         } catch (DatastoreException ex) {
             Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(Exception ex) {
-            Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return null;
 
+        return null;
     }
 
     /**
@@ -151,31 +171,26 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
     @Override
     public boolean adiciona(Restaurante restaurante) {
 
-        try {
-            if (restaurante == null || restaurante.getNome().trim().length() == ZERO) {
-                throw new IllegalArgumentException();
-            }
-            
-            Entity.Builder entRestaurante = Entity.newBuilder();
-            entRestaurante.setKey(makeKey(KEY));
-            entRestaurante.addProperty(makeProperty(ID, makeValue(restaurante.getId())));
-            entRestaurante.addProperty(makeProperty(CAMPUS, makeValue(restaurante.getId())));
-            entRestaurante.addProperty(makeProperty(NOME, makeValue(restaurante.getId())));
-            entRestaurante.addProperty(makeProperty(INICIO_HORARIO, makeValue(restaurante.getInicioHorario())));
-            entRestaurante.addProperty(makeProperty(FIM_HORARIO, makeValue(restaurante.getFimHorario())));
-            
-            Mutation.Builder mutation = Mutation.newBuilder();
-            mutation.addInsertAutoId(entRestaurante);
-            
-            CommitRequest comit = CommitRequest.newBuilder()
-                    .setMutation(mutation)
-                    .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
-                    .build();
-            CommitResponse resp = datastore.commit(comit);
-        } catch (DatastoreException ex) {
-            Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+        if (restaurante == null || restaurante.getNome().trim().length() == ZERO) {
+            throw new IllegalArgumentException();
         }
-        
+
+        Entity.Builder entRestaurante = Entity.newBuilder();
+        entRestaurante.setKey(makeKey());
+        entRestaurante.addProperty(makeProperty(ID, makeValue(restaurante.getId())));
+        entRestaurante.addProperty(makeProperty(CAMPUS, makeValue(restaurante.getId())));
+        entRestaurante.addProperty(makeProperty(NOME, makeValue(restaurante.getId())));
+        entRestaurante.addProperty(makeProperty(INICIO_HORARIO, makeValue(restaurante.getInicioHorario())));
+        entRestaurante.addProperty(makeProperty(FIM_HORARIO, makeValue(restaurante.getFimHorario())));
+
+        Mutation.Builder mutation = Mutation.newBuilder();
+        mutation.addInsertAutoId(entRestaurante);
+
+        CommitRequest.newBuilder()
+                .setMutation(mutation)
+                .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
+                .build();
+
         return true;
     }
 
@@ -190,29 +205,24 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
     @Override
     public boolean remover(Restaurante restaurante) {
 
-        try {
-            if (restaurante == null) {
-                return false;
-            }
-            
-            Entity employee = Entity.newBuilder()
-                                    .setKey(makeKey(KEY, restaurante.getNome()))
-                                    .build();
-            
-            CommitRequest request = CommitRequest.newBuilder()
-                                                 .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
-                                                 .setMutation(Mutation.newBuilder().addDelete(employee.getKey()))
-                                                 .build();
-            datastore.commit(request);
-            
-            return true;
-        } catch (DatastoreException ex) {
-            Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex){
-           Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+        if (restaurante == null) {
+            return false;
         }
-        
-        return false;
+
+        Key.Builder key = Key.newBuilder().addPathElement(
+                Key.PathElement.newBuilder()
+                .setKind(ID)
+                .setName(restaurante.getId()));
+
+        Mutation.Builder mutation = Mutation.newBuilder();
+        mutation.addDelete(key);
+
+        CommitRequest.newBuilder()
+                .setMutation(mutation)
+                .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
+                .build();
+
+        return true;
     }
 
     /**
@@ -235,7 +245,7 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
             entAssunto.addProperty(makeProperty(FIM_HORARIO, makeValue(restaurante.getFimHorario())));
 
             Mutation.Builder mutation = Mutation.newBuilder();
-            mutation.addUpsert(entAssunto);
+            mutation.addUpdate(entAssunto);
 
             CommitRequest.newBuilder()
                     .setMutation(mutation)
@@ -259,7 +269,7 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
     @Override
     public boolean adicionaPrato(Prato prato, Restaurante restaurante) {
         try {
-            Restaurante restauranteEncontrado = obtem(restaurante).get(ZERO);
+            Restaurante restauranteEncontrado = obtemRestaurante(restaurante);
             restauranteEncontrado.getListaPratos().add(prato);
 
             return atualizar(restauranteEncontrado);
@@ -280,7 +290,7 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
      */
     @Override
     public List<Prato> obtemPrato(Restaurante restaurante, Date dia) {
-        return obtem(restaurante).get(ZERO).getListaPratos();
+        return obtemRestaurante(restaurante).getListaPratos();
     }
 
     /**
@@ -325,8 +335,7 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
     }
 
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="MÉTODOS PRIVADOS">   
+    // <editor-fold defaultstate="collapsed" desc="MÉTODOS PRIVADOS">
     /**
      * Obtém uma lista de restaurantes.
      *
@@ -354,15 +363,38 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
      */
     private void inicializeDataset() {
         try {
-            if(datastore == null){
-                String datasetId = "my-dataset";
-                datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsfromEnv()
-                        .dataset(datasetId).build());
-            }
+
+            String datasetId = "my-dataset";
+            datastore = DatastoreFactory.get().create(DatastoreHelper.getOptionsfromEnv()
+                    .dataset(datasetId).build());
+
         } catch (JsonProcessingException ex) {
             Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (GeneralSecurityException | IOException ex) {
             Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Inicializa o repositório de restaurantes.
+     */
+    private void inicializeRestaurantes() {
+        for (Restaurante rest : obtenhaListaDeRestaurante()) {
+            Entity.Builder entAssunto = Entity.newBuilder();
+            entAssunto.setKey(makeKey());
+            entAssunto.addProperty(makeProperty(ID, makeValue(rest.getId())));
+            entAssunto.addProperty(makeProperty(CAMPUS, makeValue(rest.getId())));
+            entAssunto.addProperty(makeProperty(NOME, makeValue(rest.getId())));
+            entAssunto.addProperty(makeProperty(INICIO_HORARIO, makeValue(rest.getInicioHorario())));
+            entAssunto.addProperty(makeProperty(FIM_HORARIO, makeValue(rest.getFimHorario())));
+
+            Mutation.Builder mutation = Mutation.newBuilder();
+            mutation.addInsertAutoId(entAssunto);
+
+            CommitRequest.newBuilder()
+                    .setMutation(mutation)
+                    .setMode(CommitRequest.Mode.NON_TRANSACTIONAL)
+                    .build();
         }
     }
 
@@ -376,7 +408,7 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
 
         try {
             Query.Builder query = Query.newBuilder();
-            query.addKindBuilder().setName(KEY);
+            query.addKindBuilder().setName(DATA_SET_NAME);
 
             RunQueryRequest request = RunQueryRequest.newBuilder().setQuery(query).build();
             RunQueryResponse response = datastore.runQuery(request);
@@ -386,8 +418,8 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
                 String id = getString(props.get(ID));
                 String campus = getString(props.get(CAMPUS));
                 String nome = getString(props.get(NOME));
-                Date inicioHorario = new Date(getTimestamp(props.get(INICIO_HORARIO)));
-                Date fimHorario = new Date(getTimestamp(props.get(FIM_HORARIO)));
+                Date inicioHorario = obtenhaData(getString(props.get(INICIO_HORARIO)));
+                Date fimHorario = obtenhaData(getString(props.get(FIM_HORARIO)));
 
                 listaRetorno.add(new Restaurante(
                         id,
@@ -446,8 +478,8 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
                 String id = getString(props.get(ID));
                 String campus = getString(props.get(CAMPUS));
                 String nome = getString(props.get(NOME));
-                Date inicioHorario = new Date(getString(props.get(INICIO_HORARIO)));
-                Date fimHorario = new Date(getString(props.get(FIM_HORARIO)));
+                Date inicioHorario = obtenhaData(getString(props.get(INICIO_HORARIO)));
+                Date fimHorario = obtenhaData(getString(props.get(FIM_HORARIO)));
 
                 retorno = new Restaurante(
                         id,
@@ -465,5 +497,24 @@ public final class RestauranteRepositoryImpl extends ConfiguracaoBase implements
         return retorno;
     }
 
+    /**
+     * Converte a string informada para {@link Date}
+     *
+     * @param data {@link String} Para conversão.
+     * @return Data convertida ou nova data em caso de exception.
+     */
+    private Date obtenhaData(String data) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+            return new java.sql.Date(format.parse(data).getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(RestauranteRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new Date();
+    }
+
     // </editor-fold>
+
 }

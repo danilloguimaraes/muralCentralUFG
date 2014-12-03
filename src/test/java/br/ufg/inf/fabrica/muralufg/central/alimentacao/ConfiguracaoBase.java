@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Configuração base compartilhada entre as classes de teste do pacote de
@@ -17,7 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
  *
  * @author Fabrica de Software - INF/UFG
  */
-@RunWith(MockitoJUnitRunner.class)
 public abstract class ConfiguracaoBase {
 
     // <editor-fold defaultstate="collapsed" desc="CONSTANTES">
@@ -32,6 +28,7 @@ public abstract class ConfiguracaoBase {
     private final String DIAS = "DIAS";
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="VARIÁVEIS">
     /**
      * Formas de pagamento aceitas no restaurante.
@@ -44,24 +41,19 @@ public abstract class ConfiguracaoBase {
     protected Date dataDisponivel;
 
     /**
-     * {@link String} ID da imagem.
+     * {@link UUID} da imagem.
      */
-    protected String imagemId;
+    protected UUID imagemId;
 
     /**
      * Referência da classe a ser testada.
      */
-    protected RestauranteRepositoryImpl restIpml;
+    RestauranteRepositoryImpl restIpml;
 
     // </editor-fold>
     
-    
-    public RestauranteRepositoryImpl getRestIpml() {
-        return restIpml;
-    }
-
-    public void setRestIpml(RestauranteRepositoryImpl restIpml) {
-        this.restIpml = restIpml;
+    public ConfiguracaoBase(){
+        restIpml = new RestauranteRepositoryImpl();
     }
     
     // <editor-fold defaultstate="collapsed" desc="MÉTODOS PRIVADOS">
@@ -100,8 +92,8 @@ public abstract class ConfiguracaoBase {
         p.setDiaEmQueEstaDisponivel(obtenhaDataAleatoria(DIAS));
         p.setMimeTypeImage(listaMimeType.get(new Random().nextInt(listaMimeType.size())));
         p.setPrecoEmReais(new Random().nextDouble());
-        imagemId = UUID.randomUUID().toString();
-        p.setImagemId(imagemId);
+        imagemId = UUID.randomUUID();
+        p.setImagemId(imagemId.toString());
 
         return p;
     }
