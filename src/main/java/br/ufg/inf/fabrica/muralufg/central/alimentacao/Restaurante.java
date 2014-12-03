@@ -95,6 +95,10 @@ public class Restaurante extends ConfiguracaoBase {
         this.inicioHorario = inicioHorario;
         this.fimHorario = fimHorario;
     }
+    
+    public Restaurante(String id){
+        this.id = id;
+    }
 
     /**
      * Identifica se o presente restaurante é "semelhante" àquele fornecido.
@@ -258,7 +262,7 @@ public class Restaurante extends ConfiguracaoBase {
     private ArrayList<Prato> obtenhaListaDePratos() {
         ArrayList<Prato> lista = new ArrayList<>();
 
-        int indice = new Random().nextInt(2);
+        int indice = new Random().nextInt(20);
 
         for (int i = 0; i < indice; i++) {
             lista.add(ObtenhaPratoAleatorio());
