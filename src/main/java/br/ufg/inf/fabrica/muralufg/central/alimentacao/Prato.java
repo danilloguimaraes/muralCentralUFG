@@ -48,7 +48,8 @@
  * professores, ao realizar atividades no âmbito da Fábrica de Software
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
- */
+*/
+
 package br.ufg.inf.fabrica.muralufg.central.alimentacao;
 
 import java.util.Date;
