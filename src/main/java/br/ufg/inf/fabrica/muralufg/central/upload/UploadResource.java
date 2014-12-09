@@ -52,6 +52,11 @@
 
 package br.ufg.inf.fabrica.muralufg.central.upload;
 
+import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
+import br.ufg.inf.fabrica.muralufg.central.arquivo.ArquivoCloudManager;
+import br.ufg.inf.fabrica.muralufg.central.arquivo.ArquivoRepository;
+import br.ufg.inf.fabrica.muralufg.central.arquivo.ArquivoRepositoryCloudStorage;
+import br.ufg.inf.fabrica.muralufg.central.configuracao.ConfiguracaoRepository;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -114,6 +119,7 @@ public class UploadResource {
     @Path("/fechar/{id}")
     @POST
     public Response fechaSessao(@PathParam("id") String sessaoId) {
+
         if (ids.contains(sessaoId)) {
             ids.remove(sessaoId);
             return Response.ok().build();
@@ -138,10 +144,21 @@ public class UploadResource {
                            @FormDataParam("file") InputStream uploadedInputStream,
                            @FormDataParam("file") FormDataContentDisposition fileDetail) throws Exception {
 
-        // TODO O diretório fixo abaixo deverá ser obtido da configuração
-        // TODO o nome do arquivo não pode ser o nome da sessão.
-        java.nio.file.Path outputPath = FileSystems.getDefault().getPath("c:/tmp", sessaoId);
-        Files.copy(uploadedInputStream, outputPath);
+        ConfiguracaoRepository configuracaoRepository = null; //TODO invocar implementação da classe de configuração
+
+        String bucket = configuracaoRepository.valor("Bucket");
+        String projectId = configuracaoRepository.valor("projectId");
+        String aplicationName = configuracaoRepository.valor("AplicationName");
+        String accountId = configuracaoRepository.valor("accountId");
+        String keyPath = configuracaoRepository.valor("keyPath");
+
+        ArquivoRepository repository = new ArquivoRepositoryCloudStorage(bucket,projectId,aplicationName,accountId,keyPath);
+
+        //TODO pegar o nome do arquivo no objeto fileDetail
+
+        Arquivo arquivo = new Arquivo(sessaoId,"text/plain");
+        repository.persiste(arquivo,uploadedInputStream);
+
         return Response.ok().build();
     }
 }

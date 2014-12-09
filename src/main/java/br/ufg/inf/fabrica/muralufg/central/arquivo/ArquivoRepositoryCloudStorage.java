@@ -82,6 +82,15 @@ public class ArquivoRepositoryCloudStorage implements ArquivoRepository {
         this.cloudManager = cloudManager;
     }
 
+    public ArquivoRepositoryCloudStorage(String bucket, String projectId, String applicationName, String accountId, String keyPath) {
+        this.bucket = bucket;
+        this.projectId = projectId;
+        this.applicationName = applicationName;
+        this.accountId = accountId;
+        this.keyPath = keyPath;
+        this.cloudManager = new ArquivoCloudManagerImplementation();
+    }
+
     /**
      * Envia um arquivo ao Google Cloud Storage por meio da Java Client Library.
      *
