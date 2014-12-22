@@ -69,4 +69,5 @@ public interface AutenticacaoService {
      * fornecida. Caso contrário, retorna {@code false}.
      */
     boolean autentica(String usuario, String senha);
+
 }
