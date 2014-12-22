@@ -52,72 +52,110 @@
 
 package br.ufg.inf.fabrica.muralufg.central.ouvidoria;
 
-import org.joda.time.DateTime;
-
 import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
-
-import java.util.Set;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
+import java.util.*;
 
 /**
  * Detalhe de uma submissão dirigida à ouvidoria da UFG.
  * <p>Uma instância desta classe é um <i>value object</i>.</p>
  */
-public class Assunto {
+public class Assunto implements Comparable<Assunto> {
 
-    /**
-     * Identifica anexos associados à submissão.
-     * Não é obrigatória a existência de anexo.
-     */
     private Set<Arquivo> anexos;
-
-    /**
-     * Conteúdo (mensagem) associada à submissão.
-     * Descreve a reclamação, denúncia, elogio ou, de forma
-     * ampla, a mensagem de interesse do emissor.
-     */
     private String conteudo;
-
-    /**
-     * Data em que o assunto é criado.
-     */
-    private DateTime data;
-
-    /**
-     * Identificação da origem (autor) da mensagem, caso
-     * tenha sido fornecido pelo interessado.
-     * <b>ESTA INFORMAÇÃO NÃO É OBRIGATÓRIA.</b>
-     */
+    private Date data;
     private String fonte;
+    private boolean respondido;
 
-	public Set<Arquivo> getAnexos() {
-		return anexos;
-	}
+    public Assunto(String conteudo, Date data, String fonte) {
+        this.conteudo = conteudo;
+        this.data = data;
+        this.fonte = fonte;
+        this.respondido = false;
+    }
 
-	public void setAnexos(Set<Arquivo> anexos) {
-		this.anexos = anexos;
-	}
+    /**
+     * Função que retorna a data do assunto
+     * @return Data do objeto assunto
+     */
+    public Date getData() {
 
-	public String getConteudo() {
-		return conteudo;
-	}
+        return data;
+    }
 
-	public void setConteudo(String conteudo) {
-		this.conteudo = conteudo;
-	}
+    /**
+     * Função que altera a data do assunto.
+     * @param data Nova data do objeto assunto.
+     */
+    public void setData(Date data) {
 
-	public DateTime getData() {
-		return data;
-	}
+        this.data = data;
+    }
 
-	public void setData(DateTime data) {
-		this.data = data;
-	}
+    /**
+     * Função que retorna o conteudo do assunto.
+     * @return Conteudo do objeto assunto.
+     */
+    public String getConteudo() {
 
-	public String getFonte() {
-		return fonte;
-	}
+        return conteudo;
+    }
 
-	public void setFonte(String fonte) {
-		this.fonte = fonte;
-	}
+    /**
+     * Função que altera o conteudo do assunto.
+     * @param conteudo Novo conteudo do objeto assunto.
+     */
+    public void setConteudo(String conteudo) {
+
+        this.conteudo = conteudo;
+    }
+
+    /**
+     * Função que retorna a fonte do assunto.
+     * @return Fonte do objeto assunto.
+     */
+    public String getFonte() {
+
+        return fonte;
+    }
+
+    /**
+     * Função que altera a fonte do assunto.
+     * @param fonte Nova fonte do assunto.
+     */
+    public void setFonte(String fonte) {
+
+        this.fonte = fonte;
+    }
+
+    /**
+     * Função que retorna se o assunto foi respondido ou não.
+     * @return DSata do objeto assunto.
+     */
+    public boolean isRespondido() {
+
+        return respondido;
+    }
+
+    /**
+     * Função que torna o assunto respondido.
+     */
+    public void foiRespondido() {
+
+        this.respondido = true;
+    }
+
+    /**
+     * Função que compara um assunto com a instancia assunto atual, levando em conta suas datas.
+     * @param assunto O assunto que será comparado.
+     */
+    @Override
+    public int compareTo(Assunto assunto) {
+
+        DateTimeComparator comparador = DateTimeComparator.getInstance();
+        int resultadoComparacao = comparador.compare(this.getData().getTime(), assunto.getData().getTime());
+        return resultadoComparacao;
+    }
 }
