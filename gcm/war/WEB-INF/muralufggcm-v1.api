@@ -1,0 +1,180 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://myapp.appspot.com/_ah/api",
+  "name" : "muralufggcm",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "ufg.br",
+  "ownerName" : "ufg.br",
+  "packagePath" : "br.ufg.mural.ufg.model",
+  "methods" : {
+    "muralufggcm.serverstatus.get" : {
+      "path" : "serverstatus",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "br.ufg.mural.ufg.MuralEndpoint.getServerStatus",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "muralufggcm.logmensagem.get" : {
+      "path" : "logmensagem/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "br.ufg.mural.ufg.MuralEndpoint.getLogMensagem",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "muralufggcm.mensagem.post" : {
+      "path" : "mensagem",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "br.ufg.mural.ufg.MuralEndpoint.enviarMensagem",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "ServerStatus" : {
+        "id" : "ServerStatus",
+        "type" : "object",
+        "properties" : {
+          "mensagem" : {
+            "type" : "string"
+          },
+          "funcionando" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "LogMensagem" : {
+        "id" : "LogMensagem",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "sucesso" : {
+            "type" : "boolean"
+          },
+          "falha" : {
+            "type" : "boolean"
+          },
+          "falhas" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "FalhaEnvio"
+            }
+          },
+          "messageError" : {
+            "type" : "string"
+          },
+          "falhaEnvio" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "FalhaEnvio"
+            }
+          }
+        }
+      },
+      "FalhaEnvio" : {
+        "id" : "FalhaEnvio",
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string"
+          },
+          "regId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Mensagem" : {
+        "id" : "Mensagem",
+        "type" : "object",
+        "properties" : {
+          "texto" : {
+            "type" : "string"
+          },
+          "tempoDeVida" : {
+            "type" : "integer"
+          },
+          "regIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "br.ufg.mural.ufg.MuralEndpoint.getServerStatus" : {
+        "response" : {
+          "$ref" : "ServerStatus"
+        }
+      },
+      "br.ufg.mural.ufg.MuralEndpoint.getLogMensagem" : {
+        "response" : {
+          "$ref" : "LogMensagem"
+        }
+      },
+      "br.ufg.mural.ufg.MuralEndpoint.enviarMensagem" : {
+        "request" : {
+          "$ref" : "Mensagem"
+        },
+        "response" : {
+          "$ref" : "LogMensagem"
+        }
+      }
+    }
+  }
+}
