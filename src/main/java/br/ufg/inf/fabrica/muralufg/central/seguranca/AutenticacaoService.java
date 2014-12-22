@@ -52,6 +52,8 @@
 
 package br.ufg.inf.fabrica.muralufg.central.seguranca;
 
+import java.util.List;
+
 /**
  * Serviço que permite autenticar o responsável
  * por uma determinada requisição.

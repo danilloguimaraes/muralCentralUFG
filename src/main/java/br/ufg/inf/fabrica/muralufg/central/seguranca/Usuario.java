@@ -60,6 +60,8 @@ import java.util.Set;
  * quanto quem envia informações para a Central.</p>
  */
 public class Usuario {
+	
+	private Long id;
     private String username;
     private Set<String> registrationIds;
 
@@ -67,6 +69,10 @@ public class Usuario {
      * Construtor padrão de Usuario.
      */
     public Usuario() {
+    }
+    
+    public Usuario(Long id) {
+    	this.id = id;
     }
 
     /**
@@ -111,4 +117,12 @@ public class Usuario {
     public void setRegistrationIds(Set<String> registrationIds) {
         this.registrationIds = registrationIds;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

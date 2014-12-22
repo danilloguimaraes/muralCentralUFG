@@ -52,7 +52,13 @@
 
 package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import br.ufg.inf.fabrica.muralufg.central.seguranca.Usuario;
 
 /**
  * Representa informação veiculada/divulgada pelo
@@ -85,6 +91,11 @@ public class Mensagem {
      * Imagens associadas à mensagem.
      */
     private List<Imagem> imagens;
+    
+    /**
+     * Usuario remetente da mensagem.
+     */
+    private Usuario remetente;
 
     /**
      * Cria uma instância de mensagem.
@@ -99,6 +110,13 @@ public class Mensagem {
         setConteudo(conteudo);
         setDataCriacao(dataCriacao);
         setImagens(imagens);
+    }
+    
+    /**
+     * Construtor padrão.
+     */
+    public Mensagem(){
+    	
     }
 
     /**
@@ -229,4 +247,12 @@ public class Mensagem {
 
         this.dataCriacao = dataCriacao;
     }
+
+	public Usuario getRemetente() {
+		return remetente;
+	}
+
+	public void setRemetente(Usuario remetente) {
+		this.remetente = remetente;
+	}
 }
