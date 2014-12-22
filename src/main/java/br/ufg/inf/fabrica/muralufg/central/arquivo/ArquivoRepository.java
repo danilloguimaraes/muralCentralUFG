@@ -52,6 +52,10 @@
 
 package br.ufg.inf.fabrica.muralufg.central.arquivo;
 
+import org.omg.CORBA.portable.OutputStream;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.stream.Stream;
 
 /**
@@ -80,7 +84,7 @@ public interface ArquivoRepository {
      * @param conteudo {@link Stream} do qual o conteúdo do
      *                               arquivo poderá ser recuperado.
      */
-    public void persiste(Arquivo arquivo, Stream conteudo);
+    public void persiste(Arquivo arquivo, InputStream conteudo) throws IOException;
 
     /**
      * Recupera metainformações sobre o arquivo cujo identificador único é
@@ -89,7 +93,7 @@ public interface ArquivoRepository {
      * @return Instância de {@link Arquivo} correspondente ao identificador
      * fornecido.
      */
-    public Arquivo recupera(String arquivoId);
+    public InputStream recupera(String arquivoId) throws IOException;
 
     /**
      * Obtém {@link Stream} para conteúdo do arquivo.

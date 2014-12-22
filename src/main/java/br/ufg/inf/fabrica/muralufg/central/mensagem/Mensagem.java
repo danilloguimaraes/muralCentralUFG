@@ -54,6 +54,8 @@ package br.ufg.inf.fabrica.muralufg.central.mensagem;
 
 import java.util.*;
 
+import br.ufg.inf.fabrica.muralufg.central.arquivo.Arquivo;
+
 /**
  * Representa informação veiculada/divulgada pelo
  * Mural UFG.
@@ -82,9 +84,9 @@ public class Mensagem {
     private Date dataCriacao;
 
     /**
-     * Imagens associadas à mensagem.
+     * Arquivos associadas à mensagem.
      */
-    private List<Imagem> imagens;
+    private List<Arquivo> arquivos;
 
     /**
      * Cria uma instância de mensagem.
@@ -92,59 +94,64 @@ public class Mensagem {
      * @param id          O identificador único da mensagem.
      * @param conteudo    O conteúdo da mensagem.
      * @param dataCriacao A data de criação da mensagem.
-     * @param imagens     O conjunto de imagens associadas à mensagem.
+     * @param arquivos     O conjunto de arquivos associadas à mensagem.
      */
-    public Mensagem(String id, String conteudo, Date dataCriacao, List<Imagem> imagens) {
+    public Mensagem(String id, String conteudo, Date dataCriacao, List<Arquivo> arquivos) {
         setId(id);
         setConteudo(conteudo);
         setDataCriacao(dataCriacao);
-        setImagens(imagens);
+        setArquivos(arquivos);
     }
-
+    
     /**
-     * Obtém imagens associadas à mensagem.
+     * Cria umas instâcia de mensagem sem nenhuma construtor
+     * */
+    
+    public Mensagem(){
+    	
+    }
+    /**
+     * Obtém arquvos associadas à mensagem.
      *
-     * @return Imagens associadas à mensagem.
+     * @return Arquivos associadas à mensagem.
      */
-    public List<Imagem> getImagens() {
-        return Collections.unmodifiableList(imagens);
+    public List<Arquivo> getArquivos() {
+        return Collections.unmodifiableList(arquivos);
     }
 
     /**
-     * Define as imagens associadas à mensagem.
-     * @param imagens Lista de imagens a serem
+     * Define as arquivos associadas à mensagem.
+     * @param arquivos Lista de arquivos a serem
      *                associadas à mensagem.
      */
-    private void setImagens(List<Imagem> imagens) {
-        this.imagens = new ArrayList<Imagem>();
+    private void setArquivos(List<Arquivo> arquivos) {
+        this.arquivos = new ArrayList<Arquivo>();
 
-        if (imagens == null) {
+        if (arquivos == null) {
             return;
         }
 
-        for (Imagem imagem : imagens) {
-            adicionaImagem(imagem);
-        }
     }
 
     /**
-     * Associa (adiciona) uma imagem à mensagem.
-     * Imagem cujo valor é <c>null</c> ou duplicidade não são
+     * Associa (adiciona) uma arquivo à mensagem.
+     * Arquivo cujo valor é <c>null</c> ou duplicidade não são
      * admitidos.
      *
-     * @param imagem Informações sobre a imagem a ser
-     *               adicionada (associada) à mensagem.
+     * @param arquivo Informações sobre a arquivo a ser
+     *               adicionada (associada) ao arquivos.
      */
-    private void adicionaImagem(Imagem imagem) {
-        if (imagem == null) {
-            throw new IllegalArgumentException("imagem é null");
+
+    private void AdicionaArquivo(Arquivo arquivo) {
+        if (arquivo == null) {
+            throw new IllegalArgumentException("arquivo é null");
         }
 
-        if (imagens.contains(imagem)) {
-            throw new IllegalArgumentException("imagem já adicionada à mensagem");
+        if (arquivos.contains(arquivo)) {
+            throw new IllegalArgumentException("arquivo já adicionada à mensagem");
         }
 
-        imagens.add(imagem);
+        arquivos.add(arquivo);
     }
 
     /**
