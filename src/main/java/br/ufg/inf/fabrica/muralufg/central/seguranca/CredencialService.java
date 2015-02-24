@@ -63,7 +63,7 @@ package br.ufg.inf.fabrica.muralufg.central.seguranca;
  * <p>Posteriormente, por meio de</p>
  */
 public interface CredencialService {
-
+	
     /**
      * Persiste a credencial fornecida.
      * <p>Convém destacar que a estratégia deve assegurar que,
@@ -75,6 +75,7 @@ public interface CredencialService {
      * @param senha Senha da credencial.
      * @return {@code true} se a credencial foi persistida de forma
      * satisfatória ou {@code false}, caso contrário.
+     * @throws IOException 
      * @see #autenticar(String, String)
      * @throws java.lang.IllegalArgumentException Caso
      */
