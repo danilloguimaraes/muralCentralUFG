@@ -49,32 +49,88 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Representa uma palestra, um curso, um simpósio, um congresso ou similar.
  */
 public class Evento {
-	private Date dataInicio;
-	private Date dataFim;
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
+    private long id;
+    private DateTime dataInicio;
+    private DateTime dataFim;
+    private String descricao;
+    private String nomeEvento;
+    private String horaEvento;
+    private static final long serialVersionUID = 7375320096535047617L;
 
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
+    public Evento(){
+        
+    }
+    
+    /*
+    Implementação do construtor de evento, que será utilizado posteriormente no DAO para salvamento.
+    */
+    public Evento (String nomeEvento, String horaEvento, String descricao, DateTime dataInicio, DateTime dataFim){
+        this.nomeEvento = nomeEvento;
+        this.horaEvento = horaEvento;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+    }
 
-	public Date getDataFim() {
-		return dataFim;
-	}
+    
+    /*
+    Métodos GET e SET para os eventos, que serão responsáveis pela "aquisição" de informações e definição de informações.
+    */
+    public long getId() {
+        return id;
+    }
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public DateTime getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(DateTime dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public DateTime getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(DateTime dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getNomeEvento() {
+        return nomeEvento;
+    }
+
+    public void setNomeEvento(String nomeEvento) {
+        this.nomeEvento = nomeEvento;
+    }
+
+    public String getHoraEvento() {
+        return horaEvento;
+    }
+
+    public void setHoraEvento(String horaEvento) {
+        this.horaEvento = horaEvento;
+    }
 
 }

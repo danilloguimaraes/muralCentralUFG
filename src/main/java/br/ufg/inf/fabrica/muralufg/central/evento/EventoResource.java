@@ -49,53 +49,59 @@
  * do Instituto de Informática (UFG). Consulte <http://fs.inf.ufg.br>
  * para detalhes.
  */
-
 package br.ufg.inf.fabrica.muralufg.central.evento;
 
 import java.util.Date;
 import java.util.List;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
- * Manutenção de eventos.
+ * Implementação da interface EventoRepository
  */
-public interface EventoRepository {
+@Path(value = "/evento")
+public class EventoResource implements EventoRepository {
 
-    /**
-     * Adiciona o evento ao repositório.
-     * @param evento O evento a ser adicionado.
-     * @return {@code true} se e somente se o evento
-     * foi adicionado de forma satisfatória.
-     */
-    boolean adiciona(Evento evento);    
-    
-    /**
-     * Identifica eventos do repositório cuja realização
-     * encontra-se no "raio" de tempo, em dias, com base
-     * no dia corrente.
-     * @param raioEmDias Número de dias passados e futuros
-     *                   perfazendo um período no qual qualquer
-     *                   realização de evento que há interseção
-     *                   com ele será fornecido na resposta.
-     * @return Eventos, em ordem cronológica, cuja realização
-     * coincide com o período determinado pela data corrente e
-     * o "raio" fornecidos.
-     *
-     * @see #proximos(java.util.Date, int)
-     */
-    List<Evento> proximos(int raioEmDias);
+    EventoRepositoryDataStore eventoRepositoryDataStore = new EventoRepositoryDataStore();
 
-    /**
-     * Identifica eventos cuja realização coincide com o período
-     * definido pela data e os dias indicados, tanto anteriores
-     * quanto posteriores à data.
-     * @param data Data que define período relevante para a busca de
-     *             eventos.
-     * @param raioEmDias Número de dias, tanto anteriores quanto
-     *                   posteriores à data indicada.
-     * @return Eventos cuja realização coincide com o período definido
-     * pela data e dias anteriores/posteriores fornecidos.
-     *
-     * @see #adiciona(Evento)
+    @POST
+    @Override
+    public boolean adiciona(Evento evento) {
+        eventoRepositoryDataStore.adiciona(evento);
+        return true;
+    }
+
+    /*
+     Implementação da listagem de eventos da interface EventoRepository.
+     @param raioEmDias Número de dias passados e futuros
+     perfazendo um período no qual qualquer
+     realização de evento que há interseção
+     com ele será fornecido na resposta.
+     @return Eventos, em ordem cronológica, cuja realização
+     coincide com o período determinado pela data corrente e
+     o "raio" fornecidos.
      */
-    List<Evento> proximos(Date data, int raioEmDias);
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    public List<Evento> proximos(@PathParam("raio") int raioEmDias) {
+        return eventoRepositoryDataStore.filtraEventoPorRaio(raioEmDias);
+    }
+
+    /*
+     Implementação da listagem de eventos com data e evento a partir da interface EventoRepository.
+     @param data Data que define período relevante para a busca de
+     eventos.
+     @param raioEmDias Número de dias, tanto anteriores quanto
+     posteriores à data indicada.
+     @return Eventos cuja realização coincide com o período definido
+     pela data e dias anteriores/posteriores fornecidos.
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Override
+    public List<Evento> proximos(@PathParam("data") Date data, @PathParam("raio") int raioEmDias) {
+        return eventoRepositoryDataStore.filtraEventoPorDataERaio(data, raioEmDias);
+    }
+
 }
